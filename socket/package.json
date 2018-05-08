@@ -1,0 +1,33 @@
+{
+  "name": "eventapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "eventapp.js",
+  "dependencies": {
+    "apn": "^2.1.2",
+    "apns": "^0.1.0",
+    "express": "^4.14.1",
+    "forever": "^0.15.3",
+    "forever-monitor": "^1.7.1",
+    "forever-server": "^0.4.0",
+    "fs": "0.0.1-security",
+    "http": "^0.0.0",
+    "httpolyglot": "^0.1.2",
+    "mysql": "^2.13.0",
+    "net": "^1.0.2",
+    "node-constants": "^0.0.2",
+    "node-static": "^0.7.9",
+    "nodemailer": "^3.0.0",
+    "path": "^0.12.7",
+    "process": "^0.11.9",
+    "socket.io": "^1.7.2",
+    "underscore": "^1.8.3",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

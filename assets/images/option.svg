@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19">
+    <g fill="none" fill-rule="evenodd" opacity=".5" transform="translate(1)">
+        <ellipse cx="8.93" cy="9.5" stroke="#979797" stroke-width="2" rx="8.93" ry="8.5"/>
+        <text fill="#A6A6A6" font-family="HelveticaNeue-Medium, Helvetica Neue" font-size="14" font-weight="400">
+            <tspan x="5.209" y="14.708">?</tspan>
+        </text>
+    </g>
+</svg>

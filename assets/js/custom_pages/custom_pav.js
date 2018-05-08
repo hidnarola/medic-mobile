@@ -29,7 +29,7 @@ $(function(){
         var switchery = new Switchery(html, {color: '#4CAF50'});
     });
 
-    get_device_data();
+//    get_device_data();
     function get_device_data(){
 	    $.ajax({
 	        type: "POST",
