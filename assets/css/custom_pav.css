@@ -1,0 +1,170 @@
+body{
+	background-image: url('../images/site_img/medic_bg.jpg');
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+body:before{
+	position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.2);
+    left: 0;
+    bottom: 0;
+    content: '';
+}
+.required:after { content: " *";color:#F44336;}
+.cbg-black-100{ background-color: #000000ad; color:#fff; }
+.cbg-black-200{ background-color: #000000cf; color:#fff; }
+.cbg-black-300{ background-color: #000; color:#fff; }
+.dataTables_length{ float:left; }
+.modal-open{ padding-right:3px !important; }
+.panel,
+.dataTables_wrapper{ box-shadow:0px 10px 30px -7px rgba(0,0,0,0.4); }   
+.dataTables_wrapper .action a{
+	font-size:14px;
+	font-weight:500;
+	color:#00000087;
+}
+.dataTables_wrapper .action a:hover{
+	color:#000000d6;
+}
+.custom_save_button{width: 90px;display: inline-block;float: left;margin-right: 15px; border:none;padding:8px 12px;font-weight:400;}
+.custom_cancel_button{width: 90px;display: inline-block;float: left;font-weight:400;}
+.custom_dt_action_button{ font-weight:500; color:#222832; border:2px solid #222832; background-color:#fff; text-transform: uppercase; margin-bottom:3px !important;}
+.custom_dt_action_button:hover,
+.custom_dt_action_button:focus,
+.custom_action_button:hover,
+.custom_action_button:focus{ 
+    color: #fff;
+    opacity: 0.90;
+    background-color:#222832;
+}
+.dt-head-center{ text-align: center }
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+	background-color: #ff5722;
+}
+
+.operations_date_range #date_range{ 
+	width:auto;
+	border-width: 2px;
+}
+.ranges ul li.active,
+.daterangepicker td.active,
+.daterangepicker td.active:hover,
+.daterangepicker td.active:focus{ 
+	background-color: #ff5722; 
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+    background-color: #ff5722;
+    border-color: #ff5722;
+}
+
+.page-container{ padding-bottom:0px !important; }
+.modal-backdrop.in{ opacity: 0.8; }
+
+/*****************************************************************
+                Custom Form Validation success Tick
+*****************************************************************/
+	.form_success_icon{right:10px;color:#00bcd4;}
+	.form_success_vert_icon { color: #00bcd4; }
+	.form-horizontal .has-feedback > .form-control-feedback,
+	.select_form_group .form-control-feedback{ right: 30px !important; }
+
+/*****************************************************************
+                        Custom Scroll
+*****************************************************************/
+	body::-webkit-scrollbar { width: 0.3em; }
+	body::-webkit-scrollbar-track { box-shadow: inset 0 0 6px rgba(0,0,0,0.3); }
+	body::-webkit-scrollbar-thumb { background-color: #FF5722; outline: 1px solid #FF5722; }
+
+	.custom_scrollbar::-webkit-scrollbar { width: 0.4em; }
+	.custom_scrollbar::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); }
+	.custom_scrollbar::-webkit-scrollbar-thumb { background-color: #26A69A; outline: 1px solid slategrey; }
+
+/*****************************************************************
+                        Custom Loader
+*****************************************************************/
+	#custom_loading {background-color: rgba(0, 0, 0, 0.7); height: 100%; width: 100%; position: fixed; margin-top: 0px; top: 0px; left: 0px; bottom: 0px; overflow: hidden !important; right: 0px; z-index: 999999; }
+	#custom_loading #loading-center{position: absolute; width:65px;top: 50%; left:50%; transform: translateX(-50%) translateY(-50%);}
+
+
+/*****************************************************************
+                        Mobile Sidebar
+*****************************************************************/
+	.sidenav .navigation.admin-sidebar li a{ font-size:12px; }
+	.sidenav {
+	    height: 100%;
+	    width: 0;
+	    position: fixed;
+	    z-index: 1;
+	    top: 0;
+	    left: 0;
+	    background-color: #142029f2;
+	    overflow-x: hidden;
+	    transition: 0.5s;
+	    z-index:1111;
+	}
+
+	.sidenav a {
+	    padding: 8px 8px 8px 32px;
+	    text-decoration: none;
+	    font-size: 15px;
+	    color: #fff;
+	    display: block;
+	    transition: 0.3s;
+	}
+
+	.sidenav .dropdown-menu a{
+		color:#fff;
+	}
+	.sidenav .nav .open > a,
+	.sidenav .nav .open > a:hover,
+	.sidenav .nav .open > a:focus{
+		color:#fff;
+	}
+
+	.sidenav .nav > li > a:hover, 
+	.sidenav .nav > li > a:focus{
+		background-color: transparent !important;
+	}
+
+	.sidenav a:hover {
+	    color: #f1f1f1;
+	}
+
+	.sidenav .closebtn {
+	    font-size: 36px;
+	    margin-left: 50px;
+	}
+
+	@media screen and (max-height: 450px) {
+	  .sidenav a {font-size: 13px;padding-left: 15px}
+	}
+
+.dashboard_tile.active,
+.dashboard_tile:hover{
+    background-color: #e0e0e0;
+    box-shadow: 1px 1px 1px 1px #000;
+}
+
+@media(max-width:991px){
+    /*************************************************
+                    Datatable design
+    **************************************************/
+    .datatable-header{padding: 15px;}
+    #DataTables_Table_0_filter label{display: block;text-align: left;}
+    #DataTables_Table_0_filter label span {float: left;margin: 8px 0;margin-left: 0;width: 45px;text-align: left;}
+    #DataTables_Table_0_filter input {width: calc(100% - 45px);}
+    #DataTables_Table_0_length{float: left !important;margin: 0;}
+    #DataTables_Table_0_length label > span:first-child {float: left;margin: 8px 0;margin-left: 0;width: 45px;text-align: left;}
+    .box-bg {min-height: inherit;margin: 0 0 30px;}
+}
