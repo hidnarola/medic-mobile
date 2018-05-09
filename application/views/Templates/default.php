@@ -37,12 +37,14 @@
         <!-- Core JS files -->        
 <!--        <script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
         <script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>-->
-        
+
 
         <!-- /core JS files -->
 
         <!-- Theme JS files -->
-
+        <script type="text/javascript" src="assets/js/plugins/visualization/d3/d3.min.js"></script>
+        <script type="text/javascript" src="assets/js/plugins/visualization/d3/d3_tooltip.js"></script>
+        <script type="text/javascript" src="assets/js/core/libraries/jquery_ui/core.min.js"></script>
         <script type="text/javascript" src="assets/js/plugins/forms/styling/switchery.min.js"></script>
         <script type="text/javascript" src="assets/js/plugins/forms/styling/switch.min.js"></script>
         <script type="text/javascript" src="assets/js/plugins/forms/styling/uniform.min.js"></script>	
@@ -61,7 +63,7 @@
         <script type="text/javascript" src="assets/js/plugins/pagination/bs_pagination.min.js"></script>
         <script type="text/javascript" src="assets/js/plugins/media/fancybox.min.js"></script>
 
-        <script type="text/javascript" src="assets/js/core/app.js"></script>
+<!--        <script type="text/javascript" src="assets/js/core/app.js"></script>-->
 
         <script type="text/javascript" src="assets/js/custom_pages/custom_pav.js"></script>
         <script type="text/javascript" src="assets/js/plugins/notifications/pnotify.min.js"></script>
@@ -75,13 +77,6 @@
                 autoWidth: false,
                 theme: "bootstrap"
             });
-            function openNav() {
-                document.getElementById("mySidenav").style.width = "100%";
-            }
-
-            function closeNav() {
-                document.getElementById("mySidenav").style.width = "0";
-            }
         </script>
     </head>
     <body>
@@ -91,9 +86,10 @@
                     <div class="logo"><a href="<?php echo site_url('/'); ?>"><img src="assets/images/logo.png" alt=""/></a></div>
                     <div class="nav">
                         <ul>
-                            <li><a href="javascript:void(0)">Service</a></li>
-                            <li class="<?php echo ($action == "notifications") ? 'active' : ''; ?>"><a href="<?php echo site_url('notifications'); ?>">Notifications</a></li>
-                            <li class="<?php echo($class == "dashboard" && $action == "index") ? 'active' : ''; ?>"><a href="<?php echo site_url('dashboard'); ?>">Operation</a></li>
+                            <li class="<?php echo($class == "service") ? 'active' : ''; ?>"><a href="<?php echo site_url('service'); ?>">Service</a></li>
+                            <li class="<?php echo ($class == "notifications") ? 'active' : ''; ?>"><a href="<?php echo site_url('notifications'); ?>">Notifications</a></li>
+                            <!--<li class="<?php echo($class == "dashboard" && $action == "index") ? 'active' : ''; ?>"><a href="<?php echo site_url('dashboard'); ?>">Operation</a></li>-->
+                            <li class="<?php echo ($class == "operation") ? 'active' : ''; ?>">><a href="<?php echo site_url('operation'); ?>">Operation</a></li>
                         </ul>
                     </div>
                     <div class="header-r">
@@ -117,6 +113,51 @@
                 </div>	
             </div>
         </header>
+        <section class="mobile-nav">
+            <div class="nav">
+                <ul>
+                    <li class="dropdown">
+                        <a href="" id="dropdownMenuButton-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Service</a>
+                        <div class="dropdown-menu left-nav" aria-labelledby="dropdownMenuButton-1">
+                            <ul>
+                                <li class="current-nav active"><a href=""><i></i> <span>STATS</span></a></li>
+                                <li class="trends-nav"> <a href=""> <i></i> <span>TRENDS</span> </a> </li>
+                                <li class="map-nav"> <a href=""> <i></i> <span>MAP</span> </a> </li>
+                                <li class="operators-nav"> <a href=""> <i></i> <span>operators</span> </a> </li>
+                                <li class="machines-nav"> <a href=""> <i></i> <span>Machines</span> </a> </li>
+                                <li class="visits-nav"> <a href=""> <i></i> <span>VISITS</span> </a> </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="" id="dropdownMenuButton-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Notifications</a>
+                        <div class="dropdown-menu left-nav" aria-labelledby="dropdownMenuButton-2">
+                            <ul>
+                                <li class="current-nav active"><a href=""><i></i> <span>STATS</span></a></li>
+                                <li class="trends-nav"> <a href=""> <i></i> <span>TRENDS</span> </a> </li>
+                                <li class="map-nav"> <a href=""> <i></i> <span>MAP</span> </a> </li>
+                                <li class="operators-nav"> <a href=""> <i></i> <span>operators</span> </a> </li>
+                                <li class="machines-nav"> <a href=""> <i></i> <span>Machines</span> </a> </li>
+                                <li class="visits-nav"> <a href=""> <i></i> <span>VISITS</span> </a> </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Operation</a>
+                        <div class="dropdown-menu dropdown-menu-right left-nav" aria-labelledby="dropdownMenuButton">
+                            <ul>
+                                <li class="current-nav active"><a href=""><i></i> <span>STATS</span></a></li>
+                                <li class="trends-nav"> <a href=""> <i></i> <span>TRENDS</span> </a> </li>
+                                <li class="map-nav"> <a href=""> <i></i> <span>MAP</span> </a> </li>
+                                <li class="operators-nav"> <a href=""> <i></i> <span>operators</span> </a> </li>
+                                <li class="machines-nav"> <a href=""> <i></i> <span>Machines</span> </a> </li>
+                                <li class="visits-nav"> <a href=""> <i></i> <span>VISITS</span> </a> </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
         <div id="custom_loading" class="hide">
             <div id="loading-center">
                 <svg version="1.1" id="L7" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">

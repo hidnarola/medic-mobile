@@ -8,7 +8,7 @@ class Device extends MY_Controller {
     }
 
 	public function get_data(){
-		$myfile = fopen("http://52.53.204.247/Socket/obd_device_data.txt", "r") or die("Unable to open file!");
+		$myfile = fopen("http://80.95.189.228/Socket/obd_device_data.txt", "r") or die("Unable to open file!");
 		$file_data = fread($myfile,10240);
 		$ch = curl_init('http://clientapp.narola.online:1016/api/getdecodeddata');
 		$postdata = json_encode(array("data"=>$file_data));

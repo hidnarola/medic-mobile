@@ -1,5 +1,5 @@
 var net = require('net');
-var HOST = '52.53.204.247';
+var HOST = '80.95.189.228';
 var PORT = 3536;
 
  var server = net.createServer(function(socket) {

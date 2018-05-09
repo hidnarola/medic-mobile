@@ -3,12 +3,12 @@
         <div class="row">
             <div class="setting-nav">
                 <ul class="d-flex">
-                    <li><a href="">General</a></li>
-                    <li><a href="">Machines</a></li>
-                    <li><a href="">Operators</a></li>
+                    <li><a href="<?php echo site_url('settings') ?>">General</a></li>
+                    <li><a href="<?php echo site_url('settings/manage_vehicles') ?>">Machines</a></li>
+                    <li><a href="<?php echo site_url('settings/manage_operators') ?>">Operators</a></li>
                     <li><a href="">Work lists</a></li>
                     <li><a href="">Reports</a></li>
-                    <li><a href="">Customers</a></li>
+                    <li><a href="<?php echo site_url('settings/manage_users') ?>">Customers</a></li>
                 </ul>
             </div>
             <div class="general-info d-flex">

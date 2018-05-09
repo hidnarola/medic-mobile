@@ -1,279 +1,298 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dashboard extends MY_Controller {
 
-    public function __construct(){
+    public function __construct() {
         parent::__construct();
-        $this->load->model(array('dashboard_model','vehicle_model','track_model'));
+        $this->load->model(array('dashboard_model', 'vehicle_model', 'track_model'));
         $this->operators_per_page = $this->service_due_per_page = $this->faults_per_page = $this->pod_per_page = $this->incidents_per_page = 10;
         $this->dailycheck_per_page = 25;
     }
 
-	/**
-	 * This function is used to redirect on Dashboard page.
-	 * @param $id -> String
-	 * @return redirect
-	 * @author PAV
-	*/
-	public function index(){
-		if ((!$this->session->userdata('logged_in'))) {
+    /**
+     * This function is used to redirect on Dashboard page.
+     * @param $id -> String
+     * @return redirect
+     * @author PAV
+     */
+    public function index() {
+        if ((!$this->session->userdata('logged_in'))) {
             $this->session->set_flashdata('error', 'Please login to continue!');
             redirect(base_url(), 'refresh');
         }
 
-        if(get_AdminLogin('A')){
-        	$data['title'] = 'Dashboard';
+        if (get_AdminLogin('A')) {
+            $data['title'] = 'Dashboard';
             redirect('manage_company');
-			//$this->template->load('default','authentication/dashboard',$data);
-        }else{
-        	$data['title'] = 'Dashboard';
-            $start_date_data = date('Y-m-d H:i:s',(time() - 86400)); //345600
-            $end_date_data   = date('Y-m-d H:i:s',time());
-        	if($this->input->get()){
-                $area_data         = htmlentities($this->input->get('txt_area'));
-                $start_date_data   = ($this->input->get('txt_date')!='') ? htmlentities(date('Y-m-d',strtotime($this->input->get('txt_date')))).' 00:00:00' : $start_date_data;
-                $end_date_data     = ($this->input->get('txt_date')!='') ? htmlentities(date('Y-m-d',strtotime($this->input->get('txt_date')))).' 23:59:59' : $end_date_data;
-                $vehicle_data      = htmlentities($this->input->get('txt_vehicle'));
-                $report_data       = htmlentities($this->input->get('txt_report_type')); 
-                $alert_data        = htmlentities($this->input->get('txt_alert'));
-                $forklift_data     = htmlentities($this->input->get('txt_forklift'));
+            //$this->template->load('default','authentication/dashboard',$data);
+        } else {
+            $data['title'] = 'Dashboard';
+            $start_date_data = date('Y-m-d H:i:s', (time() - 86400)); //345600
+            $end_date_data = date('Y-m-d H:i:s', time());
+            if ($this->input->get()) {
+                $area_data = htmlentities($this->input->get('txt_area'));
+                $start_date_data = ($this->input->get('txt_date') != '') ? htmlentities(date('Y-m-d', strtotime($this->input->get('txt_date')))) . ' 00:00:00' : $start_date_data;
+                $end_date_data = ($this->input->get('txt_date') != '') ? htmlentities(date('Y-m-d', strtotime($this->input->get('txt_date')))) . ' 23:59:59' : $end_date_data;
+                $vehicle_data = htmlentities($this->input->get('txt_vehicle'));
+                $report_data = htmlentities($this->input->get('txt_report_type'));
+                $alert_data = htmlentities($this->input->get('txt_alert'));
+                $forklift_data = htmlentities($this->input->get('txt_forklift'));
                 $where = '';
-                if($report_data=='overview'){ // Overview Report
-                    $where = " WHERE tbl_gps.timeStamp>='".$start_date_data."' AND tbl_gps.timeStamp<='".$end_date_data."' ";
+                if ($report_data == 'overview') { // Overview Report
+                    $where = " WHERE tbl_gps.timeStamp>='" . $start_date_data . "' AND tbl_gps.timeStamp<='" . $end_date_data . "' ";
                     $data['vehicle_latlong'] = $this->vehicle_model->get_vehicle_latlong($where);
-                    foreach($data['vehicle_latlong'] as $k => $v){
+                    foreach ($data['vehicle_latlong'] as $k => $v) {
                         $where = array(
                             'g.timeStamp>=' => $start_date_data,
                             'g.timeStamp<=' => $end_date_data,
                             'v.vehicleGUID' => $v['vehicleGUID'],
-                            'v.deviceGUID'  => $v['deviceGUID']
+                            'v.deviceGUID' => $v['deviceGUID']
                         );
                         $vehilcle_track = $this->track_model->get_gps_by_sessionID($where)->result_array();
-                        foreach($vehilcle_track as $key => $value){
-                            $data['vehicle_latlong'][$k]['telematics'][] = str_replace('"', '', $value['latitude']).','.str_replace('"', '', $value['longitude']);
+                        foreach ($vehilcle_track as $key => $value) {
+                            $data['vehicle_latlong'][$k]['telematics'][] = str_replace('"', '', $value['latitude']) . ',' . str_replace('"', '', $value['longitude']);
                         }
                     }
-                    $return_arr = $this->get_device_json(MEDIC17L0018_json);
-                    $MEDIC17L0018_Array = $return_arr['reverse_device_Array'];
-                    $lat_key = $return_arr['latest_lat_key'];
-                    $lon_key = $return_arr['latest_lon_key'];
-                    $data_arr = array(
-                        'latitude'  => $MEDIC17L0018_Array[$lat_key]['v'],
-                        'longitude' => $MEDIC17L0018_Array[$lon_key]['v'],
-                        'telematics'=> array(),
-                        'deviceGUID' => 'MEDIC17L0018'
-                    );
-                    $data['vehicle_latlong'][] = $data_arr;
 
-                    $return_arr = $this->get_device_json(MEDIC18A0036_json);
-                    $MEDIC18A0036_Array = $return_arr['reverse_device_Array'];
-                    $lat_key = $return_arr['latest_lat_key'];
-                    $lon_key = $return_arr['latest_lon_key'];
-                    $data_arr = array(
-                        'latitude'  => $MEDIC18A0036_Array[$lat_key]['v'],
-                        'longitude' => $MEDIC18A0036_Array[$lon_key]['v'],
-                        'telematics'=> array(),
-                        'deviceGUID' => 'MEDIC18A0036'
-                    );
-                    $data['vehicle_latlong'][] = $data_arr;
-                }else if($report_data=='dailycheck'){ // DailyCheck Report
-                    if($this->input->get('txt_date')==''){ $start_date_data = $end_date_data = ''; }
-                    if($this->input->get('txt_date')!=''){
+                    /* Commented by KU
+                      $return_arr = $this->get_device_json(MEDIC17L0018_json);
+                      $MEDIC17L0018_Array = $return_arr['reverse_device_Array'];
+                      $lat_key = $return_arr['latest_lat_key'];
+                      $lon_key = $return_arr['latest_lon_key'];
+                      $data_arr = array(
+                      'latitude' => $MEDIC17L0018_Array[$lat_key]['v'],
+                      'longitude' => $MEDIC17L0018_Array[$lon_key]['v'],
+                      'telematics' => array(),
+                      'deviceGUID' => 'MEDIC17L0018'
+                      );
+                      $data['vehicle_latlong'][] = $data_arr;
+
+                      $return_arr = $this->get_device_json(MEDIC18A0036_json);
+                      $MEDIC18A0036_Array = $return_arr['reverse_device_Array'];
+                      $lat_key = $return_arr['latest_lat_key'];
+                      $lon_key = $return_arr['latest_lon_key'];
+                      $data_arr = array(
+                      'latitude' => $MEDIC18A0036_Array[$lat_key]['v'],
+                      'longitude' => $MEDIC18A0036_Array[$lon_key]['v'],
+                      'telematics' => array(),
+                      'deviceGUID' => 'MEDIC18A0036'
+                      );
+                      $data['vehicle_latlong'][] = $data_arr;
+                     */
+                } else if ($report_data == 'dailycheck') { // DailyCheck Report
+                    if ($this->input->get('txt_date') == '') {
+                        $start_date_data = $end_date_data = '';
+                    }
+                    if ($this->input->get('txt_date') != '') {
                         $condition = array(
                             'signatureDateTime>=' => $start_date_data,
                             'signatureDateTime<=' => $end_date_data
-                        ); 
-                    }else{
-                        $condition = array();
-                    } 
-                    $total_records = $this->dashboard_model->get_all_details(TBL_DAILYCHECK,$condition)->num_rows();
-                    $total_pagination_links = ceil($total_records/$this->dailycheck_per_page);
-                    $data['total_pagination_links'] = $total_pagination_links;
-                }else if($report_data=='faults'){ // Faults Report
-                    if($this->input->get('txt_date')==''){ $start_date_data = $end_date_data = ''; }
-                    if($this->input->get('txt_date')!=''){
-                        $condition = array(
-                            'date_range_start'  => $start_date_data,
-                            'date_range_end'    => $end_date_data
-                        ); 
-                    }else{
+                        );
+                    } else {
                         $condition = array();
                     }
-                    $total_records = $this->dashboard_model->get_all_faults('','',$condition,1)->num_rows();
-                    $total_pagination_links = ceil($total_records/$this->faults_per_page);
+                    $total_records = $this->dashboard_model->get_all_details(TBL_DAILYCHECK, $condition)->num_rows();
+                    $total_pagination_links = ceil($total_records / $this->dailycheck_per_page);
                     $data['total_pagination_links'] = $total_pagination_links;
-                }else if($report_data=='service_due'){ // Service Due Report
-                    $total_records = $this->dashboard_model->get_all_details(TBL_VEHICLE,array())->num_rows();
-                    $total_pagination_links = ceil($total_records/$this->service_due_per_page);
-                    $data['total_pagination_links'] = $total_pagination_links;
-                }else if($report_data=='proof_of_delivery'){ // POD Report
-                    if($this->input->get('txt_date')==''){ $start_date_data = $end_date_data = ''; }
-                    if($this->input->get('txt_date')!=''){
+                } else if ($report_data == 'faults') { // Faults Report
+                    if ($this->input->get('txt_date') == '') {
+                        $start_date_data = $end_date_data = '';
+                    }
+                    if ($this->input->get('txt_date') != '') {
                         $condition = array(
-                            'date_range_start'  => $start_date_data,
-                            'date_range_end'    => $end_date_data
-                        ); 
-                    }else{
+                            'date_range_start' => $start_date_data,
+                            'date_range_end' => $end_date_data
+                        );
+                    } else {
                         $condition = array();
                     }
-                    $total_records = $this->dashboard_model->get_all_pod('','',$condition,1)->num_rows();
-                    $total_pagination_links = ceil($total_records/$this->pod_per_page);
+                    $total_records = $this->dashboard_model->get_all_faults('', '', $condition, 1)->num_rows();
+                    $total_pagination_links = ceil($total_records / $this->faults_per_page);
                     $data['total_pagination_links'] = $total_pagination_links;
-                }else if($report_data=='incidents'){ // Incidents Report
-                    if($this->input->get('txt_date')==''){ $start_date_data = $end_date_data = ''; }
-                    if($this->input->get('txt_date')!=''){
+                } else if ($report_data == 'service_due') { // Service Due Report
+                    $total_records = $this->dashboard_model->get_all_details(TBL_VEHICLE, array())->num_rows();
+                    $total_pagination_links = ceil($total_records / $this->service_due_per_page);
+                    $data['total_pagination_links'] = $total_pagination_links;
+                } else if ($report_data == 'proof_of_delivery') { // POD Report
+                    if ($this->input->get('txt_date') == '') {
+                        $start_date_data = $end_date_data = '';
+                    }
+                    if ($this->input->get('txt_date') != '') {
                         $condition = array(
-                            'date_range_start'  => $start_date_data,
-                            'date_range_end'    => $end_date_data
-                        ); 
-                    }else{
+                            'date_range_start' => $start_date_data,
+                            'date_range_end' => $end_date_data
+                        );
+                    } else {
                         $condition = array();
                     }
-                    $total_records = $this->dashboard_model->get_all_incidents('','',$condition,1)->num_rows();
-                    $total_pagination_links = ceil($total_records/$this->incidents_per_page);
+                    $total_records = $this->dashboard_model->get_all_pod('', '', $condition, 1)->num_rows();
+                    $total_pagination_links = ceil($total_records / $this->pod_per_page);
                     $data['total_pagination_links'] = $total_pagination_links;
-                }else if($report_data=='operators'){ // Operators Report
-                    $total_records = $this->dashboard_model->get_all_details(TBL_OPERATIVE,array())->num_rows();
-                    $total_pagination_links = ceil($total_records/$this->dailycheck_per_page);
-                    if($total_pagination_links<1){
+                } else if ($report_data == 'incidents') { // Incidents Report
+                    if ($this->input->get('txt_date') == '') {
+                        $start_date_data = $end_date_data = '';
+                    }
+                    if ($this->input->get('txt_date') != '') {
+                        $condition = array(
+                            'date_range_start' => $start_date_data,
+                            'date_range_end' => $end_date_data
+                        );
+                    } else {
+                        $condition = array();
+                    }
+                    $total_records = $this->dashboard_model->get_all_incidents('', '', $condition, 1)->num_rows();
+                    $total_pagination_links = ceil($total_records / $this->incidents_per_page);
+                    $data['total_pagination_links'] = $total_pagination_links;
+                } else if ($report_data == 'operators') { // Operators Report
+                    $total_records = $this->dashboard_model->get_all_details(TBL_OPERATIVE, array())->num_rows();
+                    $total_pagination_links = ceil($total_records / $this->dailycheck_per_page);
+                    if ($total_pagination_links < 1) {
                         $total_pagination_links = 1;
                     }
                     $data['total_pagination_links'] = $total_pagination_links;
                 }
-        		$data['dataArr'] = array(
-        			'area_data' 		=> $area_data,
-        			'start_date_data' 	=> $start_date_data,
-        			'end_date_data' 	=> $end_date_data,
-        			'vehicle_data' 		=> $vehicle_data,
-        			'report_data' 		=> $report_data,
-        			'alert_data'		=> $alert_data,
-        			'forklift_data'		=> $forklift_data
-        		);
-        	}else{
-                $where = " WHERE tbl_gps.timeStamp>='".$start_date_data."' AND tbl_gps.timeStamp<='".$end_date_data."' ";
+                $data['dataArr'] = array(
+                    'area_data' => $area_data,
+                    'start_date_data' => $start_date_data,
+                    'end_date_data' => $end_date_data,
+                    'vehicle_data' => $vehicle_data,
+                    'report_data' => $report_data,
+                    'alert_data' => $alert_data,
+                    'forklift_data' => $forklift_data
+                );
+            } else {
+                $where = " WHERE tbl_gps.timeStamp>='" . $start_date_data . "' AND tbl_gps.timeStamp<='" . $end_date_data . "' ";
                 $data['vehicle_latlong'] = $this->vehicle_model->get_vehicle_latlong($where);
-                foreach($data['vehicle_latlong'] as $k => $v){
+                foreach ($data['vehicle_latlong'] as $k => $v) {
                     $where = array(
                         'g.timeStamp>=' => $start_date_data,
                         'g.timeStamp<=' => $end_date_data,
                         'v.vehicleGUID' => $v['vehicleGUID'],
-                        'v.deviceGUID'  => $v['deviceGUID']
+                        'v.deviceGUID' => $v['deviceGUID']
                     );
                     $vehilcle_track = $this->track_model->get_gps_by_sessionID($where)->result_array();
-                    foreach($vehilcle_track as $key => $value){
-                        $data['vehicle_latlong'][$k]['telematics'][] = str_replace('"', '', $value['latitude']).','.str_replace('"', '', $value['longitude']);
+                    foreach ($vehilcle_track as $key => $value) {
+                        $data['vehicle_latlong'][$k]['telematics'][] = str_replace('"', '', $value['latitude']) . ',' . str_replace('"', '', $value['longitude']);
                     }
-                }  
+                }
 
-                $return_arr = $this->get_device_json(MEDIC17L0018_json);
-                $MEDIC17L0018_Array = $return_arr['reverse_device_Array'];
-                $lat_key = $return_arr['latest_lat_key'];
-                $lon_key = $return_arr['latest_lon_key'];
-                $data_arr = array(
-                    'latitude'  => $MEDIC17L0018_Array[$lat_key]['v'],
-                    'longitude' => $MEDIC17L0018_Array[$lon_key]['v'],
-                    'telematics'=> array(),
-                    'deviceGUID' => 'MEDIC17L0018'
-                );
-                $data['vehicle_latlong'][] = $data_arr;
+                /* Commented by KU
+                  $return_arr = $this->get_device_json(MEDIC17L0018_json);
+                  $MEDIC17L0018_Array = $return_arr['reverse_device_Array'];
+                  $lat_key = $return_arr['latest_lat_key'];
+                  $lon_key = $return_arr['latest_lon_key'];
+                  $data_arr = array(
+                  'latitude' => $MEDIC17L0018_Array[$lat_key]['v'],
+                  'longitude' => $MEDIC17L0018_Array[$lon_key]['v'],
+                  'telematics' => array(),
+                  'deviceGUID' => 'MEDIC17L0018'
+                  );
+                  $data['vehicle_latlong'][] = $data_arr;
 
-                $return_arr = $this->get_device_json(MEDIC18A0036_json);
-                $MEDIC18A0036_Array = $return_arr['reverse_device_Array'];
-                $lat_key = $return_arr['latest_lat_key'];
-                $lon_key = $return_arr['latest_lon_key'];
-                $data_arr = array(
-                    'latitude'  => $MEDIC18A0036_Array[$lat_key]['v'],
-                    'longitude' => $MEDIC18A0036_Array[$lon_key]['v'],
-                    'telematics'=> array(),
-                    'deviceGUID' => 'MEDIC18A0036'
-                );
-                $data['vehicle_latlong'][] = $data_arr;
+                  $return_arr = $this->get_device_json(MEDIC18A0036_json);
+                  $MEDIC18A0036_Array = $return_arr['reverse_device_Array'];
+                  $lat_key = $return_arr['latest_lat_key'];
+                  $lon_key = $return_arr['latest_lon_key'];
+                  $data_arr = array(
+                  'latitude' => $MEDIC18A0036_Array[$lat_key]['v'],
+                  'longitude' => $MEDIC18A0036_Array[$lon_key]['v'],
+                  'telematics' => array(),
+                  'deviceGUID' => 'MEDIC18A0036'
+                  );
+                  $data['vehicle_latlong'][] = $data_arr;
+                 */
             }
 
-            if($this->input->get('txt_date')!=''){ 
-                $start_date_data   = htmlentities(date('Y-m-d',strtotime($this->input->get('txt_date')))).' 00:00:00';
-                $end_date_data     = htmlentities(date('Y-m-d',strtotime($this->input->get('txt_date')))).' 23:59:59';
-                $where = "dc.signatureDateTime>='".$start_date_data."' and dc.signatureDateTime<='".$end_date_data."'";
-            }else{
+            if ($this->input->get('txt_date') != '') {
+                $start_date_data = htmlentities(date('Y-m-d', strtotime($this->input->get('txt_date')))) . ' 00:00:00';
+                $end_date_data = htmlentities(date('Y-m-d', strtotime($this->input->get('txt_date')))) . ' 23:59:59';
+                $where = "dc.signatureDateTime>='" . $start_date_data . "' and dc.signatureDateTime<='" . $end_date_data . "'";
+            } else {
                 $where = '';
             }
-            
-            $sql = "SELECT count(dc.dailyCheckID) as daily_check_unchecked_cnt FROM ".TBL_DAILYCHECK." as dc WHERE dc.typeOfCheck=0";
-            if($where!=''){ $sql.=" and ".$where; }
+
+            $sql = "SELECT count(dc.dailyCheckID) as daily_check_unchecked_cnt FROM " . TBL_DAILYCHECK . " as dc WHERE dc.typeOfCheck=0";
+            if ($where != '') {
+                $sql .= " and " . $where;
+            }
             $daily_check_unchecked_cnt = $this->db->query($sql)->row_array();
 
-            $sql = "SELECT count(dc.dailyCheckID) as daily_check_checked_cnt FROM ".TBL_DAILYCHECK." as dc WHERE dc.typeOfCheck=1";
-            if($where!=''){ $sql.=" and ".$where; }
+            $sql = "SELECT count(dc.dailyCheckID) as daily_check_checked_cnt FROM " . TBL_DAILYCHECK . " as dc WHERE dc.typeOfCheck=1";
+            if ($where != '') {
+                $sql .= " and " . $where;
+            }
             $daily_check_checked_cnt = $this->db->query($sql)->row_array();
 
-            if($where!=''){
+            if ($where != '') {
                 $condition = array(
-                    'date_range_start'  => $start_date_data,
-                    'date_range_end'    => $end_date_data
+                    'date_range_start' => $start_date_data,
+                    'date_range_end' => $end_date_data
                 );
-            }else{ $condition = array(); }
+            } else {
+                $condition = array();
+            }
 
             // Faults
-            $daily_check_faults = $this->dashboard_model->get_all_faults('','',$condition)->result_array();
+            $daily_check_faults = $this->dashboard_model->get_all_faults('', '', $condition)->result_array();
             $total_faults = array_column($daily_check_faults, 'total_faults');
             $daily_check_fault_cnt = array_sum($total_faults);
 
             // Service Due
-            $sql = "SELECT count(vehicleGUID) as total_service_due FROM ".TBL_VEHICLE;
+            $sql = "SELECT count(vehicleGUID) as total_service_due FROM " . TBL_VEHICLE;
             $service_due_cnt = $this->db->query($sql)->row_array();
 
             // Proof Of Delivery
-            $podArr = $this->dashboard_model->get_all_pod('','',$condition)->result_array();
+            $podArr = $this->dashboard_model->get_all_pod('', '', $condition)->result_array();
             $total_pod = array_column($podArr, 'total_pod');
             $pod_cnt = array_sum($total_pod);
 
             // Incidents
-            $incidentsArr = $this->dashboard_model->get_all_incidents('','',$condition)->result_array();
+            $incidentsArr = $this->dashboard_model->get_all_incidents('', '', $condition)->result_array();
             $total_incidents = array_column($incidentsArr, 'total_incidents');
             $incidents_cnt = array_sum($total_incidents);
 
-            
+
 
             $stat = array(
                 'daily_check_unchecked_cnt' => $daily_check_unchecked_cnt['daily_check_unchecked_cnt'],
-                'daily_check_checked_cnt'   => $daily_check_checked_cnt['daily_check_checked_cnt'],
-                'daily_check_fault_cnt'     => $daily_check_fault_cnt,
-                'service_due_cnt'           => $service_due_cnt['total_service_due'],
-                'pod_cnt'                   => $pod_cnt,
-                'daily_check_incident_cnt'  => $incidents_cnt,
-                
+                'daily_check_checked_cnt' => $daily_check_checked_cnt['daily_check_checked_cnt'],
+                'daily_check_fault_cnt' => $daily_check_fault_cnt,
+                'service_due_cnt' => $service_due_cnt['total_service_due'],
+                'pod_cnt' => $pod_cnt,
+                'daily_check_incident_cnt' => $incidents_cnt,
             );
             $data['stat'] = $stat;
-			$this->template->load('default','authentication/dashboard',$data);
+            $this->template->load('default', 'authentication/dashboard', $data);
         }
-	}
+    }
 
     /**
      * This function is used to get operators data by ajax with pagination.
      * @param --
      * @return JSON object
      * @author PAV
-    */
-    public function get_operators_pagination(){
-        if($this->input->post('print')!=''){
+     */
+    public function get_operators_pagination() {
+        if ($this->input->post('print') != '') {
             $operators_details = $this->dashboard_model->get_operators_details();
-        }else{
-            $offset = ($this->input->post('page_no')-1) * $this->operators_per_page;
-            $operators_details = $this->dashboard_model->get_operators_details($this->operators_per_page,$offset);
+        } else {
+            $offset = ($this->input->post('page_no') - 1) * $this->operators_per_page;
+            $operators_details = $this->dashboard_model->get_operators_details($this->operators_per_page, $offset);
         }
-        foreach($operators_details as $k => $v){
+        foreach ($operators_details as $k => $v) {
             $operatorsArr[$v['operativeGUID']]['firstname'] = $v['firstName'];
             $operatorsArr[$v['operativeGUID']]['lastname'] = $v['lastName'];
             $operatorsArr[$v['operativeGUID']]['DOB'] = $v['DOB'];
             $operatorsArr[$v['operativeGUID']]['email'] = $v['email'];
             $operatorsArr[$v['operativeGUID']]['employee'] = $v['employee'];
-            if($v['qualification_id']!=''){
-                $qualification_id_Arr = explode(':-:',$v['qualification_id']);
-                $lic_number_Arr = explode(':-:',$v['lic_number']);
-                $lic_type_Arr = explode(':-:',$v['lic_type']);
-                $lic_expiry_Arr = explode(':-:',$v['lic_expiry']);
-                foreach($qualification_id_Arr as $k1 => $v1){
+            if ($v['qualification_id'] != '') {
+                $qualification_id_Arr = explode(':-:', $v['qualification_id']);
+                $lic_number_Arr = explode(':-:', $v['lic_number']);
+                $lic_type_Arr = explode(':-:', $v['lic_type']);
+                $lic_expiry_Arr = explode(':-:', $v['lic_expiry']);
+                foreach ($qualification_id_Arr as $k1 => $v1) {
                     $operatorsArr[$v['operativeGUID']]['license'][$v1]['number'] = $lic_number_Arr[$k1];
                     $operatorsArr[$v['operativeGUID']]['license'][$v1]['type'] = $lic_type_Arr[$k1];
                     $operatorsArr[$v['operativeGUID']]['license'][$v1]['expiry'] = $lic_expiry_Arr[$k1];
@@ -281,27 +300,27 @@ class Dashboard extends MY_Controller {
             }
         }
         $data['operatorsArr'] = $operatorsArr;
-        
-        if($this->input->post('print')!=''){
-            $html = $this->load->view('partial_view/print_operators_report.php',$data,true);
+
+        if ($this->input->post('print') != '') {
+            $html = $this->load->view('partial_view/print_operators_report.php', $data, true);
             $tbl = '<table><thead>';
-            $tbl.='<tr>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Driver</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">HGV Licence No</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Expiry Date</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Classes Covered</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Additional Licence 1</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Expiry Date</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Additional Licence 2</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Expiry Date</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Classes Covered</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Status</th>';
-            $tbl.='</tr>';
-            $tbl.='</thead>';
-            $tbl.='<tbody>'.$html.'</tbody></table>';
+            $tbl .= '<tr>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Driver</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">HGV Licence No</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Expiry Date</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Classes Covered</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Additional Licence 1</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Expiry Date</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Additional Licence 2</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Expiry Date</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Classes Covered</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Status</th>';
+            $tbl .= '</tr>';
+            $tbl .= '</thead>';
+            $tbl .= '<tbody>' . $html . '</tbody></table>';
             $html = $tbl;
-        }else{
-            $html = $this->load->view('partial_view/operators_report.php',$data,true);
+        } else {
+            $html = $this->load->view('partial_view/operators_report.php', $data, true);
         }
         echo json_encode($html);
         die;
@@ -312,41 +331,41 @@ class Dashboard extends MY_Controller {
      * @param --
      * @return JSON object
      * @author PAV
-    */
-    public function get_dailycheck_pagination(){
-        if($this->input->post('txt_date')!=''){
-            $date_range_start = date('Y-m-d',strtotime($this->input->post('txt_date'))).' 00:00:00';
-            $date_range_end = date('Y-m-d',strtotime($this->input->post('txt_date'))).' 23:59:59';
+     */
+    public function get_dailycheck_pagination() {
+        if ($this->input->post('txt_date') != '') {
+            $date_range_start = date('Y-m-d', strtotime($this->input->post('txt_date'))) . ' 00:00:00';
+            $date_range_end = date('Y-m-d', strtotime($this->input->post('txt_date'))) . ' 23:59:59';
             $where_Arr = array(
                 'date_range_start' => $date_range_start,
                 'date_range_end' => $date_range_end
             );
-        }else{
+        } else {
             $where_Arr = array();
         }
-        if($this->input->post('print')!=''){
-            $dailycheck_details = $this->dashboard_model->get_dailycheck_details('','',$where_Arr);
-        }else{
-            $offset = ($this->input->post('page_no')-1) * $this->dailycheck_per_page;
+        if ($this->input->post('print') != '') {
+            $dailycheck_details = $this->dashboard_model->get_dailycheck_details('', '', $where_Arr);
+        } else {
+            $offset = ($this->input->post('page_no') - 1) * $this->dailycheck_per_page;
             $dailycheck_details = $this->dashboard_model->get_dailycheck_details($this->dailycheck_per_page, $offset, $where_Arr);
         }
         $data['dailycheckArr'] = $dailycheck_details;
-        if($this->input->post('print')!=''){
-            $html = $this->load->view('partial_view/dailycheck/dailycheck_print.php',$data,true);
+        if ($this->input->post('print') != '') {
+            $html = $this->load->view('partial_view/dailycheck/dailycheck_print.php', $data, true);
             $tbl = '<table><thead>';
-            $tbl.='<tr>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Driver</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Vehicle RegNo.</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Vehicle Type</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Mileage</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Total Fault</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Added On</th>';
-            $tbl.='</tr>';
-            $tbl.='</thead>';
-            $tbl.='<tbody>'.$html.'</tbody></table>';
+            $tbl .= '<tr>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Driver</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Vehicle RegNo.</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Vehicle Type</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Mileage</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Total Fault</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Added On</th>';
+            $tbl .= '</tr>';
+            $tbl .= '</thead>';
+            $tbl .= '<tbody>' . $html . '</tbody></table>';
             $html = $tbl;
-        }else{
-            $html = $this->load->view('partial_view/dailycheck/dailycheck_report.php',$data,true);
+        } else {
+            $html = $this->load->view('partial_view/dailycheck/dailycheck_report.php', $data, true);
         }
         echo json_encode($html);
         die;
@@ -357,11 +376,11 @@ class Dashboard extends MY_Controller {
      * @param --
      * @return JSON object
      * @author PAV
-    */
-    public function view_dailycheck(){
+     */
+    public function view_dailycheck() {
         $defaultCheckID = base64_decode($this->input->get_post('dailyCheckID'));
         $data['dailyCheckArr'] = $this->dashboard_model->get_dailycheck_details_by_id($defaultCheckID);
-        $html = $this->load->view('partial_view/dailycheck/dailycheck_view.php',$data,true);
+        $html = $this->load->view('partial_view/dailycheck/dailycheck_view.php', $data, true);
         echo json_encode($html);
         die;
     }
@@ -371,36 +390,39 @@ class Dashboard extends MY_Controller {
      * @param --
      * @return JSON object
      * @author PAV
-    */
-    public function get_service_due_pagination(){
-        if($this->input->post('txt_date')!=''){ $data['txt_date'] = $txt_date = date('Y-m-d',strtotime($this->input->post('txt_date'))); }
-        else{ $data['txt_date'] = $txt_date = date('Y-m-d'); }
+     */
+    public function get_service_due_pagination() {
+        if ($this->input->post('txt_date') != '') {
+            $data['txt_date'] = $txt_date = date('Y-m-d', strtotime($this->input->post('txt_date')));
+        } else {
+            $data['txt_date'] = $txt_date = date('Y-m-d');
+        }
         $where_Arr = array();
-        if($this->input->post('print')!=''){
-            $vehicles_details = $this->vehicle_model->get_all_vehicles('','',$where_Arr);
-        }else{
-            $offset = ($this->input->post('page_no')-1) * $this->service_due_per_page;
+        if ($this->input->post('print') != '') {
+            $vehicles_details = $this->vehicle_model->get_all_vehicles('', '', $where_Arr);
+        } else {
+            $offset = ($this->input->post('page_no') - 1) * $this->service_due_per_page;
             $vehicles_details = $this->vehicle_model->get_all_vehicles($this->service_due_per_page, $offset, $where_Arr);
         }
         $data['vehiclesArr'] = $vehicles_details;
-        if($this->input->post('print')!=''){
-            $html = $this->load->view('partial_view/service_due/service_due_print.php',$data,true);
+        if ($this->input->post('print') != '') {
+            $html = $this->load->view('partial_view/service_due/service_due_print.php', $data, true);
             $tbl = '<table><thead>';
-            $tbl.='<tr>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Registration</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Current ODO</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Vehicle Description</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Last Inspection Date</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Last Inspection ODO</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Next Inspection Due</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Confirmed?</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Status</th>';
-            $tbl.='</tr>';
-            $tbl.='</thead>';
-            $tbl.='<tbody>'.$html.'</tbody></table>';
+            $tbl .= '<tr>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Registration</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Current ODO</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Vehicle Description</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Last Inspection Date</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Last Inspection ODO</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Next Inspection Due</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Confirmed?</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Status</th>';
+            $tbl .= '</tr>';
+            $tbl .= '</thead>';
+            $tbl .= '<tbody>' . $html . '</tbody></table>';
             $html = $tbl;
-        }else{
-            $html = $this->load->view('partial_view/service_due/service_due_report.php',$data,true);
+        } else {
+            $html = $this->load->view('partial_view/service_due/service_due_report.php', $data, true);
         }
         echo json_encode($html);
         die;
@@ -411,53 +433,53 @@ class Dashboard extends MY_Controller {
      * @param --
      * @return JSON object
      * @author PAV
-    */
-    public function get_pod_pagination(){
-        if($this->input->post('txt_date')!=''){
-            $date_range_start = date('Y-m-d',strtotime($this->input->post('txt_date'))).' 00:00:00';
-            $date_range_end = date('Y-m-d',strtotime($this->input->post('txt_date'))).' 23:59:59';
+     */
+    public function get_pod_pagination() {
+        if ($this->input->post('txt_date') != '') {
+            $date_range_start = date('Y-m-d', strtotime($this->input->post('txt_date'))) . ' 00:00:00';
+            $date_range_end = date('Y-m-d', strtotime($this->input->post('txt_date'))) . ' 23:59:59';
             $where_Arr = array(
                 'date_range_start' => $date_range_start,
                 'date_range_end' => $date_range_end
-            ); 
-            $data['txt_date'] = $txt_date = date('Y-m-d',strtotime($this->input->post('txt_date'))); 
-        }else{ 
-            $data['txt_date'] = $txt_date = date('Y-m-d'); 
+            );
+            $data['txt_date'] = $txt_date = date('Y-m-d', strtotime($this->input->post('txt_date')));
+        } else {
+            $data['txt_date'] = $txt_date = date('Y-m-d');
             $where_Arr = array();
         }
-        
-        if($this->input->post('print')!=''){
-            $vehicles_details = $this->dashboard_model->get_all_pod('','',$where_Arr)->result_array();
-        }else{
-            $offset = ($this->input->post('page_no')-1) * $this->incidents_per_page;
+
+        if ($this->input->post('print') != '') {
+            $vehicles_details = $this->dashboard_model->get_all_pod('', '', $where_Arr)->result_array();
+        } else {
+            $offset = ($this->input->post('page_no') - 1) * $this->incidents_per_page;
             $vehicles_details = $this->dashboard_model->get_all_pod($this->pod_per_page, $offset, $where_Arr)->result_array();
         }
         $data['vehiclesArr'] = $vehicles_details;
-        if($this->input->post('print')!=''){
-            $html = $this->load->view('partial_view/pod/pod_print.php',$data,true);
+        if ($this->input->post('print') != '') {
+            $html = $this->load->view('partial_view/pod/pod_print.php', $data, true);
             $tbl = '<table><thead>';
-            $tbl.='<tr>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Vehicle Registration</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Operative Name</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Original Depot</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Incidents</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">No. of Drops</th>';
-            $tbl.='</tr>';
-            $tbl.='</thead>';
-            $tbl.='<tbody>'.$html.'</tbody></table>';
+            $tbl .= '<tr>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Vehicle Registration</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Operative Name</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Original Depot</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Incidents</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">No. of Drops</th>';
+            $tbl .= '</tr>';
+            $tbl .= '</thead>';
+            $tbl .= '<tbody>' . $html . '</tbody></table>';
             $html = $tbl;
-        }else{
-            $html = $this->load->view('partial_view/pod/pod_report.php',$data,true);
+        } else {
+            $html = $this->load->view('partial_view/pod/pod_report.php', $data, true);
         }
         echo json_encode($html);
         die;
     }
 
-    public function view_pod(){
+    public function view_pod() {
         $vehicleGUID = base64_decode($this->input->get_post('vehicleGUID'));
         $tempArr = $this->dashboard_model->get_pod_by_vehicleGUID($vehicleGUID);
         //p($tempArr,1);
-        foreach($tempArr as $k => $v){
+        foreach ($tempArr as $k => $v) {
             $podArr[$v['vehicleGUID']]['vehicleGUID'] = $v['vehicleGUID'];
             $podArr[$v['vehicleGUID']]['registration'] = $v['registration'];
             $podArr[$v['vehicleGUID']]['firstName'] = $v['firstName'];
@@ -469,36 +491,36 @@ class Dashboard extends MY_Controller {
         }
         $data['podArr'] = $podArr;
         $data['vehicleGUID'] = $vehicleGUID;
-        $html = $this->load->view('partial_view/pod/pod_view.php',$data,true);
+        $html = $this->load->view('partial_view/pod/pod_view.php', $data, true);
         echo json_encode($html);
         die;
     }
 
-    public function view_pod_images(){
+    public function view_pod_images() {
         $proofID = $this->input->get_post('proofID');
         $this->db->select('*');
         $this->db->from(TBL_DELIVERYPROOFIMAGE);
-        $this->db->where('proofID',$proofID);
+        $this->db->where('proofID', $proofID);
         $q = $this->db->get();
         $imagesArr = $q->result_array();
-       // p($imagesArr,1);
+        // p($imagesArr,1);
         $view = '<div class="row">';
-        if(!empty($imagesArr)){
-            foreach($imagesArr as $k => $v){
-                $view.= '<div class="col-lg-4">';
-                    $view.= '<div class="panel panel-flat">';
-                        $view.= '<div class="panel-body" style="padding:0px">';
-                            $view.= '<a href="'.POD_IMG_PATH.$v['image'].'" data-popup="lightbox">';
-                                $view.= '<img src="'.POD_IMG_PATH.$v['image'].'" style="width: 100%;height: 170px;">';
-                            $view.= '</a>';
-                        $view.= '</div>';
-                    $view.= '</div>';
-                $view.= '</div>';
-            }    
-        }else{
-            $view.= '<div class="col-lg-12"><h2>No Image Exists</h2></div>';
+        if (!empty($imagesArr)) {
+            foreach ($imagesArr as $k => $v) {
+                $view .= '<div class="col-lg-4">';
+                $view .= '<div class="panel panel-flat">';
+                $view .= '<div class="panel-body" style="padding:0px">';
+                $view .= '<a href="' . POD_IMG_PATH . $v['image'] . '" data-popup="lightbox">';
+                $view .= '<img src="' . POD_IMG_PATH . $v['image'] . '" style="width: 100%;height: 170px;">';
+                $view .= '</a>';
+                $view .= '</div>';
+                $view .= '</div>';
+                $view .= '</div>';
+            }
+        } else {
+            $view .= '<div class="col-lg-12"><h2>No Image Exists</h2></div>';
         }
-        $view.= '</div>';
+        $view .= '</div>';
         echo json_encode($view);
         die;
     }
@@ -508,43 +530,43 @@ class Dashboard extends MY_Controller {
      * @param --
      * @return JSON object
      * @author PAV
-    */
-    public function get_faults_pagination(){
-        if($this->input->post('txt_date')!=''){
-            $date_range_start = date('Y-m-d',strtotime($this->input->post('txt_date'))).' 00:00:00';
-            $date_range_end = date('Y-m-d',strtotime($this->input->post('txt_date'))).' 23:59:59';
+     */
+    public function get_faults_pagination() {
+        if ($this->input->post('txt_date') != '') {
+            $date_range_start = date('Y-m-d', strtotime($this->input->post('txt_date'))) . ' 00:00:00';
+            $date_range_end = date('Y-m-d', strtotime($this->input->post('txt_date'))) . ' 23:59:59';
             $where_Arr = array(
                 'date_range_start' => $date_range_start,
                 'date_range_end' => $date_range_end
-            ); 
-            $data['txt_date'] = $txt_date = date('Y-m-d',strtotime($this->input->post('txt_date'))); 
-        }else{ 
-            $data['txt_date'] = $txt_date = date('Y-m-d'); 
+            );
+            $data['txt_date'] = $txt_date = date('Y-m-d', strtotime($this->input->post('txt_date')));
+        } else {
+            $data['txt_date'] = $txt_date = date('Y-m-d');
             $where_Arr = array();
         }
-        
-        if($this->input->post('print')!=''){
-            $vehicles_details = $this->dashboard_model->get_all_faults('','',$where_Arr)->result_array();
-        }else{
-            $offset = ($this->input->post('page_no')-1) * $this->faults_per_page;
+
+        if ($this->input->post('print') != '') {
+            $vehicles_details = $this->dashboard_model->get_all_faults('', '', $where_Arr)->result_array();
+        } else {
+            $offset = ($this->input->post('page_no') - 1) * $this->faults_per_page;
             $vehicles_details = $this->dashboard_model->get_all_faults($this->faults_per_page, $offset, $where_Arr)->result_array();
         }
         $data['vehiclesArr'] = $vehicles_details;
-        if($this->input->post('print')!=''){
-            $html = $this->load->view('partial_view/faults/faults_print.php',$data,true);
+        if ($this->input->post('print') != '') {
+            $html = $this->load->view('partial_view/faults/faults_print.php', $data, true);
             $tbl = '<table><thead>';
-            $tbl.='<tr>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Vehicle Registration</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Operative Name</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Original Depot</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Incidents</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">No. of Drops</th>';
-            $tbl.='</tr>';
-            $tbl.='</thead>';
-            $tbl.='<tbody>'.$html.'</tbody></table>';
+            $tbl .= '<tr>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Vehicle Registration</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Operative Name</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Original Depot</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Incidents</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">No. of Drops</th>';
+            $tbl .= '</tr>';
+            $tbl .= '</thead>';
+            $tbl .= '<tbody>' . $html . '</tbody></table>';
             $html = $tbl;
-        }else{
-            $html = $this->load->view('partial_view/faults/faults_report.php',$data,true);
+        } else {
+            $html = $this->load->view('partial_view/faults/faults_report.php', $data, true);
         }
         echo json_encode($html);
         die;
@@ -555,16 +577,16 @@ class Dashboard extends MY_Controller {
      * @param --
      * @return JSON object
      * @author PAV
-    */
-    public function view_faults(){
+     */
+    public function view_faults() {
         $vehicleGUID = base64_decode($this->input->get_post('vehicleGUID'));
         $tempArr = $this->dashboard_model->get_faults_by_vehicleGUID($vehicleGUID);
         $cnt = 0;
-        foreach($tempArr as $k => $v){
-            $faultsArr[$v['vehicleGUID']]['vehicleGUID']    = $v['vehicleGUID'];
-            $faultsArr[$v['vehicleGUID']]['registration']   = $v['registration'];
-            $faultsArr[$v['vehicleGUID']]['firstName']      = $v['firstName'];
-            $faultsArr[$v['vehicleGUID']]['lastName']       = $v['lastName'];
+        foreach ($tempArr as $k => $v) {
+            $faultsArr[$v['vehicleGUID']]['vehicleGUID'] = $v['vehicleGUID'];
+            $faultsArr[$v['vehicleGUID']]['registration'] = $v['registration'];
+            $faultsArr[$v['vehicleGUID']]['firstName'] = $v['firstName'];
+            $faultsArr[$v['vehicleGUID']]['lastName'] = $v['lastName'];
             $faultsArr[$v['vehicleGUID']]['faults'][$cnt]['faultType'] = $v['faultType'];
             $faultsArr[$v['vehicleGUID']]['faults'][$cnt]['images'] = $v['images'];
             $faultsArr[$v['vehicleGUID']]['faults'][$cnt]['vehicleType'] = $v['vehicleType'];
@@ -576,7 +598,7 @@ class Dashboard extends MY_Controller {
         }
         $data['faultsArr'] = $faultsArr;
         $data['vehicleGUID'] = $vehicleGUID;
-        $html = $this->load->view('partial_view/faults/faults_view.php',$data,true);
+        $html = $this->load->view('partial_view/faults/faults_view.php', $data, true);
         echo json_encode($html);
         die;
     }
@@ -586,43 +608,43 @@ class Dashboard extends MY_Controller {
      * @param --
      * @return JSON object
      * @author PAV
-    */
-    public function get_incidents_pagination(){
-        if($this->input->post('txt_date')!=''){
-            $date_range_start = date('Y-m-d',strtotime($this->input->post('txt_date'))).' 00:00:00';
-            $date_range_end = date('Y-m-d',strtotime($this->input->post('txt_date'))).' 23:59:59';
+     */
+    public function get_incidents_pagination() {
+        if ($this->input->post('txt_date') != '') {
+            $date_range_start = date('Y-m-d', strtotime($this->input->post('txt_date'))) . ' 00:00:00';
+            $date_range_end = date('Y-m-d', strtotime($this->input->post('txt_date'))) . ' 23:59:59';
             $where_Arr = array(
                 'date_range_start' => $date_range_start,
                 'date_range_end' => $date_range_end
-            ); 
-            $data['txt_date'] = $txt_date = date('Y-m-d',strtotime($this->input->post('txt_date'))); 
-        }else{ 
-            $data['txt_date'] = $txt_date = date('Y-m-d'); 
+            );
+            $data['txt_date'] = $txt_date = date('Y-m-d', strtotime($this->input->post('txt_date')));
+        } else {
+            $data['txt_date'] = $txt_date = date('Y-m-d');
             $where_Arr = array();
         }
-        
-        if($this->input->post('print')!=''){
-            $vehicles_details = $this->dashboard_model->get_all_incidents('','',$where_Arr)->result_array();
-        }else{
-            $offset = ($this->input->post('page_no')-1) * $this->incidents_per_page;
+
+        if ($this->input->post('print') != '') {
+            $vehicles_details = $this->dashboard_model->get_all_incidents('', '', $where_Arr)->result_array();
+        } else {
+            $offset = ($this->input->post('page_no') - 1) * $this->incidents_per_page;
             $vehicles_details = $this->dashboard_model->get_all_incidents($this->incidents_per_page, $offset, $where_Arr)->result_array();
         }
         $data['vehiclesArr'] = $vehicles_details;
-        if($this->input->post('print')!=''){
-            $html = $this->load->view('partial_view/incidents/incidents_print.php',$data,true);
+        if ($this->input->post('print') != '') {
+            $html = $this->load->view('partial_view/incidents/incidents_print.php', $data, true);
             $tbl = '<table><thead>';
-            $tbl.='<tr>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Vehicle Registration</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Operative Name</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Original Depot</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Incidents</th>';
-            $tbl.='<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">No. of Drops</th>';
-            $tbl.='</tr>';
-            $tbl.='</thead>';
-            $tbl.='<tbody>'.$html.'</tbody></table>';
+            $tbl .= '<tr>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Vehicle Registration</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Operative Name</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Original Depot</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">Incidents</th>';
+            $tbl .= '<th style="font-size:13px;border:1px solid #000000ad;padding:2px;border-width:1px 1px 1px 1px;">No. of Drops</th>';
+            $tbl .= '</tr>';
+            $tbl .= '</thead>';
+            $tbl .= '<tbody>' . $html . '</tbody></table>';
             $html = $tbl;
-        }else{
-            $html = $this->load->view('partial_view/incidents/incidents_report.php',$data,true);
+        } else {
+            $html = $this->load->view('partial_view/incidents/incidents_report.php', $data, true);
         }
         echo json_encode($html);
         die;
@@ -633,18 +655,18 @@ class Dashboard extends MY_Controller {
      * @param --
      * @return JSON object
      * @author PAV
-    */
-    public function view_incidents(){
+     */
+    public function view_incidents() {
         $vehicleGUID = base64_decode($this->input->get_post('vehicleGUID'));
         $tempArr = $this->dashboard_model->get_incidents_by_vehicleGUID($vehicleGUID);
         $cnt = 0;
-        foreach($tempArr as $k => $v){
+        foreach ($tempArr as $k => $v) {
             $incidentsArr[$v['vehicleGUID']]['vehicleGUID'] = $v['vehicleGUID'];
             $incidentsArr[$v['vehicleGUID']]['registration'] = $v['registration'];
             $incidentsArr[$v['vehicleGUID']]['firstName'] = $v['firstName'];
             $incidentsArr[$v['vehicleGUID']]['lastName'] = $v['lastName'];
             $incidentsArr[$v['vehicleGUID']]['incidentID'] = $v['incidentID'];
-            if($v['RTC']!=''){
+            if ($v['RTC'] != '') {
                 $incidentsArr[$v['vehicleGUID']]['incidents'][$cnt]['rtc'] = $v['RTC'];
                 $incidentsArr[$v['vehicleGUID']]['incidents'][$cnt]['building'] = $v['building'];
                 $incidentsArr[$v['vehicleGUID']]['incidents'][$cnt]['nonVehicular'] = $v['nonVehicular'];
@@ -658,14 +680,15 @@ class Dashboard extends MY_Controller {
         }
         $data['incidentsArr'] = $incidentsArr;
         $data['vehicleGUID'] = $vehicleGUID;
-        $html = $this->load->view('partial_view/incidents/incidents_view.php',$data,true);
+        $html = $this->load->view('partial_view/incidents/incidents_view.php', $data, true);
         echo json_encode($html);
         die;
     }
-    
-	public function notifications(){
-		$this->template->load('default','authentication/notification');
-	}
+
+    public function notifications() {
+        $this->template->load('default', 'authentication/notification');
+    }
+
 }
 
 /* End of file Dashboard.php */

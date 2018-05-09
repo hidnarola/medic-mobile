@@ -57,8 +57,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'login';
 $route['logout'] = 'login/logout';
 $route['dashboard'] = 'dashboard';
-$route['notifications'] = 'dashboard/notifications';
-
+// $route['notifications'] = 'dashboard/notifications'; //Set new route for notifications
 // Super Admin
 $route['manage_company'] = 'super_admin/company/display_company';
 $route['manage_company/add'] = 'super_admin/company/add_company';
@@ -93,3 +92,12 @@ $route['settings/manage_operators/edit/(:any)'] = 'company_admin/settings/edit_o
 $route['settings/manage_operators/delete/(:any)'] = 'company_admin/settings/delete_operators/$1';
 
 $route['track/vehicle/(:any)'] = 'company_admin/track/vehicle_track/$1';
+
+/* Route changes after design integration */
+$route['service'] = 'company_admin/service';
+$route['service/error'] = 'company_admin/service/error';
+$route['service/history'] = 'company_admin/service/history';
+$route['notifications'] = 'company_admin/notifications';
+$route['notifications/log'] = 'company_admin/notifications/log';
+$route['operation'] = 'company_admin/operation';
+
