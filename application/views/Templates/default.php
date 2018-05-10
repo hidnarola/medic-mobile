@@ -11,6 +11,7 @@
         <!-- Global stylesheets -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="assets/css/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
         <link href="assets/css/style.css" rel="stylesheet" />
         <link href="assets/css/responsive.css" rel="stylesheet" />
         <link href="assets/css/custom_ku.css" rel="stylesheet" type="text/css">
@@ -29,9 +30,10 @@
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>        
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="assets/js/jquery.mCustomScrollbar.min.js"></script>
         <script src="assets/js/custom.js"></script>
 
         <!-- Core JS files -->        
@@ -71,6 +73,7 @@
         <script type="text/javascript" src="assets/js/plugins/ui/nicescroll.min.js"></script>
         <!--<script type="text/javascript" src="https://www.jqueryscript.net/demo/jQuery-Plugin-For-Smooth-Mouse-Scrolling-scrollSpeed/jQuery.scrollSpeed.js"></script>-->
 
+
         <!-- /theme JS files -->
         <script>
             $(".selectbox").selectBoxIt({
@@ -89,7 +92,7 @@
                             <li class="<?php echo($class == "service") ? 'active' : ''; ?>"><a href="<?php echo site_url('service'); ?>">Service</a></li>
                             <li class="<?php echo ($class == "notifications") ? 'active' : ''; ?>"><a href="<?php echo site_url('notifications'); ?>">Notifications</a></li>
                             <!--<li class="<?php echo($class == "dashboard" && $action == "index") ? 'active' : ''; ?>"><a href="<?php echo site_url('dashboard'); ?>">Operation</a></li>-->
-                            <li class="<?php echo ($class == "operation") ? 'active' : ''; ?>">><a href="<?php echo site_url('operation'); ?>">Operation</a></li>
+                            <li class="<?php echo ($class == "operation" || ($class == "dashboard" && $action == "index")) ? 'active' : ''; ?>">><a href="<?php echo site_url('operation'); ?>">Operation</a></li>
                         </ul>
                     </div>
                     <div class="header-r">

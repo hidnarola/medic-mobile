@@ -264,7 +264,8 @@ class Dashboard extends MY_Controller {
                 'daily_check_incident_cnt' => $incidents_cnt,
             );
             $data['stat'] = $stat;
-            $this->template->load('default', 'authentication/dashboard', $data);
+//            $this->template->load('default', 'authentication/dashboard', $data);
+            $this->template->load('default', 'company_admin/operation/map', $data);
         }
     }
 

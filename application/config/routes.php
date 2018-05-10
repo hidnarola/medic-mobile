@@ -94,10 +94,21 @@ $route['settings/manage_operators/delete/(:any)'] = 'company_admin/settings/dele
 $route['track/vehicle/(:any)'] = 'company_admin/track/vehicle_track/$1';
 
 /* Route changes after design integration */
+//-- Service route
 $route['service'] = 'company_admin/service';
 $route['service/error'] = 'company_admin/service/error';
 $route['service/history'] = 'company_admin/service/history';
+
+//-- Notification route
 $route['notifications'] = 'company_admin/notifications';
 $route['notifications/log'] = 'company_admin/notifications/log';
+
+//-- Operation route
 $route['operation'] = 'company_admin/operation';
+$route['operation/trends'] = 'company_admin/operation/trends';
+$route['operation/map'] = 'company_admin/operation/map';
+$route['operation/machines'] = 'company_admin/operation/machines';
+$route['operation/visits'] = 'company_admin/operation/visits';
+$route['operation/operators'] = 'company_admin/operation/operators';
+
 

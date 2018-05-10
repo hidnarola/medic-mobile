@@ -51,45 +51,7 @@
     <div class="container">
         <div class="row">
             <div class="panel-content d-flex">
-                <div class="left-nav">
-                    <ul>
-                        <li class="current-nav <?php if ($this->controller == 'operation' && $this->action == 'index') echo 'active' ?>">
-                            <a href="notification-empty.html">
-                                <i></i> <span>STATS</span>
-                            </a>
-                        </li>
-                        <li class="trends-nav">
-                            <a href="notification-log.html">
-                                <i></i> <span>TRENDS</span>
-                            </a>
-                        </li>
-                        <li class="timeline-nav">
-                            <a href="timeline.html">
-                                <i></i> <span>TIMELINE</span>
-                            </a>
-                        </li>
-                        <li class="map-nav">
-                            <a href="live-map.html">
-                                <i></i> <span>MAP</span>
-                            </a>
-                        </li>
-                        <li class="operators-nav">
-                            <a href="operation-utilization-trends-hours.html">
-                                <i></i> <span>operators</span>
-                            </a>
-                        </li>
-                        <li class="machines-nav">
-                            <a href="machine.html">
-                                <i></i> <span>Machines</span>
-                            </a>
-                        </li>
-                        <li class="visits-nav">
-                            <a href="visits.html">
-                                <i></i> <span>VISITS</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <?php $this->load->view('company_admin/operation/left') ?>
                 <div class="right-panel">
                     <div class="more-option">
                         <ul>
@@ -165,17 +127,9 @@
 
                     <div class="loader-crane-wrap">
                         <div class="loader-crane d-flex">
-                            <h4>Loader crane stats</h4>
+                            <h4>Demountable stats</h4>
                             <h6></h6>
                             <a href="">See stats per machine »</a>
-                            <div class="dropdown">
-                                <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Today </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </div>
                         </div>
 
                         <div class="loader-box loader-box-5">
@@ -464,12 +418,10 @@
                                         <td>68</td>
                                         <td>3</td>
                                     </tr>
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
