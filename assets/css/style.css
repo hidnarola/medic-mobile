@@ -28,12 +28,12 @@
 *{margin:0; padding:0;}
 body{ font-family:'Open Sans'; font-size:100%;  line-height:100%;}
 button:focus, :focus, input:focus, textarea:focus, select:focus {outline:0; outline-offset:0;}
+.row{ margin:0;}
 .dropdown-item.active,
 .dropdown-item:active {color: #fff; text-decoration: none; background-color:#d52b1f;}
-
-.container{max-width:1024px; width:100%;} 
+.container{max-width:100%; width:100%;} 
 .header{background-color:#000;  border-bottom:solid 3px #d52b1f; padding:0;}
-.header .row{align-items:center; height:64px;}
+.header .row{align-items:center; height:64px; margin:0;}
 .logo{ width:15%;}
 .logo a{ display:block;}
 .nav{ width:70%; text-align:center; justify-content:center;}
@@ -155,7 +155,7 @@ a.dropdown-item{font-family:'Helvetica Neue'; font-size:13px; text-align:left; p
 .dropdown-menu a:hover{background:#191919;color:#d52b1f;}
 
 .panel-content{ width:100%; display:block; margin:0; min-height:600px;}
-.left-nav{background:#2d2d2d; width:78px;}
+.left-nav{background:#2d2d2d; width:93px; margin-left: -15px;}
 .left-nav ul{ margin:0; padding:0; line-height:100%; display:block;}
 .left-nav ul li{ display:block;}
 .left-nav ul li a{ padding:8px 4px; display:block; text-align:center; text-transform:uppercase;}

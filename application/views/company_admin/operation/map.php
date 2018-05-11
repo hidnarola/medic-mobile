@@ -83,97 +83,72 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="map-content">
-                                    <div class="map">
+                                    <div class="map" id="map" style="height: 540px">
                                         <img src="assets/images/map.jpg" alt="" />
                                     </div>
 
                                     <div id="accordion" class="map-accordion">
-                                        <h2>MY FLEET (10) <i></i></h2>
-                                        <div class="card">
-                                            <div class="card-header" id="headingOne">
-                                                <div data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"  class="collapsed">
-                                                    <div class="card-header-body">
-                                                        <div class="card-header-img"><i></i></div>
-                                                        <h3>50-BBB-9/34935 <br/> 2 products</h3>
-                                                        <p>Operator: John Doe</p>
+                                        <h2>MY FLEET (<?php echo count($vehicle_latlong); ?>) <i></i></h2>
+                                        <!--                                        <div class="card">
+                                                                                    <div class="card-header" id="headingOne">
+                                                                                        <div data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"  class="collapsed">
+                                                                                            <div class="card-header-body">
+                                                                                                <div class="card-header-img"><i></i></div>
+                                                                                                <h3>50-BBB-9/34935 <br/> 2 products</h3>
+                                                                                                <p>Operator: John Doe</p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                                                                        <div class="card-body card-content">
+                                                                                            <div class="last-active">
+                                                                                                <p>Last active: About a minute ago <br/> No active alerts.</p>
+                                                                                                <a href="">See stops »</a>
+                                                                                            </div>
+                                                                                            <div class="alert-btm">
+                                                                                                <h4>Alerts:</h4>
+                                                                                                <p>10.8.2017, 11:41 - Truck driving with crane up</p>
+                                                                                                <h4>Notifications:</h4>
+                                                                                                <p>10.8.2017, 11:41 - Emergency stop not used</p>
+                                                                                                <p>10.8.2017, 11:41 - Emergency stop not used</p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>-->
+                                        <?php foreach ($vehicle_latlong as $k => $v) { ?>
+                                            <div class="card">
+                                                <div class="card-header" id="heading<?php echo $k ?>">
+                                                    <div data-toggle="collapse" data-target="#collapse<?php echo $k ?>" aria-expanded="true" aria-controls="collapsethree"  class="collapsed">
+                                                        <div class="card-header-body">
+                                                            <div class="card-header-img"><i></i></div>
+                                                            <h3><?php echo $v['deviceGUID']; ?> <br/> 2 products</h3>
+                                                            <p>Operator: John Doe</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="collapse<?php echo $k ?>" class="collapse" aria-labelledby="heading<?php echo $k ?>" data-parent="#accordion">
+                                                    <div class="card-body card-content">
+                                                        <div class="last-active">
+                                                            <p>Last active: About a minute ago <br/> No active alerts.</p>
+                                                            <a href="">See stops »</a>
+                                                        </div>
+                                                        <div class="alert-btm">
+                                                            <h4>Alerts:</h4>
+                                                            <p>10.8.2017, 11:41 - Truck driving with crane up</p>
+                                                            <h4>Notifications:</h4>
+                                                            <p>10.8.2017, 11:41 - Emergency stop not used</p>
+                                                            <p>10.8.2017, 11:41 - Emergency stop not used</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                                                <div class="card-body card-content">
-                                                    <div class="last-active">
-                                                        <p>Last active: About a minute ago <br/> No active alerts.</p>
-                                                        <a href="">See stops »</a>
-                                                    </div>
-                                                    <div class="alert-btm">
-                                                        <h4>Alerts:</h4>
-                                                        <p>10.8.2017, 11:41 - Truck driving with crane up</p>
-                                                        <h4>Notifications:</h4>
-                                                        <p>10.8.2017, 11:41 - Emergency stop not used</p>
-                                                        <p>10.8.2017, 11:41 - Emergency stop not used</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" id="headingtwo">
-                                                <div data-toggle="collapse" data-target="#collapsetwo" aria-expanded="true" aria-controls="collapsetwo" class="collapsed">
-                                                    <div class="card-header-body">
-                                                        <div class="card-header-img"><i></i></div>
-                                                        <h3>50-BBB-9/34935 <br/> 2 products</h3>
-                                                        <p>Operator: John Doe</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="collapsetwo" class="collapse" aria-labelledby="headingtwo" data-parent="#accordion">
-                                                <div class="card-body card-content">
-                                                    <div class="last-active">
-                                                        <p>Last active: About a minute ago <br/> No active alerts.</p>
-                                                        <a href="">See stops »</a>
-                                                    </div>
-                                                    <div class="alert-btm">
-                                                        <h4>Alerts:</h4>
-                                                        <p>10.8.2017, 11:41 - Truck driving with crane up</p>
-                                                        <h4>Notifications:</h4>
-                                                        <p>10.8.2017, 11:41 - Emergency stop not used</p>
-                                                        <p>10.8.2017, 11:41 - Emergency stop not used</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-header" id="headingthree">
-                                                <div data-toggle="collapse" data-target="#collapsethree" aria-expanded="true" aria-controls="collapsethree"  class="collapsed">
-                                                    <div class="card-header-body">
-                                                        <div class="card-header-img"><i></i></div>
-                                                        <h3>50-BBB-9/34935 <br/> 2 products</h3>
-                                                        <p>Operator: John Doe</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="collapsethree" class="collapse" aria-labelledby="headingthree" data-parent="#accordion">
-                                                <div class="card-body card-content">
-                                                    <div class="last-active">
-                                                        <p>Last active: About a minute ago <br/> No active alerts.</p>
-                                                        <a href="">See stops »</a>
-                                                    </div>
-                                                    <div class="alert-btm">
-                                                        <h4>Alerts:</h4>
-                                                        <p>10.8.2017, 11:41 - Truck driving with crane up</p>
-                                                        <h4>Notifications:</h4>
-                                                        <p>10.8.2017, 11:41 - Emergency stop not used</p>
-                                                        <p>10.8.2017, 11:41 - Emergency stop not used</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="map-content">
-                                    <div class="map">
+                                    <div class="map stop-map" id="map2" style="height: 540px">
                                         <img src="assets/images/map.jpg" alt="" />
                                     </div>
                                     <div class="map-accordion stops">
@@ -693,6 +668,11 @@
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE19qNQTlcPGeOthK32NgAUo1xoiks_-Y&callback=initMap"></script>			
 <script type="text/javascript">
+    //--Custom scorllbar
+    $("#content-8").mCustomScrollbar({
+        axis: "y"
+    });
+
     const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var vehicle_data = <?php echo json_encode($vehicle_latlong); ?>;
 
@@ -708,9 +688,6 @@
         });
     });
 
-    $("#content-8").mCustomScrollbar({
-        axis: "y"
-    });
     function initMap() {
         $('#map').show();
         var mapOptions = {
@@ -932,5 +909,19 @@
         map.setCenter(latlngbounds.getCenter());
         map.fitBounds(latlngbounds);
         var markerCluster = new MarkerClusterer(map, markers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+    }
+    /******************************************
+     Marker Random Color
+     *******************************************/
+    var safeColors = ['00', '33', '66', '99', 'cc', 'ff'];
+    function rand() {
+        return Math.floor(Math.random() * 6);
+    }
+    function randomColor() {
+        var r = safeColors[rand()];
+        var g = safeColors[rand()];
+        var b = safeColors[rand()];
+        var color = '#' + r + g + b;
+        return (color.split('#'))[1];
     }
 </script>

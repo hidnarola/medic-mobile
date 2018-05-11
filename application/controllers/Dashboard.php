@@ -56,31 +56,29 @@ class Dashboard extends MY_Controller {
                         }
                     }
 
-                    /* Commented by KU
-                      $return_arr = $this->get_device_json(MEDIC17L0018_json);
-                      $MEDIC17L0018_Array = $return_arr['reverse_device_Array'];
-                      $lat_key = $return_arr['latest_lat_key'];
-                      $lon_key = $return_arr['latest_lon_key'];
-                      $data_arr = array(
-                      'latitude' => $MEDIC17L0018_Array[$lat_key]['v'],
-                      'longitude' => $MEDIC17L0018_Array[$lon_key]['v'],
-                      'telematics' => array(),
-                      'deviceGUID' => 'MEDIC17L0018'
-                      );
-                      $data['vehicle_latlong'][] = $data_arr;
+                    $return_arr = $this->get_device_json(MEDIC17L0018_json);
+                    $MEDIC17L0018_Array = $return_arr['reverse_device_Array'];
+                    $lat_key = $return_arr['latest_lat_key'];
+                    $lon_key = $return_arr['latest_lon_key'];
+                    $data_arr = array(
+                        'latitude' => $MEDIC17L0018_Array[$lat_key]['v'],
+                        'longitude' => $MEDIC17L0018_Array[$lon_key]['v'],
+                        'telematics' => array(),
+                        'deviceGUID' => 'MEDIC17L0018'
+                    );
+                    $data['vehicle_latlong'][] = $data_arr;
 
-                      $return_arr = $this->get_device_json(MEDIC18A0036_json);
-                      $MEDIC18A0036_Array = $return_arr['reverse_device_Array'];
-                      $lat_key = $return_arr['latest_lat_key'];
-                      $lon_key = $return_arr['latest_lon_key'];
-                      $data_arr = array(
-                      'latitude' => $MEDIC18A0036_Array[$lat_key]['v'],
-                      'longitude' => $MEDIC18A0036_Array[$lon_key]['v'],
-                      'telematics' => array(),
-                      'deviceGUID' => 'MEDIC18A0036'
-                      );
-                      $data['vehicle_latlong'][] = $data_arr;
-                     */
+                    $return_arr = $this->get_device_json(MEDIC18A0036_json);
+                    $MEDIC18A0036_Array = $return_arr['reverse_device_Array'];
+                    $lat_key = $return_arr['latest_lat_key'];
+                    $lon_key = $return_arr['latest_lon_key'];
+                    $data_arr = array(
+                        'latitude' => $MEDIC18A0036_Array[$lat_key]['v'],
+                        'longitude' => $MEDIC18A0036_Array[$lon_key]['v'],
+                        'telematics' => array(),
+                        'deviceGUID' => 'MEDIC18A0036'
+                    );
+                    $data['vehicle_latlong'][] = $data_arr;
                 } else if ($report_data == 'dailycheck') { // DailyCheck Report
                     if ($this->input->get('txt_date') == '') {
                         $start_date_data = $end_date_data = '';
@@ -178,31 +176,29 @@ class Dashboard extends MY_Controller {
                     }
                 }
 
-                /* Commented by KU
-                  $return_arr = $this->get_device_json(MEDIC17L0018_json);
-                  $MEDIC17L0018_Array = $return_arr['reverse_device_Array'];
-                  $lat_key = $return_arr['latest_lat_key'];
-                  $lon_key = $return_arr['latest_lon_key'];
-                  $data_arr = array(
-                  'latitude' => $MEDIC17L0018_Array[$lat_key]['v'],
-                  'longitude' => $MEDIC17L0018_Array[$lon_key]['v'],
-                  'telematics' => array(),
-                  'deviceGUID' => 'MEDIC17L0018'
-                  );
-                  $data['vehicle_latlong'][] = $data_arr;
+                $return_arr = $this->get_device_json(MEDIC17L0018_json);
+                $MEDIC17L0018_Array = $return_arr['reverse_device_Array'];
+                $lat_key = $return_arr['latest_lat_key'];
+                $lon_key = $return_arr['latest_lon_key'];
+                $data_arr = array(
+                    'latitude' => $MEDIC17L0018_Array[$lat_key]['v'],
+                    'longitude' => $MEDIC17L0018_Array[$lon_key]['v'],
+                    'telematics' => array(),
+                    'deviceGUID' => 'MEDIC17L0018'
+                );
+                $data['vehicle_latlong'][] = $data_arr;
 
-                  $return_arr = $this->get_device_json(MEDIC18A0036_json);
-                  $MEDIC18A0036_Array = $return_arr['reverse_device_Array'];
-                  $lat_key = $return_arr['latest_lat_key'];
-                  $lon_key = $return_arr['latest_lon_key'];
-                  $data_arr = array(
-                  'latitude' => $MEDIC18A0036_Array[$lat_key]['v'],
-                  'longitude' => $MEDIC18A0036_Array[$lon_key]['v'],
-                  'telematics' => array(),
-                  'deviceGUID' => 'MEDIC18A0036'
-                  );
-                  $data['vehicle_latlong'][] = $data_arr;
-                 */
+                $return_arr = $this->get_device_json(MEDIC18A0036_json);
+                $MEDIC18A0036_Array = $return_arr['reverse_device_Array'];
+                $lat_key = $return_arr['latest_lat_key'];
+                $lon_key = $return_arr['latest_lon_key'];
+                $data_arr = array(
+                    'latitude' => $MEDIC18A0036_Array[$lat_key]['v'],
+                    'longitude' => $MEDIC18A0036_Array[$lon_key]['v'],
+                    'telematics' => array(),
+                    'deviceGUID' => 'MEDIC18A0036'
+                );
+                $data['vehicle_latlong'][] = $data_arr;
             }
 
             if ($this->input->get('txt_date') != '') {
