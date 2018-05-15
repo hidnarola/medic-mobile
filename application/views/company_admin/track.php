@@ -25,7 +25,7 @@
 	.sticky-hdr-l:after{border-left:100px solid #fff; content:" "; display:block; position:absolute; bottom:0; left:100%; width:0; height: 0; z-index: 1; border-bottom:50px solid transparent; }
 	.sticky-hdr-l a.hdr-back-btn{width:50px; line-height: 50px; padding: 0 10px; background: #FF5722; display: inline-block; vertical-align: top; color: #fff; text-align: center;} 
 	.sticky-hdr-l a.hdr-logo{ display:inline-block; vertical-align:top; padding:5px 10px;}
-	.sticky-hdr-l a.hdr-logo img{max-width:40px;}
+	/*.sticky-hdr-l a.hdr-logo img{max-width:40px;}*/
 	.sticky-hdr-r{float:right; background:#fff;position:relative; margin:-5px 0 0;}
 	.sticky-hdr-r:after{border-right:100px solid #fff; content:" "; display:block; position:absolute; bottom:0; right:100%; width:0; height: 0; z-index: 1; border-bottom:50px solid transparent; }
 	.hdr-setting-btn{background:#fff; width:50px; text-align:center; display:inline-block; vertical-align:top;  }
@@ -557,7 +557,8 @@
 			<div class="sticky-hdr">
 				<div class="sticky-hdr-l">
 					<a href="<?php echo site_url('/'); ?>" class="hdr-back-btn"><i class="icon-arrow-left16"></i></a>
-					<a href="<?php echo site_url('/'); ?>" class="hdr-logo"><img src="<?php echo site_url('assets/images/site_img/logo-icon.png'); ?>" alt="" /></a>
+					<!--<a href="<?php echo site_url('/'); ?>" class="hdr-logo"><img src="<?php echo site_url('assets/images/site_img/logo-icon.png'); ?>" alt="" /></a>-->
+                                        <a href="<?php echo site_url('/'); ?>" class="hdr-logo"><img src="<?php echo site_url('assets/images/logo.png'); ?>" alt="" height="40px"/></a>
 				</div>
 				<div class="sticky-hdr-r">
 					<ul class="hdr-icon-list">
