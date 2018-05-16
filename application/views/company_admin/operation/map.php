@@ -56,13 +56,13 @@
                     <div class="more-option">
                         <ul>
                             <li class="export-li">
-                                <a href="service-empty.html">
+                                <a href="javascript:void(0)">
                                     <i></i>
                                     <span>EXPORT</span>
                                 </a>
                             </li>
                             <li class="print-li">
-                                <a href="service-errolog.html">
+                                <a href="javascript:void(0)">
                                     <i></i>
                                     <span>PRINT</span>
                                 </a>
@@ -665,14 +665,69 @@
         </div>
     </div>
 </div>
+<div id="custom_timeframe_modal" class="modal fade">
+    <div class="modal-dialog modal-md" style="margin:12% auto">
+        <div class="modal-content">
+            <div class="modal-header bg-black custom_modal_header">
+                <h6 class="modal-title text-center">TimeFrame Selction</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body panel-body" id="custom_timeframe_body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="text-semibold">Start Date:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                                <input type="text" class="form-control pickadate-accessibility" placeholder="Select a date&hellip;" id="txt_track_start_date" name="track_start_date" value="<?php echo date('d F, Y'); ?>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="text-semibold">Start Time:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="icon-alarm"></i></span>
+                                <input type="text" class="form-control pickatime-hidden" placeholder="Try me&hellip;" name="track_start_time" id="txt_track_start_time" value="<?php echo '12:00 AM'; ?>">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="text-semibold">End Date:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                                <input type="text" class="form-control pickadate-accessibility" placeholder="Select a date&hellip;" id="txt_track_end_date" name="track_end_date" value="<?php echo date('d F, Y'); ?>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">    
+                        <div class="form-group">
+                            <label class="text-semibold">End Time:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="icon-alarm"></i></span>
+                                <input type="text" class="form-control pickatime-hidden" placeholder="Try me&hellip;" name="track_end_time" id="txt_track_end_time" value="<?php echo '11:30 PM'; ?>">
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="txt_deviceGUID" id="txt_deviceGUID">
+                    <button type="button" class="btn btn-red btn-block btn_custom_tf_serach">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE19qNQTlcPGeOthK32NgAUo1xoiks_-Y&callback=initMap"></script>			
 <script type="text/javascript">
+
     //--Custom scorllbar
     $("#content-8").mCustomScrollbar({
         axis: "y"
     });
 
+    //-- Script for map
     const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var vehicle_data = <?php echo json_encode($vehicle_latlong); ?>;
 
@@ -691,170 +746,8 @@
     function initMap() {
         $('#map').show();
         var mapOptions = {
-//            zoom: 16,
             zoom: 16,
             center: new google.maps.LatLng(vehicle_latlong[0]),
-//            mapTypeId: 'satellite'
-            //        styles: [
-            //   {
-            //     "elementType": "geometry",
-            //     "stylers": [
-            //       {
-            //         "color": "#f5f5f5"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "elementType": "labels.icon",
-            //     "stylers": [
-            //       {
-            //         "visibility": "off"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "elementType": "labels.text.fill",
-            //     "stylers": [
-            //       {
-            //         "color": "#616161"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "elementType": "labels.text.stroke",
-            //     "stylers": [
-            //       {
-            //         "color": "#f5f5f5"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "featureType": "administrative.land_parcel",
-            //     "elementType": "labels.text.fill",
-            //     "stylers": [
-            //       {
-            //         "color": "#bdbdbd"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "featureType": "poi",
-            //     "elementType": "geometry",
-            //     "stylers": [
-            //       {
-            //         "color": "#eeeeee"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "featureType": "poi",
-            //     "elementType": "labels.text.fill",
-            //     "stylers": [
-            //       {
-            //         "color": "#757575"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "featureType": "poi.park",
-            //     "elementType": "geometry",
-            //     "stylers": [
-            //       {
-            //         "color": "#e5e5e5"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "featureType": "poi.park",
-            //     "elementType": "labels.text.fill",
-            //     "stylers": [
-            //       {
-            //         "color": "#9e9e9e"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "featureType": "road",
-            //     "elementType": "geometry",
-            //     "stylers": [
-            //       {
-            //         "color": "#ffffff"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "featureType": "road.arterial",
-            //     "elementType": "labels.text.fill",
-            //     "stylers": [
-            //       {
-            //         "color": "#757575"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "featureType": "road.highway",
-            //     "elementType": "geometry",
-            //     "stylers": [
-            //       {
-            //         "color": "#dadada"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "featureType": "road.highway",
-            //     "elementType": "labels.text.fill",
-            //     "stylers": [
-            //       {
-            //         "color": "#616161"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "featureType": "road.local",
-            //     "elementType": "labels.text.fill",
-            //     "stylers": [
-            //       {
-            //         "color": "#9e9e9e"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "featureType": "transit.line",
-            //     "elementType": "geometry",
-            //     "stylers": [
-            //       {
-            //         "color": "#e5e5e5"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "featureType": "transit.station",
-            //     "elementType": "geometry",
-            //     "stylers": [
-            //       {
-            //         "color": "#eeeeee"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "featureType": "water",
-            //     "elementType": "geometry",
-            //     "stylers": [
-            //       {
-            //         "color": "#c9c9c9"
-            //       }
-            //     ]
-            //   },
-            //   {
-            //     "featureType": "water",
-            //     "elementType": "labels.text.fill",
-            //     "stylers": [
-            //       {
-            //         "color": "#9e9e9e"
-            //       }
-            //     ]
-            //   }
-            // ]
         };
         map = new google.maps.Map(document.getElementById("map"), mapOptions);
         var latlngbounds = new google.maps.LatLngBounds();
@@ -867,7 +760,10 @@
             var marker = new google.maps.Marker({
                 position: myLatlng,
                 map: map,
-                icon: pinImage,
+                icon: {
+                    url: pinImage,
+                    labelOrigin: new google.maps.Point(30, 60)
+                },
                 //url: site_url + 'track/vehicle/' + vehicle_data[key]['deviceGUID'],
                 label: {
                     color: 'black',
@@ -884,15 +780,17 @@
             var last_three_hour = "?track_start_date=" + date + "&track_start_time=" + (d.getHours() - 3) + ":" + d.getMinutes() + ":" + d.getSeconds() + "&track_end_date=" + date + "&track_end_time=" + time;
             var today = "?track_start_date=" + date + "&track_start_time=00:00:01" + "&track_end_date=" + date + "&track_end_time=23:30:00";
             var yesterday = "?track_start_date=" + (d.getDate() - 1) + " " + MONTH_NAMES[d.getMonth()] + ", " + d.getFullYear() + "&track_start_time=00:00:01" + "&track_end_date=" + (d.getDate() - 1) + "&track_end_time=23:30:00";
+            var last_use = "?last_use=1";
             var content = '<div>' +
                     '<label><b>Track</b> : ' + vehicle_data[key]['deviceGUID'] + '</label>' +
                     '<ul style="padding-left:16px;margin-bottom:0px">' +
-                    '<li style="padding:3px"><b><a href="' + site_url + "track/vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + last_hour + '" style="color:#000">Last Hour</a></b></li>' +
-                    '<li style="padding:3px"><b><a href="' + site_url + "track/vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + last_two_hour + '" style="color:#000">Last 2 Hours</a></b></li>' +
-                    '<li style="padding:3px"><b><a href="' + site_url + "track/vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + last_three_hour + '" style="color:#000">Last 3 Hours</a></b></li>' +
+//                    '<li style="padding:3px"><b><a href="' + site_url + "track/vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + last_hour + '" style="color:#000">Last Hour</a></b></li>' +
+//                    '<li style="padding:3px"><b><a href="' + site_url + "track/vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + last_two_hour + '" style="color:#000">Last 2 Hours</a></b></li>' +
+//                    '<li style="padding:3px"><b><a href="' + site_url + "track/vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + last_three_hour + '" style="color:#000">Last 3 Hours</a></b></li>' +
                     '<li style="padding:3px"><b><a href="' + site_url + "track/vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + today + '" style="color:#000">Today</a></b></li>' +
                     '<li style="padding:3px"><b><a href="' + site_url + "track/vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + yesterday + '" style="color:#000">Yesterday</a></b></li>' +
-                    '<li style="padding:3px"><b><a href="javascript:void(0)" onClick="open_custom_timeframe_modal(\'' + vehicle_data[key]['deviceGUID'] + '\')" style="color:#000">Custom</a></b></li>' +
+                    '<li style="padding:3px"><b><a href="' + site_url + "track/vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + last_use + '" style="color:#000">Last use</a></b></li>' +
+                    '<li style="padding:3px"><b><a href="javascript:void(0)" onClick="open_custom_timeframe_modal(\'' + vehicle_data[key]['deviceGUID'] + '\')" style="color:#000">Date range</a></b></li>' +
                     '</ul>' +
                     '</div>';
             google.maps.event.addListener(marker, 'click', function () {
@@ -929,8 +827,257 @@
         var color = '#' + r + g + b;
         return (color.split('#'))[1];
     }
+</script>
+<script type="text/javascript">
     function open_custom_timeframe_modal(deviceGUID) {
         $('#txt_deviceGUID').val(deviceGUID);
         $('#custom_timeframe_modal').modal('show');
+    }
+    $(document).on('click', '.btn_custom_tf_serach', function () {
+        var href = '?track_start_date=' + $('#txt_track_start_date').val() + '&track_start_time=' + $('#txt_track_start_time').val() + '&track_end_date=' + $('#txt_track_end_date').val() + '&track_end_time=' + $('#txt_track_end_time').val();
+        window.location.href = site_url + 'track/vehicle/' + $('#txt_deviceGUID').val() + '/' + href;
+    });
+    $(function () {
+        //        $('.pickatime-hidden').pickatime({
+        //            formatSubmit: 'HH:i',
+        //            hiddenName: true
+        //        });
+
+        $('#tbl_tracking tr td a').on('click', function () {
+            $('.indi_div').removeClass('hide');
+            livemap($(this).attr('deviceGUID'));
+            map2($(this).attr('deviceGUID'));
+            $('.td_last_service').html($(this).attr('lastServiceDate'));
+            $('.td_next_service').html($(this).attr('nextServiceDue'));
+            $('.td_last_inspection').html($(this).attr('lastInspectionDate'));
+            $('.td_next_inspection').html($(this).attr('nextInspectionDue'));
+        });
+
+        // Pie with legend
+        // ------------------------------
+
+        // Initialize chart
+        animatedPieWithLegend("#pie_basic_legend", 200);
+
+        // Chart setup
+        function animatedPieWithLegend(element, size) {
+
+            // Add data set
+            var data = [
+                {
+                    "status": "New",
+                    "value": 578,
+                    "color": "#29B6F6"
+                }, {
+                    "status": "Pending",
+                    "value": 983,
+                    "color": "#66BB6A"
+                }, {
+                    "status": "Shipped",
+                    "value": 459,
+                    "color": "#EF5350"
+                }
+            ];
+
+            // Main variables
+            var d3Container = d3.select(element),
+                    distance = 2, // reserve 2px space for mouseover arc moving
+                    radius = (size / 2) - distance,
+                    sum = d3.sum(data, function (d) {
+                        return d.value;
+                    });
+
+
+            // Create chart
+            // ------------------------------
+
+            // Add svg element
+            var container = d3Container.append("svg");
+
+            // Add SVG group
+            var svg = container
+                    .attr("width", size)
+                    .attr("height", size)
+                    .append("g")
+                    .attr("transform", "translate(" + (size / 2) + "," + (size / 2) + ")");
+
+
+            // Construct chart layout
+            // ------------------------------
+
+            // Pie
+            var pie = d3.layout.pie()
+                    .sort(null)
+                    .startAngle(Math.PI)
+                    .endAngle(3 * Math.PI)
+                    .value(function (d) {
+                        return d.value;
+                    });
+
+            // Arc
+            var arc = d3.svg.arc()
+                    .outerRadius(radius);
+
+
+            //
+            // Append chart elements
+            //
+
+            // Group chart elements
+            var arcGroup = svg.selectAll(".d3-arc")
+                    .data(pie(data))
+                    .enter()
+                    .append("g")
+                    .attr("class", "d3-arc")
+                    .style({
+                        'stroke': '#fff',
+                        'stroke-width': 2,
+                        'cursor': 'pointer'
+                    });
+
+            // Append path
+            var arcPath = arcGroup
+                    .append("path")
+                    .style("fill", function (d) {
+                        return d.data.color;
+                    });
+
+
+            // Add interactions
+            arcPath
+                    .on('mouseover', function (d, i) {
+
+                        // Transition on mouseover
+                        d3.select(this)
+                                .transition()
+                                .duration(500)
+                                .ease('elastic')
+                                .attr('transform', function (d) {
+                                    d.midAngle = ((d.endAngle - d.startAngle) / 2) + d.startAngle;
+                                    var x = Math.sin(d.midAngle) * distance;
+                                    var y = -Math.cos(d.midAngle) * distance;
+                                    return 'translate(' + x + ',' + y + ')';
+                                });
+
+                        // Animate legend
+                        $(element + ' [data-slice]').css({
+                            'opacity': 0.3,
+                            'transition': 'all ease-in-out 0.15s'
+                        });
+                        $(element + ' [data-slice=' + i + ']').css({'opacity': 1});
+                    })
+                    .on('mouseout', function (d, i) {
+
+                        // Mouseout transition
+                        d3.select(this)
+                                .transition()
+                                .duration(500)
+                                .ease('bounce')
+                                .attr('transform', 'translate(0,0)');
+
+                        // Revert legend animation
+                        $(element + ' [data-slice]').css('opacity', 1);
+                    });
+
+            // Animate chart on load
+            arcPath
+                    .transition()
+                    .delay(function (d, i) {
+                        return i * 500;
+                    })
+                    .duration(500)
+                    .attrTween("d", function (d) {
+                        var interpolate = d3.interpolate(d.startAngle, d.endAngle);
+                        return function (t) {
+                            d.endAngle = interpolate(t);
+                            return arc(d);
+                        };
+                    });
+
+
+            //
+            // Append counter
+            //
+
+            // Append element
+            d3Container
+                    .append('h2')
+                    .attr('class', 'mt-15 mb-5 text-semibold');
+
+            // Animate counter
+            d3Container.select('h2')
+                    .transition()
+                    .duration(1500)
+                    .tween("text", function (d) {
+                        var i = d3.interpolate(this.textContent, sum);
+
+                        return function (t) {
+                            this.textContent = d3.format(",d")(Math.round(i(t)));
+                        };
+                    });
+
+
+            //
+            // Append legend
+            //
+
+            // Add element
+            var legend = d3.select(element)
+                    .append('ul')
+                    .attr('class', 'chart-widget-legend')
+                    .selectAll('li').data(pie(data))
+                    .enter().append('li')
+                    .attr('data-slice', function (d, i) {
+                        return i;
+                    })
+                    .attr('style', function (d, i) {
+                        return 'border-bottom: 2px solid ' + d.data.color;
+                    })
+                    .text(function (d, i) {
+                        return d.data.status + ': ';
+                    });
+
+            // Add value
+            legend.append('span')
+                    .text(function (d, i) {
+                        return d.data.value;
+                    });
+        }
+    });
+    // $('.twbs-default').twbsPagination({
+    //     totalPages: 20,
+    //     visiblePages: 7,
+    //     prev: 'Prev',
+    //     first: null,
+    //     last: null,
+    //     onPageClick: function (event, page) {
+    //         $('.twbs-content-default').text('Page ' + page);
+    //     }
+    // });
+    function print_report(elem) {
+        if (elem == 'dailycheck')
+            url = site_url + "Dashboard/get_dailycheck_pagination";
+        else if (elem == 'service_due')
+            url = site_url + "Dashboard/get_service_due_pagination";
+        else if (elem == 'operators')
+            url = site_url + "Dashboard/get_operators_pagination";
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {print: 'yes', txt_date: $('#txt_date').val()},
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                //$('body').html(data);
+                var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+                mywindow.document.write('<h1>' + document.title + '</h1>');
+                mywindow.document.write(data);
+                mywindow.document.close();
+                mywindow.focus();
+                mywindow.print();
+                mywindow.close();
+            }
+        });
     }
 </script>
