@@ -4,6 +4,7 @@
 .bg-black {background-color: rgba(0,0,0,.89) !important;color:#fff}
 .bg-black .close{color:#fff}
 .btn-red {background: #d52b1f;color:#fff}
+.map-accordion.stops{top:30px;}
 
 /** PAV css **/
 .required:after { content: " *";color:#F44336;}

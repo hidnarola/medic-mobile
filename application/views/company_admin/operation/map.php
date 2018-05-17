@@ -1,3 +1,6 @@
+<script type="text/javascript" src="assets/js/moment.min.js"></script>
+<script type="text/javascript" src="assets/js/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/css/daterangepicker.css" />
 <section class="select-services">
     <div class="container">
         <div class="row">
@@ -83,38 +86,9 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="map-content">
-                                    <div class="map" id="map" style="height: 540px">
-                                        <img src="assets/images/map.jpg" alt="" />
-                                    </div>
-
+                                    <div class="map" id="map" style="height: 540px"></div>
                                     <div id="accordion" class="map-accordion">
                                         <h2>MY FLEET (<?php echo count($vehicle_latlong); ?>) <i></i></h2>
-                                        <!--                                        <div class="card">
-                                                                                    <div class="card-header" id="headingOne">
-                                                                                        <div data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"  class="collapsed">
-                                                                                            <div class="card-header-body">
-                                                                                                <div class="card-header-img"><i></i></div>
-                                                                                                <h3>50-BBB-9/34935 <br/> 2 products</h3>
-                                                                                                <p>Operator: John Doe</p>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                                                                                        <div class="card-body card-content">
-                                                                                            <div class="last-active">
-                                                                                                <p>Last active: About a minute ago <br/> No active alerts.</p>
-                                                                                                <a href="">See stops »</a>
-                                                                                            </div>
-                                                                                            <div class="alert-btm">
-                                                                                                <h4>Alerts:</h4>
-                                                                                                <p>10.8.2017, 11:41 - Truck driving with crane up</p>
-                                                                                                <h4>Notifications:</h4>
-                                                                                                <p>10.8.2017, 11:41 - Emergency stop not used</p>
-                                                                                                <p>10.8.2017, 11:41 - Emergency stop not used</p>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>-->
                                         <?php foreach ($vehicle_latlong as $k => $v) { ?>
                                             <div class="card">
                                                 <div class="card-header" id="heading<?php echo $k ?>">
@@ -331,14 +305,14 @@
                     </div>	
                     <div class="popup-tabs mappopup-tabs">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li><a class="active" id="popuphome-tab" data-toggle="tab" href="#popuphome" role="tab" aria-controls="home" aria-selected="true">Overview</a></li>
+                            <li><a id="popuphome-tab" data-toggle="tab" href="#popuphome" role="tab" aria-controls="home" aria-selected="true">Overview</a></li>
                             <li><a id="popupoperations-tab" data-toggle="tab" href="#popupoperations" role="tab" aria-controls="profile" aria-selected="false">Trends</a></li>
-                            <li><a id="popupsafety-tab" data-toggle="tab" href="#popupsafety" role="tab" aria-controls="contact" aria-selected="false">Map</a></li>
+                            <li><a class="active" id="popupsafety-tab" data-toggle="tab" href="#popupsafety" role="tab" aria-controls="contact" aria-selected="false">Map</a></li>
                             <li><a id="popupmap-tab" data-toggle="tab" href="#popupmap" role="tab" aria-controls="contact" aria-selected="false">Service</a></li>
                             <li><a id="popupnotifications-tab" data-toggle="tab" href="#popupnotifications" role="tab" aria-controls="contact" aria-selected="false">Notifications</a></li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="popuphome" role="tabpanel" aria-labelledby="popuphome-tab">
+                            <div class="tab-pane fade" id="popuphome" role="tabpanel" aria-labelledby="popuphome-tab">
                                 <div class="active-notification active-table-info">
                                     <h2>Active notifications</h2>
                                     <div class="active-notification-inr">
@@ -465,17 +439,17 @@
                                     <img src="assets/images/graph.jpg" alt="">
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="popupsafety" role="tabpanel" aria-labelledby="popupsafety-tab">
+                            <div class="tab-pane fade show active" id="popupsafety" role="tabpanel" aria-labelledby="popupsafety-tab">
                                 <div class="today-count">
-                                    <span>19.8.</span>
+<!--                                    <span>19.8.</span>
                                     <span>20.8.</span>
                                     <span>21.8.</span>
                                     <span>22.8.</span>
                                     <span>23.8.</span>
-                                    <span>24.8.</span>
+                                    <span>24.8.</span>-->
                                     <strong>TODAY</strong>
                                 </div>
-                                <div class="map">
+                                <div class="map" id="vehicle_map" style="height: 540px">
                                     <img src="assets/images/map.jpg" alt="">
                                 </div>
                             </div>
@@ -674,43 +648,52 @@
             </div>
             <div class="modal-body panel-body" id="custom_timeframe_body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
-                            <label class="text-semibold">Start Date:</label>
+                            <label class="text-semibold">Time Frame Selection:</label>
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="icon-calendar22"></i></span>
-                                <input type="text" class="form-control pickadate-accessibility" placeholder="Select a date&hellip;" id="txt_track_start_date" name="track_start_date" value="<?php echo date('d F, Y'); ?>">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <input type="text" class="form-control" placeholder="Select a daterange" id="timeframe" name="timeframe">
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="text-semibold">Start Time:</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="icon-alarm"></i></span>
-                                <input type="text" class="form-control pickatime-hidden" placeholder="Try me&hellip;" name="track_start_time" id="txt_track_start_time" value="<?php echo '12:00 AM'; ?>">
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="text-semibold">End Date:</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="icon-calendar22"></i></span>
-                                <input type="text" class="form-control pickadate-accessibility" placeholder="Select a date&hellip;" id="txt_track_end_date" name="track_end_date" value="<?php echo date('d F, Y'); ?>">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">    
-                        <div class="form-group">
-                            <label class="text-semibold">End Time:</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="icon-alarm"></i></span>
-                                <input type="text" class="form-control pickatime-hidden" placeholder="Try me&hellip;" name="track_end_time" id="txt_track_end_time" value="<?php echo '11:30 PM'; ?>">
-                            </div>
-                        </div>
-                    </div>
+                    <!--                    <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="text-semibold">Start Date:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                                                    <input type="text" class="form-control pickadate-accessibility" placeholder="Select a date&hellip;" id="txt_track_start_date" name="track_start_date" value="<?php echo date('d F, Y'); ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="text-semibold">Start Time:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="icon-alarm"></i></span>
+                                                    <input type="text" class="form-control pickatime-hidden" placeholder="Try me&hellip;" name="track_start_time" id="txt_track_start_time" value="<?php echo '12:00 AM'; ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="text-semibold">End Date:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+                                                    <input type="text" class="form-control pickadate-accessibility" placeholder="Select a date&hellip;" id="txt_track_end_date" name="track_end_date" value="<?php echo date('d F, Y'); ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">    
+                                            <div class="form-group">
+                                                <label class="text-semibold">End Time:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="icon-alarm"></i></span>
+                                                    <input type="text" class="form-control pickatime-hidden" placeholder="Try me&hellip;" name="track_end_time" id="txt_track_end_time" value="<?php echo '11:30 PM'; ?>">
+                                                </div>
+                                            </div>
+                                        </div>-->
                     <input type="hidden" name="txt_deviceGUID" id="txt_deviceGUID">
                     <button type="button" class="btn btn-red btn-block btn_custom_tf_serach">Search</button>
                 </div>
@@ -720,6 +703,21 @@
 </div>
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE19qNQTlcPGeOthK32NgAUo1xoiks_-Y&callback=initMap"></script>			
+<script type="text/javascript">
+    var mapOptions = '',
+            vmap = '',
+            start_point = [],
+            end_point = [],
+            lat_lng = [],
+            lat_lng_2 = [],
+            path = [],
+            vmarker = '',
+            prev_latlng,
+            gps_track, last_index;
+    var cnt = 0;
+
+</script>
+<script type="text/javascript" src="assets/js/custom_pages/vehicle_track.js"></script>
 <script type="text/javascript">
 
     //--Custom scorllbar
@@ -784,12 +782,9 @@
             var content = '<div>' +
                     '<label><b>Track</b> : ' + vehicle_data[key]['deviceGUID'] + '</label>' +
                     '<ul style="padding-left:16px;margin-bottom:0px">' +
-//                    '<li style="padding:3px"><b><a href="' + site_url + "track/vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + last_hour + '" style="color:#000">Last Hour</a></b></li>' +
-//                    '<li style="padding:3px"><b><a href="' + site_url + "track/vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + last_two_hour + '" style="color:#000">Last 2 Hours</a></b></li>' +
-//                    '<li style="padding:3px"><b><a href="' + site_url + "track/vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + last_three_hour + '" style="color:#000">Last 3 Hours</a></b></li>' +
-                    '<li style="padding:3px"><b><a href="' + site_url + "track/vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + today + '" style="color:#000">Today</a></b></li>' +
-                    '<li style="padding:3px"><b><a href="' + site_url + "track/vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + yesterday + '" style="color:#000">Yesterday</a></b></li>' +
-                    '<li style="padding:3px"><b><a href="' + site_url + "track/vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + last_use + '" style="color:#000">Last use</a></b></li>' +
+                    '<li style="padding:3px"><b><a href="javascript:void(0)" class="display-map" data-href="' + site_url + "company_admin/operation/track_vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + today + '" style="color:#000">Today</a></b></li>' +
+                    '<li style="padding:3px"><b><a href="javascript:void(0)" class="display-map" data-href="' + site_url + "company_admin/operation/track_vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + yesterday + '" style="color:#000">Yesterday</a></b></li>' +
+                    '<li style="padding:3px"><b><a href="javascript:void(0)" class="display-map" data-href="' + site_url + "company_admin/operation/track_vehicle/" + vehicle_data[key]['deviceGUID'] + "/" + last_use + '" style="color:#000">Last use</a></b></li>' +
                     '<li style="padding:3px"><b><a href="javascript:void(0)" onClick="open_custom_timeframe_modal(\'' + vehicle_data[key]['deviceGUID'] + '\')" style="color:#000">Date range</a></b></li>' +
                     '</ul>' +
                     '</div>';
@@ -833,15 +828,100 @@
         $('#txt_deviceGUID').val(deviceGUID);
         $('#custom_timeframe_modal').modal('show');
     }
+    //-- Display map on popup selection
+    $(document).on('click', '.display-map', function () {
+        var href = $(this).attr('data-href');
+        $('#custom_loading').show();
+        $.ajax({
+            type: "POST",
+            url: href,
+            dataType: 'json',
+            success: function (data) {
+                $('#custom_loading').hide();
+                $('#individual-overview').modal();
+
+                gps_track = data.vehicle_latlong;
+                last_index = gps_track.length - 1;
+                mapOptions = {
+                    zoom: 19,
+                    center: new google.maps.LatLng({lat: 54.602129, lng: -7.302873}),
+                    mapTypeControl: true,
+                    mapTypeControlOptions: {
+                        position: google.maps.ControlPosition.LEFT_BOTTOM
+                    },
+                    fullscreenControl: true,
+                    fullscreenControlOptions: {
+                        position: google.maps.ControlPosition.RIGHT_BOTTOM
+                    },
+                    mapTypeId: google.maps.MapTypeId.HYBRID
+                };
+
+                vmap = new google.maps.Map(document.getElementById("vehicle_map"), mapOptions);
+                if (gps_track.length != 0) {
+                    if (gps_track[0]['is_google_route'] == 1) {
+                        setTimeout(function () {
+                            google_route_livemap('<?php echo $this->uri->segment(3); ?>');
+                        }, 1000);
+                    } else {
+                        setTimeout(function () {
+                            normal_livemap('<?php echo $this->uri->segment(3); ?>');
+                        }, 1000);
+                    }
+                } else {
+                    new PNotify({
+                        title: 'Warning notice',
+                        text: 'No Data Exists for this timeframe. Page will auto redirect to live tracking page.',
+                        addclass: 'bg-warning'
+                    });
+                    var deviceGUID = '<?php echo $this->uri->segment(3); ?>';
+                    var current_latlng = new google.maps.LatLng(
+                            parseFloat((gps_device_data[deviceGUID]['GPS']['Latitude'])),
+                            parseFloat((gps_device_data[deviceGUID]['GPS']['Longitude']))
+                            );
+                    vmarker = new google.maps.Marker({
+                        position: current_latlng,
+                        map: vmap
+                    });
+                    var latlngbounds = new google.maps.LatLngBounds();
+                    latlngbounds.extend(vmarker.position);
+                    var bounds = new google.maps.LatLngBounds();
+                    map.setCenter(latlngbounds.getCenter());
+                    setInterval(function () {
+                        noraml_live_track(deviceGUID);
+                    }, 7000);
+                }
+
+            }
+        });
+    });
+
     $(document).on('click', '.btn_custom_tf_serach', function () {
-        var href = '?track_start_date=' + $('#txt_track_start_date').val() + '&track_start_time=' + $('#txt_track_start_time').val() + '&track_end_date=' + $('#txt_track_end_date').val() + '&track_end_time=' + $('#txt_track_end_time').val();
+        var timeframe = $('#timeframe').val();
+        times = timeframe.split('-');
+        timeframe1 = $.trim(times[0]);
+        datesArr1 = timeframe1.split(' ');
+        txt_track_start_date = datesArr1[0];
+        txt_track_start_time = datesArr1[1];
+        timeframe2 = $.trim(times[1]);
+        datesArr2 = timeframe2.split(' ');
+        txt_track_end_date = datesArr2[0];
+        txt_track_end_time = datesArr2[1];
+
+//        var href = '?track_start_date=' + $('#txt_track_start_date').val() + '&track_start_time=' + $('#txt_track_start_time').val() + '&track_end_date=' + $('#txt_track_end_date').val() + '&track_end_time=' + $('#txt_track_end_time').val();
+        var href = '?track_start_date=' + txt_track_start_date + '&track_start_time=' + txt_track_start_time + '&track_end_date=' + txt_track_end_date + '&track_end_time=' + txt_track_end_time;
         window.location.href = site_url + 'track/vehicle/' + $('#txt_deviceGUID').val() + '/' + href;
     });
     $(function () {
-        //        $('.pickatime-hidden').pickatime({
-        //            formatSubmit: 'HH:i',
-        //            hiddenName: true
-        //        });
+        //-- Initialize daterange picker
+        $('#timeframe').daterangepicker({
+            timePicker: true,
+            startDate: moment().startOf('hour'),
+            endDate: moment().startOf('hour').add(32, 'hour'),
+            maxDate: new Date(),
+            locale: {
+                format: 'DD/MM/YYYY hh:mm A'
+            }
+        });
 
         $('#tbl_tracking tr td a').on('click', function () {
             $('.indi_div').removeClass('hide');

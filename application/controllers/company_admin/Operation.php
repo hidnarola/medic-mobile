@@ -76,6 +76,7 @@ class Operation extends MY_Controller {
             $data['vehicle_latlong'] = $this->track_model->get_gps_by_sessionID($where)->result_array();
         }
         echo json_encode($data);
+//        echo $this->load->view('company_admin/operation/vehicle_track', $data, true);
         exit;
     }
 
