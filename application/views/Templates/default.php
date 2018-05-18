@@ -15,6 +15,7 @@
         <link href="assets/css/style.css" rel="stylesheet" />
         <link href="assets/css/responsive.css" rel="stylesheet" />
         <link href="assets/css/custom_ku.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/pnotify.custom.min.css" rel="stylesheet" type="text/css">
         <!-- /global stylesheets -->
 
         <?php
@@ -69,7 +70,8 @@
 <!--        <script type="text/javascript" src="assets/js/core/app.js"></script>-->
 
         <script type="text/javascript" src="assets/js/custom_pages/custom_pav.js"></script>
-        <script type="text/javascript" src="assets/js/plugins/notifications/pnotify.min.js"></script>
+        <script type="text/javascript" src="assets/js/pnotify.custom.min.js"></script>
+        <!--<script type="text/javascript" src="assets/js/plugins/notifications/pnotify.min.js"></script>-->
         <!-- <script type="text/javascript" src="assets/js/pages/form_multiselect.js"></script> -->
         <script type="text/javascript" src="assets/js/plugins/ui/nicescroll.min.js"></script>
         <!--<script type="text/javascript" src="https://www.jqueryscript.net/demo/jQuery-Plugin-For-Smooth-Mouse-Scrolling-scrollSpeed/jQuery.scrollSpeed.js"></script>-->
@@ -92,11 +94,11 @@
                         <ul>
                             <li class="<?php echo($class == "service") ? 'active' : ''; ?>"><a href="<?php echo site_url('service'); ?>">Service</a></li>
                             <li class="<?php echo ($class == "notifications") ? 'active' : ''; ?>"><a href="<?php echo site_url('notifications'); ?>">Notifications</a></li>
-                            <!--<li class="<?php echo($class == "dashboard" && $action == "index") ? 'active' : ''; ?>"><a href="<?php echo site_url('dashboard'); ?>">Operation</a></li>-->
                             <li class="<?php echo ($class == "operation" || ($class == "dashboard" && $action == "index")) ? 'active' : ''; ?>">><a href="<?php echo site_url('operation'); ?>">Operation</a></li>
                         </ul>
                     </div>
                     <div class="header-r">
+                        <p class="user-txt"><?php echo get_AdminLogin('F') . ' ' . get_AdminLogin('L'); ?></p>
                         <div class="service-icon">
                             <a href="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17">
@@ -111,8 +113,13 @@
                                 </svg>
                             </a>
                         </div>
-<!--                        <span><?php echo get_AdminLogin('F') . ' ' . get_AdminLogin('L'); ?></span>
-                        <a href="<?php echo site_url('logout'); ?>"><i class="icon-switch2"></i> Logout</a>-->
+                        <div class="logout-icon">
+                            <a href="<?php echo site_url('logout') ?>">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 489.888 489.888" style="enable-background:new 0 0 489.888 489.888;" xml:space="preserve" width="16px" height="16px">
+                                <path d="M25.383,290.5c-7.2-77.5,25.9-147.7,80.8-192.3c21.4-17.4,53.4-2.5,53.4,25l0,0c0,10.1-4.8,19.4-12.6,25.7    c-38.9,31.7-62.3,81.7-56.6,136.9c7.4,71.9,65,130.1,136.8,138.1c93.7,10.5,173.3-62.9,173.3-154.5c0-48.6-22.5-92.1-57.6-120.6    c-7.8-6.3-12.5-15.6-12.5-25.6l0,0c0-27.2,31.5-42.6,52.7-25.6c50.2,40.5,82.4,102.4,82.4,171.8c0,126.9-107.8,229.2-236.7,219.9    C122.183,481.8,35.283,396.9,25.383,290.5z M244.883,0c-18,0-32.5,14.6-32.5,32.5v149.7c0,18,14.6,32.5,32.5,32.5    s32.5-14.6,32.5-32.5V32.5C277.383,14.6,262.883,0,244.883,0z" fill="#FFFFFF"/>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
                 </div>	
             </div>

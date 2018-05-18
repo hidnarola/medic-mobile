@@ -5,6 +5,11 @@
 .bg-black .close{color:#fff}
 .btn-red {background: #d52b1f;color:#fff}
 .map-accordion.stops{top:30px;}
+/*logout icon*/
+.logout-icon{margin: 0 0 0 20px;}
+.logout-icon a {display: block;}
+.logout-icon a:hover svg path{fill:#d52b1f;  stroke:#d52b1f;}
+.user-txt {font-size: 14px;color: white;margin: 0 20px 0 0;}
 
 /** PAV css **/
 .required:after { content: " *";color:#F44336;}
@@ -15,52 +20,32 @@
 .modal-open{ padding-right:3px !important; }
 .panel,
 .dataTables_wrapper{ box-shadow:0px 10px 30px -7px rgba(0,0,0,0.4); }   
-.dataTables_wrapper .action a{
-    font-size:14px;
-    font-weight:500;
-    color:#00000087;
-}
-.dataTables_wrapper .action a:hover{
-    color:#000000d6;
-}
+.dataTables_wrapper .action a{font-size:14px;font-weight:500;color:#00000087;}
+.dataTables_wrapper .action a:hover{color:#000000d6;}
 .custom_save_button{width: 90px;display: inline-block;float: left;margin-right: 15px; border:none;padding:8px 12px;font-weight:400;}
 .custom_cancel_button{width: 90px;display: inline-block;float: left;font-weight:400;}
 .custom_dt_action_button{ font-weight:500; color:#222832; border:2px solid #222832; background-color:#fff; text-transform: uppercase; margin-bottom:3px !important;}
 .custom_dt_action_button:hover,
 .custom_dt_action_button:focus,
 .custom_action_button:hover,
-.custom_action_button:focus{ 
-    color: #fff;
-    opacity: 0.90;
-    background-color:#222832;
-}
+.custom_action_button:focus{ color: #fff;opacity: 0.90;background-color:#222832;}
 .dt-head-center{ text-align: center }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
-.dropdown-menu > .active > a:focus {
-    background-color: #ff5722;
-}
+.dropdown-menu > .active > a:focus {background-color: #ff5722;}
 
-.operations_date_range #date_range{ 
-    width:auto;
-    border-width: 2px;
-}
+.operations_date_range #date_range{ width:auto;border-width: 2px;}
 .ranges ul li.active,
 .daterangepicker td.active,
 .daterangepicker td.active:hover,
-.daterangepicker td.active:focus{ 
-    background-color: #ff5722; 
-}
+.daterangepicker td.active:focus{ background-color: #ff5722; }
 
 .pagination > .active > a,
 .pagination > .active > span,
 .pagination > .active > a:hover,
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
-.pagination > .active > span:focus {
-    background-color: #ff5722;
-    border-color: #ff5722;
-}
+.pagination > .active > span:focus {background-color: #ff5722;border-color: #ff5722;}
 
 .page-container{ padding-bottom:0px !important; }
 .modal-backdrop.in{ opacity: 0.8; }
@@ -95,50 +80,21 @@ body::-webkit-scrollbar-thumb { background-color: #FF5722; outline: 1px solid #F
                         Mobile Sidebar
 *****************************************************************/
 .sidenav .navigation.admin-sidebar li a{ font-size:12px; }
-.sidenav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #142029f2;
-    overflow-x: hidden;
-    transition: 0.5s;
-    z-index:1111;
-}
+.sidenav {height: 100%;width: 0;position: fixed;z-index: 1;top: 0;left: 0;background-color: #142029f2;overflow-x: hidden;transition: 0.5s;z-index:1111;}
 
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 15px;
-    color: #fff;
-    display: block;
-    transition: 0.3s;
-}
+.sidenav a {padding: 8px 8px 8px 32px;text-decoration: none;font-size: 15px;color: #fff;display: block;transition: 0.3s;}
 
-.sidenav .dropdown-menu a{
-    color:#fff;
-}
+.sidenav .dropdown-menu a{color:#fff;}
 .sidenav .nav .open > a,
 .sidenav .nav .open > a:hover,
-.sidenav .nav .open > a:focus{
-    color:#fff;
-}
+.sidenav .nav .open > a:focus{color:#fff;}
 
 .sidenav .nav > li > a:hover, 
-.sidenav .nav > li > a:focus{
-    background-color: transparent !important;
-}
+.sidenav .nav > li > a:focus{background-color: transparent !important;}
 
-.sidenav a:hover {
-    color: #f1f1f1;
-}
+.sidenav a:hover {color: #f1f1f1;}
 
-.sidenav .closebtn {
-    font-size: 36px;
-    margin-left: 50px;
-}
+.sidenav .closebtn {font-size: 36px;margin-left: 50px;}
 
 
 @media screen and (max-height: 450px) {
@@ -146,10 +102,7 @@ body::-webkit-scrollbar-thumb { background-color: #FF5722; outline: 1px solid #F
 }
 
 .dashboard_tile.active,
-.dashboard_tile:hover{
-    background-color: #e0e0e0;
-    box-shadow: 1px 1px 1px 1px #000;
-}
+.dashboard_tile:hover{background-color: #e0e0e0;box-shadow: 1px 1px 1px 1px #000;}
 
 @media(max-width:991px){
     /*************************************************
@@ -162,4 +115,6 @@ body::-webkit-scrollbar-thumb { background-color: #FF5722; outline: 1px solid #F
     #DataTables_Table_0_length{float: left !important;margin: 0;}
     #DataTables_Table_0_length label > span:first-child {float: left;margin: 8px 0;margin-left: 0;width: 45px;text-align: left;}
     .box-bg {min-height: inherit;margin: 0 0 30px;}
+    .user-txt {font-size: 12px;margin: 0 10px 0 0;}
+
 }

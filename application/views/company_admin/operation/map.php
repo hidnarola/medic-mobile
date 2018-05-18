@@ -244,7 +244,8 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true"> Close </span></button>
                     </div>	
                     <div class="user-popup">
-                        <span class="bdr-red">
+                        <img src="assets/images/loader-track.png">
+<!--                        <span class="bdr-red">
                             <svg xmlns="http://www.w3.org/2000/svg" width="34" height="44" viewBox="0 0 53 34">
                             <g fill="none" fill-rule="evenodd">
                             <path fill="#989898" d="M48.818 10.793H38.159V22.8H.231v4.332c0 2.052 1.7 3.724 3.785 3.724h2.549a4.562 4.562 0 0 0 4.325 3.117c2.009 0 3.785-1.292 4.326-3.117h25.258a4.562 4.562 0 0 0 4.326 3.117c2.008 0 3.785-1.292 4.326-3.117H52.448V14.441c.155-1.976-1.545-3.648-3.63-3.648zM10.968 32.53c-1.776 0-3.166-1.369-3.166-3.117s1.39-3.116 3.167-3.116c1.776 0 3.167 1.368 3.167 3.116s-1.39 3.117-3.167 3.117zm33.988 0c-1.777 0-3.167-1.369-3.167-3.117s1.39-3.116 3.167-3.116c1.776 0 3.167 1.368 3.167 3.116s-1.468 3.117-3.167 3.117zm6.256-11.325h-2.549v-4.636h2.55v4.636zm0-6.004H48.2c-.54 0-.927.38-.927.912v5.548c0 .532.386.912.927.912h3.012v6.84h-1.7c0-2.508-2.007-4.484-4.556-4.484-2.55 0-4.558 1.976-4.558 4.484H15.526c0-2.508-2.008-4.484-4.557-4.484-2.55 0-4.558 1.976-4.558 4.484H4.017c-1.313 0-2.395-1.064-2.395-2.356v-3.04h37.85V12.085h9.268c1.314 0 2.395 1.064 2.395 2.356l.077.76z"/>
@@ -254,9 +255,8 @@
                             <ellipse cx="44.956" cy="29.489" fill="#989898" rx="1.468" ry="1.444"/>
                             </g>
                             </svg>
-
-                        </span>
-                        <h3>91-BJD-1/35264</h3>
+                        </span>-->
+                        <h3><div id="vehicle_title">91-BJD-1/35264</div></h3>
                         <p>Carrying 2 equipment</p>
                         <h6 class="online">Online</h6>
 
@@ -338,7 +338,6 @@
                                         </table>
                                     </div>	
                                 </div>	
-
                                 <div class="loader-box service-info">
                                     <ul class="d-flex flex-wrap">
                                         <li>
@@ -406,7 +405,6 @@
                                         </li>
                                     </ul>
                                 </div>
-
                             </div>
                             <div class="tab-pane fade" id="popupoperations" role="tabpanel" aria-labelledby="popupoperations-tab">
                                 <div class="select-data">
@@ -441,7 +439,7 @@
                             </div>
                             <div class="tab-pane fade show active" id="popupsafety" role="tabpanel" aria-labelledby="popupsafety-tab">
                                 <div class="today-count">
-<!--                                    <span>19.8.</span>
+<!--                                <span>19.8.</span>
                                     <span>20.8.</span>
                                     <span>21.8.</span>
                                     <span>22.8.</span>
@@ -748,6 +746,7 @@
             center: new google.maps.LatLng(vehicle_latlong[0]),
         };
         map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
         var latlngbounds = new google.maps.LatLngBounds();
         var infoWindow = new google.maps.InfoWindow();
         $(vehicle_latlong).each(function (key, value) {
@@ -828,9 +827,7 @@
         $('#txt_deviceGUID').val(deviceGUID);
         $('#custom_timeframe_modal').modal('show');
     }
-    //-- Display map on popup selection
-    $(document).on('click', '.display-map', function () {
-        var href = $(this).attr('data-href');
+    function display_vmap(href) {
         $('#custom_loading').show();
         $.ajax({
             type: "POST",
@@ -839,6 +836,7 @@
             success: function (data) {
                 $('#custom_loading').hide();
                 $('#individual-overview').modal();
+                $('#vehicle_title').html(data.deviceGUID);
 
                 gps_track = data.vehicle_latlong;
                 last_index = gps_track.length - 1;
@@ -853,7 +851,7 @@
                     fullscreenControlOptions: {
                         position: google.maps.ControlPosition.RIGHT_BOTTOM
                     },
-                    mapTypeId: google.maps.MapTypeId.HYBRID
+//                    mapTypeId: google.maps.MapTypeId.HYBRID
                 };
 
                 vmap = new google.maps.Map(document.getElementById("vehicle_map"), mapOptions);
@@ -871,7 +869,10 @@
                     new PNotify({
                         title: 'Warning notice',
                         text: 'No Data Exists for this timeframe. Page will auto redirect to live tracking page.',
-                        addclass: 'bg-warning'
+                        addclass: 'bg-warning',
+                        buttons: {
+                            sticker: false
+                        },
                     });
                     var deviceGUID = '<?php echo $this->uri->segment(3); ?>';
                     var current_latlng = new google.maps.LatLng(
@@ -893,6 +894,11 @@
 
             }
         });
+    }
+    //-- Display map on popup selection
+    $(document).on('click', '.display-map', function () {
+        var href = $(this).attr('data-href');
+        display_vmap(href);
     });
 
     $(document).on('click', '.btn_custom_tf_serach', function () {
@@ -906,10 +912,11 @@
         datesArr2 = timeframe2.split(' ');
         txt_track_end_date = datesArr2[0];
         txt_track_end_time = datesArr2[1];
-
+        $('#custom_timeframe_modal').modal('hide');
 //        var href = '?track_start_date=' + $('#txt_track_start_date').val() + '&track_start_time=' + $('#txt_track_start_time').val() + '&track_end_date=' + $('#txt_track_end_date').val() + '&track_end_time=' + $('#txt_track_end_time').val();
-        var href = '?track_start_date=' + txt_track_start_date + '&track_start_time=' + txt_track_start_time + '&track_end_date=' + txt_track_end_date + '&track_end_time=' + txt_track_end_time;
-        window.location.href = site_url + 'track/vehicle/' + $('#txt_deviceGUID').val() + '/' + href;
+        var href = site_url + "company_admin/operation/track_vehicle/" + $('#txt_deviceGUID').val() + '/?track_start_date=' + txt_track_start_date + '&track_start_time=' + txt_track_start_time + '&track_end_date=' + txt_track_end_date + '&track_end_time=' + txt_track_end_time;
+        display_vmap(href);
+//        window.location.href = site_url + 'track/vehicle/' + $('#txt_deviceGUID').val() + '/' + href;
     });
     $(function () {
         //-- Initialize daterange picker

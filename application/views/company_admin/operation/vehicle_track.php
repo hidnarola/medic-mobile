@@ -92,7 +92,10 @@
             new PNotify({
                 title: 'Warning notice',
                 text: 'No Data Exists for this timeframe. Page will auto redirect to live tracking page.',
-                addclass: 'bg-warning'
+                addclass: 'bg-warning',
+                buttons: {
+                    sticker: false
+                },
             });
             var deviceGUID = '<?php echo $this->uri->segment(3); ?>';
             var current_latlng = new google.maps.LatLng(
