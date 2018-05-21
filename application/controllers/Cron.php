@@ -2,14 +2,17 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Device extends MY_Controller {
+class Cron extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
         $this->load->model(array('device_model'));
     }
 
-    public function get_data() {
+    /**
+     * Save Vehicle tracking information
+     */
+    public function save_data() {
         $myfile = fopen(base_url('socket/obd_device_data.txt'), "r") or die("Unable to open file!");
         $file_data = fread($myfile, 10240);
         $ch = curl_init('http://clientapp.narola.online:1016/api/getdecodeddata');
@@ -130,9 +133,7 @@ class Device extends MY_Controller {
         $final_device_data_Array['MEDIC18A0036']['GPS']['Longitude'] = $MEDIC18A0036_Array[$return_arr['latest_lon_key']]['v'];
         $final_device_data_Array['MEDIC18A0036']['Mileage'] = '';
 
-//        $this->insert_device_data($final_device_data_Array);
-        echo json_encode($final_device_data_Array);
-        die;
+        $this->insert_device_data($final_device_data_Array);
     }
 
     public function insert_device_data($device_data_Array) {
@@ -162,17 +163,7 @@ class Device extends MY_Controller {
         }
     }
 
-    public function get_string_between($string, $start, $end) {
-        $string = ' ' . $string;
-        $ini = strpos($string, $start);
-        if ($ini == 0)
-            return '';
-        $ini += strlen($start);
-        $len = strpos($string, $end, $ini) - $ini;
-        return substr($string, $ini, $len);
-    }
-
 }
 
-/* End of file Device.php */
-/* Location: ./application/controllers/Device.php */
+/* End of file Dashboard.php */
+/* Location: ./application/controllers/Dashboard.php */

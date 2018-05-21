@@ -30,19 +30,21 @@ $(function () {
     });
 
 //    get_device_data();
-    function get_device_data() {
-        $.ajax({
-            type: "POST",
-            url: site_url + "Device/get_data",
-            async: false,
-            dataType: 'json',
-            success: function (data) {
-                gps_device_data = data;
-                console.log(gps_device_data);
-                setTimeout(function () {
-                    get_device_data();
-                }, 7000);
-            }
-        });
-    }
+
 });
+
+function get_device_data() {
+    $.ajax({
+        type: "POST",
+        url: site_url + "Device/get_data",
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            gps_device_data = data;
+            console.log(gps_device_data);
+            setTimeout(function () {
+                get_device_data();
+            }, 7000);
+        }
+    });
+}

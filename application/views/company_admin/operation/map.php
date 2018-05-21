@@ -702,6 +702,10 @@
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE19qNQTlcPGeOthK32NgAUo1xoiks_-Y&callback=initMap"></script>			
 <script type="text/javascript">
+
+    //-- Get GPS device data
+    get_device_data();
+
     var mapOptions = '',
             vmap = '',
             start_point = [],
@@ -713,7 +717,6 @@
             prev_latlng,
             gps_track, last_index;
     var cnt = 0;
-
 </script>
 <script type="text/javascript" src="assets/js/custom_pages/vehicle_track.js"></script>
 <script type="text/javascript">
@@ -879,9 +882,15 @@
                             parseFloat((gps_device_data[deviceGUID]['GPS']['Latitude'])),
                             parseFloat((gps_device_data[deviceGUID]['GPS']['Longitude']))
                             );
+                    var pinImage = base_url + 'assets/images/loader-track-marker.png';
+
                     vmarker = new google.maps.Marker({
                         position: current_latlng,
-                        map: vmap
+                        map: vmap,
+                        icon: {
+                            url: pinImage,
+//                    labelOrigin: new google.maps.Point(30, 60)
+                        },
                     });
                     var latlngbounds = new google.maps.LatLngBounds();
                     latlngbounds.extend(vmarker.position);
@@ -904,14 +913,18 @@
     $(document).on('click', '.btn_custom_tf_serach', function () {
         var timeframe = $('#timeframe').val();
         times = timeframe.split('-');
+        // First timeframe
         timeframe1 = $.trim(times[0]);
         datesArr1 = timeframe1.split(' ');
         txt_track_start_date = datesArr1[0];
-        txt_track_start_time = datesArr1[1];
+        txt_track_start_time = datesArr1[1] + ' ' + datesArr1[2];
+
+        // Second timeframe
         timeframe2 = $.trim(times[1]);
         datesArr2 = timeframe2.split(' ');
         txt_track_end_date = datesArr2[0];
-        txt_track_end_time = datesArr2[1];
+        txt_track_end_time = datesArr2[1] + ' ' + datesArr2[2];
+
         $('#custom_timeframe_modal').modal('hide');
 //        var href = '?track_start_date=' + $('#txt_track_start_date').val() + '&track_start_time=' + $('#txt_track_start_time').val() + '&track_end_date=' + $('#txt_track_end_date').val() + '&track_end_time=' + $('#txt_track_end_time').val();
         var href = site_url + "company_admin/operation/track_vehicle/" + $('#txt_deviceGUID').val() + '/?track_start_date=' + txt_track_start_date + '&track_start_time=' + txt_track_start_time + '&track_end_date=' + txt_track_end_date + '&track_end_time=' + txt_track_end_time;

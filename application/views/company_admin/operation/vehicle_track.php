@@ -49,6 +49,9 @@
     .iw-bottom-gradient {position: absolute;width: 326px;height: 25px;bottom: 10px;right: 18px;background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);}
 </style>
 <script>
+    //-- Get GPS device data
+    get_device_data();
+
     var mapOptions = '',
             map = '',
             start_point = [],
