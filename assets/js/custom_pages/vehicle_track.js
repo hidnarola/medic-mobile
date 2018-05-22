@@ -1,3 +1,5 @@
+var pinImage = base_url + 'assets/images/loader-track-marker.png';
+
 function google_route_livemap(deviceGUID) {
     start_point.push(parseFloat((gps_track[0]['latitude']).replace('"', '')), parseFloat((gps_track[0]['longitude']).replace('"', '')));
     var path = new google.maps.MVCArray();
@@ -41,10 +43,12 @@ function google_route_livemap(deviceGUID) {
             }
         }
     });
-
     vmarker = new google.maps.Marker({
         position: des,
-        map: vmap
+        map: vmap,
+        icon: {
+            url: pinImage,
+        },
     });
     var latlngbounds = new google.maps.LatLngBounds();
     latlngbounds.extend(vmarker.position);
@@ -116,9 +120,13 @@ function google_route_live_track(deviceGUID) {
     prev_latlng = destination_latlng;
 
     vmarker.setMap(null);
+
     vmarker = new google.maps.Marker({
         position: destination_latlng,
-        map: vmap
+        map: vmap,
+        icon: {
+            url: pinImage,
+        },
     });
     var latlngbounds = new google.maps.LatLngBounds();
     latlngbounds.extend(vmarker.position);
@@ -263,9 +271,13 @@ function normal_livemap(deviceGUID) {
             path = [];
         }
     }
+
     vmarker = new google.maps.Marker({
         position: current_latlng,
-        map: vmap
+        map: vmap,
+        icon: {
+            url: pinImage,
+        },
     });
     var latlngbounds = new google.maps.LatLngBounds();
     latlngbounds.extend(vmarker.position);
@@ -331,9 +343,13 @@ function noraml_live_track(deviceGUID) {
     prev_latlng = destination_latlng;
 
     vmarker.setMap(null);
+
     vmarker = new google.maps.Marker({
         position: destination_latlng,
-        map: vmap
+        map: vmap,
+        icon: {
+            url: pinImage,
+        },
     });
     var latlngbounds = new google.maps.LatLngBounds();
     latlngbounds.extend(vmarker.position);

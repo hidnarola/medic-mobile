@@ -717,14 +717,7 @@
             prev_latlng,
             gps_track, last_index;
     var cnt = 0;
-</script>
-<script type="text/javascript" src="assets/js/custom_pages/vehicle_track.js"></script>
-<script type="text/javascript">
 
-    //--Custom scorllbar
-    $("#content-8").mCustomScrollbar({
-        axis: "y"
-    });
 
     //-- Script for map
     const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -810,6 +803,7 @@
 
         var markerCluster = new MarkerClusterer(map, markers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     }
+
     /******************************************
      Marker Random Color
      *******************************************/
@@ -824,6 +818,15 @@
         var color = '#' + r + g + b;
         return (color.split('#'))[1];
     }
+</script>
+<script type="text/javascript" src="assets/js/custom_pages/vehicle_track.js"></script>
+<script type="text/javascript">
+
+    //--Custom scorllbar
+    $("#content-8").mCustomScrollbar({
+        axis: "y"
+    });
+
 </script>
 <script type="text/javascript">
     function open_custom_timeframe_modal(deviceGUID) {
@@ -871,7 +874,7 @@
                 } else {
                     new PNotify({
                         title: 'Warning notice',
-                        text: 'No Data Exists for this timeframe. Page will auto redirect to live tracking page.',
+                        text: 'No data exists for this timeframe. Page will auto redirect to live tracking page.',
                         addclass: 'bg-warning',
                         buttons: {
                             sticker: false
@@ -917,12 +920,16 @@
         timeframe1 = $.trim(times[0]);
         datesArr1 = timeframe1.split(' ');
         txt_track_start_date = datesArr1[0];
+        txt_track_start_date = txt_track_start_date.replace("/", "-");
+        txt_track_start_date = txt_track_start_date.replace("/", "-");
         txt_track_start_time = datesArr1[1] + ' ' + datesArr1[2];
 
         // Second timeframe
         timeframe2 = $.trim(times[1]);
         datesArr2 = timeframe2.split(' ');
         txt_track_end_date = datesArr2[0];
+        txt_track_end_date = txt_track_end_date.replace("/", "-");
+        txt_track_end_date = txt_track_end_date.replace("/", "-");
         txt_track_end_time = datesArr2[1] + ' ' + datesArr2[2];
 
         $('#custom_timeframe_modal').modal('hide');

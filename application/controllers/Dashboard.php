@@ -18,11 +18,6 @@ class Dashboard extends MY_Controller {
      * @author PAV
      */
     public function index() {
-        if ((!$this->session->userdata('logged_in'))) {
-            $this->session->set_flashdata('error', 'Please login to continue!');
-            redirect(base_url(), 'refresh');
-        }
-
         if (get_AdminLogin('A')) {
             $data['title'] = 'Dashboard';
             redirect('manage_company');
@@ -31,236 +26,45 @@ class Dashboard extends MY_Controller {
             $data['title'] = 'Dashboard';
             $start_date_data = date('Y-m-d H:i:s', (time() - 86400)); //345600
             $end_date_data = date('Y-m-d H:i:s', time());
-            if ($this->input->get()) {
-                $area_data = htmlentities($this->input->get('txt_area'));
-                $start_date_data = ($this->input->get('txt_date') != '') ? htmlentities(date('Y-m-d', strtotime($this->input->get('txt_date')))) . ' 00:00:00' : $start_date_data;
-                $end_date_data = ($this->input->get('txt_date') != '') ? htmlentities(date('Y-m-d', strtotime($this->input->get('txt_date')))) . ' 23:59:59' : $end_date_data;
-                $vehicle_data = htmlentities($this->input->get('txt_vehicle'));
-                $report_data = htmlentities($this->input->get('txt_report_type'));
-                $alert_data = htmlentities($this->input->get('txt_alert'));
-                $forklift_data = htmlentities($this->input->get('txt_forklift'));
-                $where = '';
-                if ($report_data == 'overview') { // Overview Report
-                    $where = " WHERE tbl_gps.timeStamp>='" . $start_date_data . "' AND tbl_gps.timeStamp<='" . $end_date_data . "' ";
-                    $data['vehicle_latlong'] = $this->vehicle_model->get_vehicle_latlong($where);
-                    foreach ($data['vehicle_latlong'] as $k => $v) {
-                        $where = array(
-                            'g.timeStamp>=' => $start_date_data,
-                            'g.timeStamp<=' => $end_date_data,
-                            'v.vehicleGUID' => $v['vehicleGUID'],
-                            'v.deviceGUID' => $v['deviceGUID']
-                        );
-                        $vehilcle_track = $this->track_model->get_gps_by_sessionID($where)->result_array();
-                        foreach ($vehilcle_track as $key => $value) {
-                            $data['vehicle_latlong'][$k]['telematics'][] = str_replace('"', '', $value['latitude']) . ',' . str_replace('"', '', $value['longitude']);
-                        }
-                    }
 
-                    $return_arr = $this->get_device_json(MEDIC17L0018_json);
-                    $MEDIC17L0018_Array = $return_arr['reverse_device_Array'];
-                    $lat_key = $return_arr['latest_lat_key'];
-                    $lon_key = $return_arr['latest_lon_key'];
-                    $data_arr = array(
-                        'latitude' => $MEDIC17L0018_Array[$lat_key]['v'],
-                        'longitude' => $MEDIC17L0018_Array[$lon_key]['v'],
-                        'telematics' => array(),
-                        'deviceGUID' => 'MEDIC17L0018'
-                    );
-                    $data['vehicle_latlong'][] = $data_arr;
-
-                    $return_arr = $this->get_device_json(MEDIC18A0036_json);
-                    $MEDIC18A0036_Array = $return_arr['reverse_device_Array'];
-                    $lat_key = $return_arr['latest_lat_key'];
-                    $lon_key = $return_arr['latest_lon_key'];
-                    $data_arr = array(
-                        'latitude' => $MEDIC18A0036_Array[$lat_key]['v'],
-                        'longitude' => $MEDIC18A0036_Array[$lon_key]['v'],
-                        'telematics' => array(),
-                        'deviceGUID' => 'MEDIC18A0036'
-                    );
-                    $data['vehicle_latlong'][] = $data_arr;
-                } else if ($report_data == 'dailycheck') { // DailyCheck Report
-                    if ($this->input->get('txt_date') == '') {
-                        $start_date_data = $end_date_data = '';
-                    }
-                    if ($this->input->get('txt_date') != '') {
-                        $condition = array(
-                            'signatureDateTime>=' => $start_date_data,
-                            'signatureDateTime<=' => $end_date_data
-                        );
-                    } else {
-                        $condition = array();
-                    }
-                    $total_records = $this->dashboard_model->get_all_details(TBL_DAILYCHECK, $condition)->num_rows();
-                    $total_pagination_links = ceil($total_records / $this->dailycheck_per_page);
-                    $data['total_pagination_links'] = $total_pagination_links;
-                } else if ($report_data == 'faults') { // Faults Report
-                    if ($this->input->get('txt_date') == '') {
-                        $start_date_data = $end_date_data = '';
-                    }
-                    if ($this->input->get('txt_date') != '') {
-                        $condition = array(
-                            'date_range_start' => $start_date_data,
-                            'date_range_end' => $end_date_data
-                        );
-                    } else {
-                        $condition = array();
-                    }
-                    $total_records = $this->dashboard_model->get_all_faults('', '', $condition, 1)->num_rows();
-                    $total_pagination_links = ceil($total_records / $this->faults_per_page);
-                    $data['total_pagination_links'] = $total_pagination_links;
-                } else if ($report_data == 'service_due') { // Service Due Report
-                    $total_records = $this->dashboard_model->get_all_details(TBL_VEHICLE, array())->num_rows();
-                    $total_pagination_links = ceil($total_records / $this->service_due_per_page);
-                    $data['total_pagination_links'] = $total_pagination_links;
-                } else if ($report_data == 'proof_of_delivery') { // POD Report
-                    if ($this->input->get('txt_date') == '') {
-                        $start_date_data = $end_date_data = '';
-                    }
-                    if ($this->input->get('txt_date') != '') {
-                        $condition = array(
-                            'date_range_start' => $start_date_data,
-                            'date_range_end' => $end_date_data
-                        );
-                    } else {
-                        $condition = array();
-                    }
-                    $total_records = $this->dashboard_model->get_all_pod('', '', $condition, 1)->num_rows();
-                    $total_pagination_links = ceil($total_records / $this->pod_per_page);
-                    $data['total_pagination_links'] = $total_pagination_links;
-                } else if ($report_data == 'incidents') { // Incidents Report
-                    if ($this->input->get('txt_date') == '') {
-                        $start_date_data = $end_date_data = '';
-                    }
-                    if ($this->input->get('txt_date') != '') {
-                        $condition = array(
-                            'date_range_start' => $start_date_data,
-                            'date_range_end' => $end_date_data
-                        );
-                    } else {
-                        $condition = array();
-                    }
-                    $total_records = $this->dashboard_model->get_all_incidents('', '', $condition, 1)->num_rows();
-                    $total_pagination_links = ceil($total_records / $this->incidents_per_page);
-                    $data['total_pagination_links'] = $total_pagination_links;
-                } else if ($report_data == 'operators') { // Operators Report
-                    $total_records = $this->dashboard_model->get_all_details(TBL_OPERATIVE, array())->num_rows();
-                    $total_pagination_links = ceil($total_records / $this->dailycheck_per_page);
-                    if ($total_pagination_links < 1) {
-                        $total_pagination_links = 1;
-                    }
-                    $data['total_pagination_links'] = $total_pagination_links;
+            $where = " WHERE tbl_gps.timeStamp>='" . $start_date_data . "' AND tbl_gps.timeStamp<='" . $end_date_data . "' ";
+            $data['vehicle_latlong'] = $this->vehicle_model->get_vehicle_latlong($where);
+            foreach ($data['vehicle_latlong'] as $k => $v) {
+                $where = array(
+                    'g.timeStamp>=' => $start_date_data,
+                    'g.timeStamp<=' => $end_date_data,
+                    'v.vehicleGUID' => $v['vehicleGUID'],
+                    'v.deviceGUID' => $v['deviceGUID']
+                );
+                $vehilcle_track = $this->track_model->get_gps_by_sessionID($where)->result_array();
+                foreach ($vehilcle_track as $key => $value) {
+                    $data['vehicle_latlong'][$k]['telematics'][] = str_replace('"', '', $value['latitude']) . ',' . str_replace('"', '', $value['longitude']);
                 }
-                $data['dataArr'] = array(
-                    'area_data' => $area_data,
-                    'start_date_data' => $start_date_data,
-                    'end_date_data' => $end_date_data,
-                    'vehicle_data' => $vehicle_data,
-                    'report_data' => $report_data,
-                    'alert_data' => $alert_data,
-                    'forklift_data' => $forklift_data
-                );
-            } else {
-                $where = " WHERE tbl_gps.timeStamp>='" . $start_date_data . "' AND tbl_gps.timeStamp<='" . $end_date_data . "' ";
-                $data['vehicle_latlong'] = $this->vehicle_model->get_vehicle_latlong($where);
-                foreach ($data['vehicle_latlong'] as $k => $v) {
-                    $where = array(
-                        'g.timeStamp>=' => $start_date_data,
-                        'g.timeStamp<=' => $end_date_data,
-                        'v.vehicleGUID' => $v['vehicleGUID'],
-                        'v.deviceGUID' => $v['deviceGUID']
-                    );
-                    $vehilcle_track = $this->track_model->get_gps_by_sessionID($where)->result_array();
-                    foreach ($vehilcle_track as $key => $value) {
-                        $data['vehicle_latlong'][$k]['telematics'][] = str_replace('"', '', $value['latitude']) . ',' . str_replace('"', '', $value['longitude']);
-                    }
-                }
-
-                $return_arr = $this->get_device_json(MEDIC17L0018_json);
-                $MEDIC17L0018_Array = $return_arr['reverse_device_Array'];
-                $lat_key = $return_arr['latest_lat_key'];
-                $lon_key = $return_arr['latest_lon_key'];
-                $data_arr = array(
-                    'latitude' => $MEDIC17L0018_Array[$lat_key]['v'],
-                    'longitude' => $MEDIC17L0018_Array[$lon_key]['v'],
-                    'telematics' => array(),
-                    'deviceGUID' => 'MEDIC17L0018'
-                );
-                $data['vehicle_latlong'][] = $data_arr;
-
-                $return_arr = $this->get_device_json(MEDIC18A0036_json);
-                $MEDIC18A0036_Array = $return_arr['reverse_device_Array'];
-                $lat_key = $return_arr['latest_lat_key'];
-                $lon_key = $return_arr['latest_lon_key'];
-                $data_arr = array(
-                    'latitude' => $MEDIC18A0036_Array[$lat_key]['v'],
-                    'longitude' => $MEDIC18A0036_Array[$lon_key]['v'],
-                    'telematics' => array(),
-                    'deviceGUID' => 'MEDIC18A0036'
-                );
-                $data['vehicle_latlong'][] = $data_arr;
             }
 
-            if ($this->input->get('txt_date') != '') {
-                $start_date_data = htmlentities(date('Y-m-d', strtotime($this->input->get('txt_date')))) . ' 00:00:00';
-                $end_date_data = htmlentities(date('Y-m-d', strtotime($this->input->get('txt_date')))) . ' 23:59:59';
-                $where = "dc.signatureDateTime>='" . $start_date_data . "' and dc.signatureDateTime<='" . $end_date_data . "'";
-            } else {
-                $where = '';
-            }
-
-            $sql = "SELECT count(dc.dailyCheckID) as daily_check_unchecked_cnt FROM " . TBL_DAILYCHECK . " as dc WHERE dc.typeOfCheck=0";
-            if ($where != '') {
-                $sql .= " and " . $where;
-            }
-            $daily_check_unchecked_cnt = $this->db->query($sql)->row_array();
-
-            $sql = "SELECT count(dc.dailyCheckID) as daily_check_checked_cnt FROM " . TBL_DAILYCHECK . " as dc WHERE dc.typeOfCheck=1";
-            if ($where != '') {
-                $sql .= " and " . $where;
-            }
-            $daily_check_checked_cnt = $this->db->query($sql)->row_array();
-
-            if ($where != '') {
-                $condition = array(
-                    'date_range_start' => $start_date_data,
-                    'date_range_end' => $end_date_data
-                );
-            } else {
-                $condition = array();
-            }
-
-            // Faults
-            $daily_check_faults = $this->dashboard_model->get_all_faults('', '', $condition)->result_array();
-            $total_faults = array_column($daily_check_faults, 'total_faults');
-            $daily_check_fault_cnt = array_sum($total_faults);
-
-            // Service Due
-            $sql = "SELECT count(vehicleGUID) as total_service_due FROM " . TBL_VEHICLE;
-            $service_due_cnt = $this->db->query($sql)->row_array();
-
-            // Proof Of Delivery
-            $podArr = $this->dashboard_model->get_all_pod('', '', $condition)->result_array();
-            $total_pod = array_column($podArr, 'total_pod');
-            $pod_cnt = array_sum($total_pod);
-
-            // Incidents
-            $incidentsArr = $this->dashboard_model->get_all_incidents('', '', $condition)->result_array();
-            $total_incidents = array_column($incidentsArr, 'total_incidents');
-            $incidents_cnt = array_sum($total_incidents);
-
-
-
-            $stat = array(
-                'daily_check_unchecked_cnt' => $daily_check_unchecked_cnt['daily_check_unchecked_cnt'],
-                'daily_check_checked_cnt' => $daily_check_checked_cnt['daily_check_checked_cnt'],
-                'daily_check_fault_cnt' => $daily_check_fault_cnt,
-                'service_due_cnt' => $service_due_cnt['total_service_due'],
-                'pod_cnt' => $pod_cnt,
-                'daily_check_incident_cnt' => $incidents_cnt,
+            $return_arr = $this->get_device_json(MEDIC17L0018_json);
+            $MEDIC17L0018_Array = $return_arr['reverse_device_Array'];
+            $lat_key = $return_arr['latest_lat_key'];
+            $lon_key = $return_arr['latest_lon_key'];
+            $data_arr = array(
+                'latitude' => $MEDIC17L0018_Array[$lat_key]['v'],
+                'longitude' => $MEDIC17L0018_Array[$lon_key]['v'],
+                'telematics' => array(),
+                'deviceGUID' => 'MEDIC17L0018'
             );
-            $data['stat'] = $stat;
-//            $this->template->load('default', 'authentication/dashboard', $data);
+            $data['vehicle_latlong'][] = $data_arr;
+
+            $return_arr = $this->get_device_json(MEDIC18A0036_json);
+            $MEDIC18A0036_Array = $return_arr['reverse_device_Array'];
+            $lat_key = $return_arr['latest_lat_key'];
+            $lon_key = $return_arr['latest_lon_key'];
+            $data_arr = array(
+                'latitude' => $MEDIC18A0036_Array[$lat_key]['v'],
+                'longitude' => $MEDIC18A0036_Array[$lon_key]['v'],
+                'telematics' => array(),
+                'deviceGUID' => 'MEDIC18A0036'
+            );
+            $data['vehicle_latlong'][] = $data_arr;
             $this->template->load('default', 'company_admin/operation/map', $data);
         }
     }
