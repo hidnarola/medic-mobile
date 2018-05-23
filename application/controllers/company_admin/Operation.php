@@ -10,7 +10,7 @@ class Operation extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model(array('track_model', 'vehicle_model'));
+        $this->load->model(array('track_model', 'vehicle_model', 'operation_model'));
     }
 
     /**
@@ -85,7 +85,9 @@ class Operation extends MY_Controller {
      * Machines page
      */
     public function machines() {
-        $this->template->load('default', 'company_admin/operation/machines');
+        $companyGUID = $this->session->userdata('companyGUID');
+        $data['machines'] = $this->operation_model->get_vehicles($companyGUID);
+        $this->template->load('default', 'company_admin/operation/machines', $data);
     }
 
     /**

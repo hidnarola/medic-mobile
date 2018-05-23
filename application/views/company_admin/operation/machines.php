@@ -95,214 +95,32 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="track-icon"></div>
-                                                <h4>91-BJD-1/35264</h4>
-                                                <p>Group 1</p>
-                                            </div>
-                                        </td>
-                                        <td>50-BBB-9/34935</td>
-                                        <td>Loader crane</td>
-                                        <td>28.08.2017</td>
-                                        <td>less than a minute ago</td>
-                                        <td>
-                                            <div class="srh-location-srh"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="track-icon"></div>
-                                                <h4>91-BJD-1/35264</h4>
-                                                <p>Group 1</p>
-                                            </div>
-                                        </td>
-                                        <td>50-BBB-9/34935</td>
-                                        <td>Loader crane</td>
-                                        <td>28.08.2017</td>
-                                        <td>less than a minute ago</td>
-                                        <td>
-                                            <div class="srh-location-srh"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="track-icon"></div>
-                                                <h4>91-BJD-1/35264</h4>
-                                                <p>Group 1</p>
-                                            </div>
-                                        </td>
-                                        <td>50-BBB-9/34935</td>
-                                        <td>Loader crane</td>
-                                        <td>28.08.2017</td>
-                                        <td>less than a minute ago</td>
-                                        <td>
-                                            <div class="srh-location-srh"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="track-icon"></div>
-                                                <h4>91-BJD-1/35264</h4>
-                                                <p>Group 1</p>
-                                            </div>
-                                        </td>
-                                        <td>50-BBB-9/34935</td>
-                                        <td>Loader crane</td>
-                                        <td>28.08.2017</td>
-                                        <td>less than a minute ago</td>
-                                        <td>
-                                            <div class="srh-location-srh"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="track-icon"></div>
-                                                <h4>91-BJD-1/35264</h4>
-                                                <p>Group 1</p>
-                                            </div>
-                                        </td>
-                                        <td>50-BBB-9/34935</td>
-                                        <td>Loader crane</td>
-                                        <td>28.08.2017</td>
-                                        <td>less than a minute ago</td>
-                                        <td>
-                                            <div class="srh-location-srh"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="track-icon"></div>
-                                                <h4>91-BJD-1/35264</h4>
-                                                <p>Group 1</p>
-                                            </div>
-                                        </td>
-                                        <td>50-BBB-9/34935</td>
-                                        <td>Loader crane</td>
-                                        <td>28.08.2017</td>
-                                        <td>less than a minute ago</td>
-                                        <td>
-                                            <div class="srh-location-srh"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="track-icon"></div>
-                                                <h4>91-BJD-1/35264</h4>
-                                                <p>Group 1</p>
-                                            </div>
-                                        </td>
-                                        <td>50-BBB-9/34935</td>
-                                        <td>Loader crane</td>
-                                        <td>28.08.2017</td>
-                                        <td>less than a minute ago</td>
-                                        <td>
-                                            <div class="srh-location-srh"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="track-icon"></div>
-                                                <h4>91-BJD-1/35264</h4>
-                                                <p>Group 1</p>
-                                            </div>
-                                        </td>
-                                        <td>50-BBB-9/34935</td>
-                                        <td>Loader crane</td>
-                                        <td>28.08.2017</td>
-                                        <td>less than a minute ago</td>
-                                        <td>
-                                            <div class="srh-location-srh"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="track-icon"></div>
-                                                <h4>91-BJD-1/35264</h4>
-                                                <p>Group 1</p>
-                                            </div>
-                                        </td>
-                                        <td>50-BBB-9/34935</td>
-                                        <td>Loader crane</td>
-                                        <td>28.08.2017</td>
-                                        <td>less than a minute ago</td>
-                                        <td>
-                                            <div class="srh-location-srh"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="track-icon"></div>
-                                                <h4>91-BJD-1/35264</h4>
-                                                <p>Group 1</p>
-                                            </div>
-                                        </td>
-                                        <td>50-BBB-9/34935</td>
-                                        <td>Loader crane</td>
-                                        <td>28.08.2017</td>
-                                        <td>less than a minute ago</td>
-                                        <td>
-                                            <div class="srh-location-srh"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="track-icon"></div>
-                                                <h4>91-BJD-1/35264</h4>
-                                                <p>Group 1</p>
-                                            </div>
-                                        </td>
-                                        <td>50-BBB-9/34935</td>
-                                        <td>Loader crane</td>
-                                        <td>28.08.2017</td>
-                                        <td>less than a minute ago</td>
-                                        <td>
-                                            <div class="srh-location-srh"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="track-icon"></div>
-                                                <h4>91-BJD-1/35264</h4>
-                                                <p>Group 1</p>
-                                            </div>
-                                        </td>
-                                        <td>50-BBB-9/34935</td>
-                                        <td>Loader crane</td>
-                                        <td>28.08.2017</td>
-                                        <td>less than a minute ago</td>
-                                        <td>
-                                            <div class="srh-location-srh"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="track-icon"></div>
-                                                <h4>91-BJD-1/35264</h4>
-                                                <p>Group 1</p>
-                                            </div>
-                                        </td>
-                                        <td>50-BBB-9/34935</td>
-                                        <td>Loader crane</td>
-                                        <td>28.08.2017</td>
-                                        <td>less than a minute ago</td>
-                                        <td>
-                                            <div class="srh-location-srh"></div>
-                                        </td>
-                                    </tr>
+                                    <?php
+                                    if (count($machines) > 0) {
+                                        foreach ($machines as $key => $machine) {
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    <div class="srh-machine">
+                                                        <div class="track-icon"></div>
+                                                        <h4><?php echo $machine['registration']?></h4>
+                                                        <p>Group 1</p>
+                                                    </div>
+                                                </td>
+                                                <td><?php echo $machine['deviceGUID'] ?></td>
+                                                <td><?php echo $machine['type'] ?></td>
+                                                <td><?php echo $machine['lastServiceDate'] ?></td>
+                                                <td></td>
+                                                <td>
+                                                    <div class="srh-location-srh"></div>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='6'>No vehicles added yet.</td></tr>";
+                                    }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>

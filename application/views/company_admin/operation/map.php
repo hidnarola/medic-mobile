@@ -715,7 +715,7 @@
             path = [],
             vmarker = '',
             prev_latlng,
-            gps_track, last_index;
+            gps_track, last_index, live_track_var;
     var cnt = 0;
 
 
@@ -734,6 +734,13 @@
             lng: parseFloat(value['longitude'].replace('"', ''))
         });
     });
+
+    // On modal close event
+    $('#individual-overview').on('hidden.bs.modal', function (e) {
+        if (live_track_var != undefined) {
+            clearInterval(live_track_var);
+        }
+    })
 
     function initMap() {
         $('#map').show();
@@ -834,6 +841,9 @@
         $('#custom_timeframe_modal').modal('show');
     }
     function display_vmap(href) {
+        if (live_track_var != undefined) {
+            clearInterval(live_track_var);
+        }
         $('#custom_loading').show();
         $.ajax({
             type: "POST",
@@ -843,6 +853,8 @@
                 $('#custom_loading').hide();
                 $('#individual-overview').modal();
                 $('#vehicle_title').html(data.deviceGUID);
+                var deviceGUID = data.deviceGUID;
+
 
                 gps_track = data.vehicle_latlong;
                 last_index = gps_track.length - 1;
@@ -864,23 +876,23 @@
                 if (gps_track.length != 0) {
                     if (gps_track[0]['is_google_route'] == 1) {
                         setTimeout(function () {
-                            google_route_livemap('<?php echo $this->uri->segment(3); ?>');
+                            google_route_livemap(deviceGUID);
                         }, 1000);
                     } else {
                         setTimeout(function () {
-                            normal_livemap('<?php echo $this->uri->segment(3); ?>');
+                            normal_livemap(deviceGUID);
                         }, 1000);
                     }
                 } else {
                     new PNotify({
                         title: 'Warning notice',
-                        text: 'No data exists for this timeframe. Page will auto redirect to live tracking page.',
+//                        text: 'No data exists for this timeframe. Page will auto redirect to live tracking page.',
+                        text: 'No data exists for this timeframe. Popup will display live tracking of vehicle.',
                         addclass: 'bg-warning',
                         buttons: {
                             sticker: false
                         },
                     });
-                    var deviceGUID = '<?php echo $this->uri->segment(3); ?>';
                     var current_latlng = new google.maps.LatLng(
                             parseFloat((gps_device_data[deviceGUID]['GPS']['Latitude'])),
                             parseFloat((gps_device_data[deviceGUID]['GPS']['Longitude']))
@@ -898,8 +910,8 @@
                     var latlngbounds = new google.maps.LatLngBounds();
                     latlngbounds.extend(vmarker.position);
                     var bounds = new google.maps.LatLngBounds();
-                    map.setCenter(latlngbounds.getCenter());
-                    setInterval(function () {
+                    vmap.setCenter(latlngbounds.getCenter());
+                    live_track_var = setInterval(function () {
                         noraml_live_track(deviceGUID);
                     }, 7000);
                 }
