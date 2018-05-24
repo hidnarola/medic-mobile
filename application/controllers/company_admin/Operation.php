@@ -11,6 +11,8 @@ class Operation extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model(array('track_model', 'vehicle_model', 'operation_model'));
+        $this->companyGUID = $this->session->userdata('companyGUID');
+        $this->regions = $this->operation_model->get_regions($this->companyGUID);
     }
 
     /**
@@ -85,8 +87,7 @@ class Operation extends MY_Controller {
      * Machines page
      */
     public function machines() {
-        $companyGUID = $this->session->userdata('companyGUID');
-        $data['machines'] = $this->operation_model->get_vehicles($companyGUID);
+        $data['machines'] = $this->operation_model->get_vehicles($this->companyGUID);
         $this->template->load('default', 'company_admin/operation/machines', $data);
     }
 
@@ -101,7 +102,8 @@ class Operation extends MY_Controller {
      * Operators page
      */
     public function operators() {
-        $this->template->load('default', 'company_admin/operation/operators');
+        $data['operators'] = $this->operation_model->get_operators($this->companyGUID);
+        $this->template->load('default', 'company_admin/operation/operators', $data);
     }
 
 }

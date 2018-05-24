@@ -1,52 +1,4 @@
-<section class="select-services">
-    <div class="container">
-        <div class="row">
-            <ul>
-                <li class="dropdown">
-                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        All products
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">products 01</a>
-                        <a class="dropdown-item" href="#">products 02</a>
-                        <a class="dropdown-item" href="#">products 03</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select region
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">products 01</a>
-                        <a class="dropdown-item" href="#">products 02</a>
-                        <a class="dropdown-item" href="#">products 03</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select branch
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">products 01</a>
-                        <a class="dropdown-item" href="#">products 02</a>
-                        <a class="dropdown-item" href="#">products 03</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select group
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">products 01</a>
-                        <a class="dropdown-item" href="#">products 02</a>
-                        <a class="dropdown-item" href="#">products 03</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</section>
-
+<?php $this->load->view('company_admin/operation/header') ?>
 <section class="home-content padding-none">
     <div class="container">
         <div class="row">
@@ -75,7 +27,6 @@
                             </li>
                         </ul>
                     </div>
-
                     <div class="services-table">
                         <div class="loader-crane d-flex">
                             <h4>Operator stats</h4>
@@ -143,114 +94,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="user-icon"></div>
-                                                <h4><a data-toggle="modal" data-target="#individual-overview">John Doe</a></h4>
-                                            </div>
-                                        </td>
-                                        <td> 40 <i class="star-icon"></i> </td>
-                                        <td><i class="circle-icon green"></i> </td>
-                                        <td>26,66</td>
-                                        <td>4,25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="user-icon"></div>
-                                                <h4>John Doe</h4>
-                                            </div>
-                                        </td>
-                                        <td> 40 <i class="star-iocn"></i> </td>
-                                        <td> <i class="circle-icon red"></i> </td>
-                                        <td>26,66</td>
-                                        <td>4,25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="user-icon"></div>
-                                                <h4>John Doe</h4>
-                                            </div>
-                                        </td>
-                                        <td> 40 <i class="star-iocn"></i></td>
-                                        <td><i class="circle-icon yellow"></i></td>
-                                        <td>26,66</td>
-                                        <td>4,25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="user-icon"></div>
-                                                <h4>John Doe</h4>
-                                            </div>
-                                        </td>
-                                        <td> 40 <i class="star-icon"></i></td>
-                                        <td><i class="circle-icon green"></i></td>
-                                        <td>26,66</td>
-                                        <td>4,25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="user-icon"></div>
-                                                <h4>John Doe</h4>
-                                            </div>
-                                        </td>
-                                        <td> 40 <i class="star-iocn"></i></td>
-                                        <td><i class="circle-icon red"></i></td>
-                                        <td>26,66</td>
-                                        <td>4,25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="user-icon"></div>
-                                                <h4>John Doe</h4>
-                                            </div>
-                                        </td>
-                                        <td> 40 <i class="star-iocn"></i></td>
-                                        <td><i class="circle-icon yellow"></i></td>
-                                        <td>26,66</td>
-                                        <td>4,25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="user-icon"></div>
-                                                <h4>John Doe</h4>
-                                            </div>
-                                        </td>
-                                        <td> 40 <i class="star-icon"></i></td>
-                                        <td><i class="circle-icon green"></i></td>
-                                        <td>26,66</td>
-                                        <td>4,25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="user-icon"></div>
-                                                <h4>John Doe</h4>
-                                            </div>
-                                        </td>
-                                        <td> 40 <i class="star-iocn"></i></td>
-                                        <td><i class="circle-icon red"></i></td>
-                                        <td>26,66</td>
-                                        <td>4,25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="srh-machine">
-                                                <div class="user-icon"></div>
-                                                <h4>John Doe</h4>
-                                            </div>
-                                        </td>
-                                        <td> 40 <i class="star-iocn"></i></td>
-                                        <td><i class="circle-icon yellow"></i></td>
-                                        <td>26,66</td>
-                                        <td>4,25</td>
-                                    </tr>
+                                    <?php
+                                    if (count($operators) > 0) {
+                                        foreach ($operators as $key => $operator) {
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    <div class="srh-machine">
+                                                        <div class="user-icon"></div>
+                                                        <h4><a data-toggle="modal" data-target="#individual-overview"><?php echo $operator['firstName'] . ' ' . $operator['lastName'] ?></a></h4>
+                                                    </div>
+                                                </td>
+                                                <td> 40 <i class="star-icon"></i> </td>
+                                                <td><i class="circle-icon green"></i> </td>
+                                                <td>26,66</td>
+                                                <td>4,25</td>
+                                            </tr>
+                                            <?php
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='4'><center>No operators added yet.</center></td></tr>";
+                                    }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
@@ -588,7 +453,7 @@
                             </ul>
                         </div>
                         <div class="graph-img">
-                            <img src="images/graph.jpg" alt="" />
+                            <img src="assets/images/graph.jpg" alt="" />
                         </div>
                     </div>
                     <div class="tab-pane fade" id="popupmap" role="tabpanel" aria-labelledby="popupmap-tab">05</div>

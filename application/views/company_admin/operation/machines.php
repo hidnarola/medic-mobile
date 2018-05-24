@@ -1,52 +1,4 @@
-<section class="select-services">
-    <div class="container">
-        <div class="row">
-            <ul>
-                <li class="dropdown">
-                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        All products
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">products 01</a>
-                        <a class="dropdown-item" href="#">products 02</a>
-                        <a class="dropdown-item" href="#">products 03</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select region
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">products 01</a>
-                        <a class="dropdown-item" href="#">products 02</a>
-                        <a class="dropdown-item" href="#">products 03</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select branch
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">products 01</a>
-                        <a class="dropdown-item" href="#">products 02</a>
-                        <a class="dropdown-item" href="#">products 03</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select group
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">products 01</a>
-                        <a class="dropdown-item" href="#">products 02</a>
-                        <a class="dropdown-item" href="#">products 03</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</section>
-
+<?php $this->load->view('company_admin/operation/header') ?>
 <section class="home-content padding-none">
     <div class="container">
         <div class="row">
@@ -103,7 +55,7 @@
                                                 <td>
                                                     <div class="srh-machine">
                                                         <div class="track-icon"></div>
-                                                        <h4><?php echo $machine['registration']?></h4>
+                                                        <h4><?php echo $machine['registration'] ?></h4>
                                                         <p>Group 1</p>
                                                     </div>
                                                 </td>
@@ -118,7 +70,7 @@
                                             <?php
                                         }
                                     } else {
-                                        echo "<tr><td colspan='6'>No vehicles added yet.</td></tr>";
+                                        echo "<tr><td colspan='6'><center>No vehicles added yet.</center></td></tr>";
                                     }
                                     ?>
                                 </tbody>

@@ -21,19 +21,19 @@
                         <table>
                             <tr>
                                 <td>Company Name</td>
-                                <td><input type="text" name="" placeholder="Company Name" /></td>
+                                <td><input type="text" name="company_name" placeholder="Company Name" class="input-edit" value="<?php echo $company['companyName'] ?>"/></td>
                             </tr>
                             <tr>
                                 <td>Name</td>
-                                <td><input type="text" name="" placeholder="Firstname Lastname"/></td>
+                                <td><input type="text" name="name" placeholder="Firstname Lastname" class="input-edit" value="<?php echo $user['firstName'] . ' ' . $user['lastName'] ?>"/></td>
                             </tr>
                             <tr>
                                 <td>Username</td>
-                                <td><input type="text" name="" placeholder="FirLas" /></td>
+                                <td><input type="text" name="username" placeholder="Username" class="input-edit" value="<?php echo $user['username']; ?>"/></td>
                             </tr>
                             <tr>
                                 <td>E-mail</td>
-                                <td><input type="text" name="" placeholder="firstname.lastname@companyname.com" /></td>
+                                <td><input type="text" name="email" placeholder="firstname.lastname@companyname.com" class="input-edit" value="<?php echo $user['emailAddress']; ?>"/></td>
                             </tr>
                             <tr>
                                 <td>Phone number</td>
@@ -41,11 +41,11 @@
                             </tr>
                             <tr>
                                 <td>SMS notifications</td>
-                                <td><input type="text" name="" placeholder="+358 40 123 1234, +358 50 498 4248" /></td>
+                                <td><input type="text" name="" placeholder="+358 40 123 1234, +358 50 498 4248" class="input-edit"/></td>
                             </tr>
                             <tr>
                                 <td>Address</td>
-                                <td><input type="text" name="" placeholder="Address line 1, 123 ABC, 012345 Place"  /></td>
+                                <td><input type="text" name="" placeholder="Address line 1, 123 ABC, 012345 Place" class="input-edit" value="<?php echo $company['addressLine1']; ?>"/></td>
                             </tr>
                         </table>
                     </div>
@@ -59,6 +59,9 @@
                         </div>	
                         <div class="general-info-r-r">
                             <span></span>
+                            <!--                            <label class="btn btn-default btn-file">
+                                                            <input type="file" style="display: none;">
+                                                        </label>-->
                         </div>
                     </div>	
                     <button type="submit">CHANGE PASSWORD</button>
@@ -81,7 +84,7 @@
                                 <tr>
                                     <td>
                                         <div class="operation-td">
-                                            <i class="question-yellow"></i>
+                                            <i class="question-red"></i>
                                             <h5>Driving with boom up</h5>
                                         </div>	
                                     </td>
@@ -105,8 +108,8 @@
                                 <tr>
                                     <td>
                                         <div class="operation-td">
-                                            <i class="question-yellow"></i>
-                                            <h5>Driving with boom up</h5>
+                                            <i class="question-red"></i>
+                                            <h5>Driving with stabilizer legs out</h5>
                                         </div>	
                                     </td>
                                     <td>
@@ -130,7 +133,7 @@
                                     <td>
                                         <div class="operation-td">
                                             <i class="question-yellow"></i>
-                                            <h5>Driving with boom up</h5>
+                                            <h5>Unstable operation</h5>
                                         </div>	
                                     </td>
                                     <td>
@@ -154,7 +157,7 @@
                                     <td>
                                         <div class="operation-td">
                                             <i class="question-yellow"></i>
-                                            <h5>Driving with boom up</h5>
+                                            <h5>Emergency stop not used</h5>
                                         </div>	
                                     </td>
                                     <td>
@@ -178,7 +181,7 @@
                                     <td>
                                         <div class="operation-td">
                                             <i class="question-yellow"></i>
-                                            <h5>Driving with boom up</h5>
+                                            <h5>Bumpy crane operation</h5>
                                         </div>	
                                     </td>
                                     <td>
@@ -202,7 +205,7 @@
                                     <td>
                                         <div class="operation-td">
                                             <i class="question-yellow"></i>
-                                            <h5>Driving with boom up</h5>
+                                            <h5>Slow operation</h5>
                                         </div>	
                                     </td>
                                     <td>
@@ -226,7 +229,7 @@
                                     <td>
                                         <div class="operation-td">
                                             <i class="question-yellow"></i>
-                                            <h5>Driving with boom up</h5>
+                                            <h5>Overload protection overridden</h5>
                                         </div>	
                                     </td>
                                     <td>
@@ -250,7 +253,55 @@
                                     <td>
                                         <div class="operation-td">
                                             <i class="question-yellow"></i>
-                                            <h5>Driving with boom up</h5>
+                                            <h5>Long idling time</h5>
+                                        </div>	
+                                    </td>
+                                    <td>
+                                        <div class="switch-wrap">
+                                            <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>	
+                                    </td>
+                                    <td>
+                                        <div class="switch-wrap">
+                                            <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="operation-td">
+                                            <i class="question-yellow"></i>
+                                            <h5>Pressing boom system to the ground</h5>
+                                        </div>	
+                                    </td>
+                                    <td>
+                                        <div class="switch-wrap">
+                                            <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>	
+                                    </td>
+                                    <td>
+                                        <div class="switch-wrap">
+                                            <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="operation-td">
+                                            <i class="question-yellow"></i>
+                                            <h5>Unoptimal crane use</h5>
                                         </div>	
                                     </td>
                                     <td>
@@ -286,8 +337,8 @@
                                 <tr>
                                     <td>
                                         <div class="operation-td">
-                                            <i class="question-yellow"></i>
-                                            <h5>Driving with boom up</h5>
+                                            <i class="question-red"></i>
+                                            <h5>Driving with hook back</h5>
                                         </div>	
                                     </td>
                                     <td>
@@ -311,31 +362,7 @@
                                     <td>
                                         <div class="operation-td">
                                             <i class="question-red"></i>
-                                            <h5>Driving with boom up</h5>
-                                        </div>	
-                                    </td>
-                                    <td>
-                                        <div class="switch-wrap">
-                                            <label class="switch">
-                                                <input type="checkbox">
-                                                <span class="slider round"></span>
-                                            </label>
-                                        </div>	
-                                    </td>
-                                    <td>
-                                        <div class="switch-wrap">
-                                            <label class="switch">
-                                                <input type="checkbox">
-                                                <span class="slider round"></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="operation-td">
-                                            <i class="question-red"></i>
-                                            <h5>Driving with boom up</h5>
+                                            <h5>Driving in tipping mode</h5>
                                         </div>	
                                     </td>
                                     <td>
@@ -359,7 +386,7 @@
                                     <td>
                                         <div class="operation-td">
                                             <i class="question-yellow"></i>
-                                            <h5>Driving with boom up</h5>
+                                            <h5>Driving without body locks activated</h5>
                                         </div>	
                                     </td>
                                     <td>
@@ -382,8 +409,32 @@
                                 <tr>
                                     <td>
                                         <div class="operation-td">
-                                            <i class="question-red"></i>
-                                            <h5>Driving with boom up</h5>
+                                            <i class="question-yellow"></i>
+                                            <h5>Emergency mode activated</h5>
+                                        </div>	
+                                    </td>
+                                    <td>
+                                        <div class="switch-wrap">
+                                            <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>	
+                                    </td>
+                                    <td>
+                                        <div class="switch-wrap">
+                                            <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="operation-td">
+                                            <i class="question-yellow"></i>
+                                            <h5>D-code error limit exceeded</h5>
                                         </div>	
                                     </td>
                                     <td>
@@ -411,3 +462,30 @@
         </div>
     </div>	
 </section>
+<script>
+    $(function () {
+
+        // We can attach the `fileselect` event to all file inputs on the page
+        $(document).on('change', ':file', function () {
+            var input = $(this),
+                    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [numFiles, label]);
+        });
+
+        // We can watch for our custom `fileselect` event like this
+        $(document).ready(function () {
+            $(':file').on('fileselect', function (event, numFiles, label) {
+                var input = $(this).parents('.input-group').find(':text'),
+                        log = numFiles > 1 ? numFiles + ' files selected' : label;
+                if (input.length) {
+                    input.val(log);
+                } else {
+                    if (log)
+                        alert(log);
+                }
+            });
+        });
+
+    });
+</script>

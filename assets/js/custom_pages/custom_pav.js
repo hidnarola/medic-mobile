@@ -41,7 +41,7 @@ function get_device_data() {
         dataType: 'json',
         success: function (data) {
             gps_device_data = data;
-            console.log(gps_device_data);
+//            console.log(gps_device_data);
             setTimeout(function () {
                 get_device_data();
             }, 7000);

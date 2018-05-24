@@ -1,55 +1,7 @@
 <script type="text/javascript" src="assets/js/moment.min.js"></script>
 <script type="text/javascript" src="assets/js/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="assets/css/daterangepicker.css" />
-<section class="select-services">
-    <div class="container">
-        <div class="row">
-            <ul>
-                <li class="dropdown">
-                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        All products
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">products 01</a>
-                        <a class="dropdown-item" href="#">products 02</a>
-                        <a class="dropdown-item" href="#">products 03</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select region
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">products 01</a>
-                        <a class="dropdown-item" href="#">products 02</a>
-                        <a class="dropdown-item" href="#">products 03</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select branch
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">products 01</a>
-                        <a class="dropdown-item" href="#">products 02</a>
-                        <a class="dropdown-item" href="#">products 03</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select group
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">products 01</a>
-                        <a class="dropdown-item" href="#">products 02</a>
-                        <a class="dropdown-item" href="#">products 03</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</section>
-
+<?php $this->load->view('company_admin/operation/header') ?>
 <section class="home-content padding-none">
     <div class="container">
         <div class="row">
@@ -122,7 +74,7 @@
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="map-content">
-                                    <div class="map stop-map" id="map2" style="height: 540px">
+                                    <div class="map stop-map" id="stopmap" style="height: 540px">
                                         <img src="assets/images/map.jpg" alt="" />
                                     </div>
                                     <div class="map-accordion stops">
@@ -725,7 +677,7 @@
 
     var vehicle_latlong = [],
             markers = [],
-            map,
+            map, stopmap,
             random_color = '';
 
     $(vehicle_data).each(function (key, value) {
@@ -749,6 +701,7 @@
             center: new google.maps.LatLng(vehicle_latlong[0]),
         };
         map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        stopmap = new google.maps.Map(document.getElementById("stopmap"), mapOptions); //-- Initialize stopmap
 
         var latlngbounds = new google.maps.LatLngBounds();
         var infoWindow = new google.maps.InfoWindow();
@@ -913,7 +866,7 @@
                     vmap.setCenter(latlngbounds.getCenter());
                     live_track_var = setInterval(function () {
                         noraml_live_track(deviceGUID);
-                    }, 7000);
+                    }, 10000);
                 }
 
             }

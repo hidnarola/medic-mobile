@@ -13,13 +13,18 @@ class Settings extends MY_Controller {
         $this->load->model(array('settings_model'));
     }
 
+    /**
+     * General info settings page
+     * @author KU
+     */
     public function index() {
-        $this->template->load('default', 'company_admin/settings/index');
+        $companyGUID = $this->session->userdata('companyGUID');
+        $data['user'] = $this->session->userdata();
+        $data['company'] = $this->settings_model->get_all_details(TBL_COMPANY, ['companyGUID' => $companyGUID])->row_array();
+        $this->template->load('default', 'company_admin/settings/index', $data);
     }
 
-    /*     * ****************************************************
-      Manage Areas
-     * ***************************************************** */
+    //-- Manage Areas
 
     /**
      * Display areas listing

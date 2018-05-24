@@ -6,7 +6,9 @@ class Dashboard extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model(array('dashboard_model', 'vehicle_model', 'track_model'));
+        $this->load->model(array('dashboard_model', 'vehicle_model', 'track_model', 'operation_model'));
+        $this->companyGUID = $this->session->userdata('companyGUID');
+        $this->regions = $this->operation_model->get_regions($this->companyGUID);
         $this->operators_per_page = $this->service_due_per_page = $this->faults_per_page = $this->pod_per_page = $this->incidents_per_page = 10;
         $this->dailycheck_per_page = 25;
     }
