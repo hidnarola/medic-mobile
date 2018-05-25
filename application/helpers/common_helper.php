@@ -227,7 +227,7 @@ if (!defined('BASEPATH'))
     function get_AdminLogin($type = '') {
         $CI = & get_instance();
         if ($type == 'I') { 
-            return $CI->session->userdata('loginDetailsID');
+            return $CI->session->userdata('userGUID');
         } else if ($type == 'U') {
             return $CI->session->userdata('username');
         } else if ($type == 'F') {

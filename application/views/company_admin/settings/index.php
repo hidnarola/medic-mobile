@@ -1,3 +1,6 @@
+<?php $success_msg = $this->session->flashdata('success'); ?>
+<script type="text/javascript" src="assets/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="assets/js/additional-methods.min.js"></script>
 <section class="setting-page">
     <div class="container">
         <div class="row">
@@ -15,40 +18,46 @@
                 <div class="general-info-l">
                     <div class="general-info-l-head d-flex">
                         <h2>General Information</h2>
-                        <a href="">EDIT</a>
+                        <a href="javascript:void(0)" class="edit_profile_btn">EDIT</a>
                     </div>
-                    <div class="general-info-l-body">
-                        <table>
-                            <tr>
-                                <td>Company Name</td>
-                                <td><input type="text" name="company_name" placeholder="Company Name" class="input-edit" value="<?php echo $company['companyName'] ?>"/></td>
-                            </tr>
-                            <tr>
-                                <td>Name</td>
-                                <td><input type="text" name="name" placeholder="Firstname Lastname" class="input-edit" value="<?php echo $user['firstName'] . ' ' . $user['lastName'] ?>"/></td>
-                            </tr>
-                            <tr>
-                                <td>Username</td>
-                                <td><input type="text" name="username" placeholder="Username" class="input-edit" value="<?php echo $user['username']; ?>"/></td>
-                            </tr>
-                            <tr>
-                                <td>E-mail</td>
-                                <td><input type="text" name="email" placeholder="firstname.lastname@companyname.com" class="input-edit" value="<?php echo $user['emailAddress']; ?>"/></td>
-                            </tr>
-                            <tr>
-                                <td>Phone number</td>
-                                <td><input type="text" name="" placeholder="+358 40 123 1234" class="input-edit"/></td>
-                            </tr>
-                            <tr>
-                                <td>SMS notifications</td>
-                                <td><input type="text" name="" placeholder="+358 40 123 1234, +358 50 498 4248" class="input-edit"/></td>
-                            </tr>
-                            <tr>
-                                <td>Address</td>
-                                <td><input type="text" name="" placeholder="Address line 1, 123 ABC, 012345 Place" class="input-edit" value="<?php echo $company['addressLine1']; ?>"/></td>
-                            </tr>
-                        </table>
-                    </div>
+                    <form id="edit-profile-form" method="post">
+                        <div class="general-info-l-body">
+                            <table>
+                                <tr>
+                                    <td>Company Name</td>
+                                    <td><input type="text" name="company_name" placeholder="Company Name" class="input-edit" value="<?php echo $company['companyName'] ?>"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td><input type="text" name="name" placeholder="Firstname Lastname" class="input-edit" value="<?php echo $user['firstName'] . ' ' . $user['lastName'] ?>"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Username</td>
+                                    <td><input type="text" name="username" placeholder="FirLas" class="input-edit" value="<?php echo $user['username']; ?>"/></td>
+                                </tr>
+                                <tr>
+                                    <td>E-mail</td>
+                                    <td><input type="text" name="email" placeholder="firstname.lastname@companyname.com" class="input-edit" value="<?php echo $user['emailAddress']; ?>"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Phone number</td>
+                                    <td><input type="text" name="phone_number" placeholder="+358 40 123 1234" class="input-edit" value="<?php echo $company['phoneNumber']; ?>"/></td>
+                                </tr>
+                                <tr>
+                                    <td>SMS notifications</td>
+                                    <td><input type="text" name="sms_notifications" placeholder="+358 40 123 1234" class="input-edit" value="<?php echo $company['smsNotification']; ?>"/></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input type="text" name="sms_notifications1" placeholder="+358 50 498 4248" class="input-edit" value="<?php echo $company['smsNotification1']; ?>"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td><input type="text" name="address" placeholder="Address line 1, 123 ABC, 012345 Place" class="input-edit" value="<?php echo $company['addressLine1']; ?>"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </form>
                 </div>
                 <div class="general-info-r">
                     <div class="general-info-r-head d-flex">
@@ -462,7 +471,63 @@
         </div>
     </div>	
 </section>
-<script>
+<script type="text/javascript">
+    var success_msg = "<?php echo $success_msg ?>";
+    $(document).ready(function () {
+        if (success_msg != '') {
+            new PNotify({
+                title: 'Success',
+                text: 'Information updated successfully!',
+                buttons: {
+                    sticker: false
+                },
+            });
+        }
+    });
+
+    // Edit profile form validation
+    $("#edit-profile-form").validate({
+        rules: {
+            company_name: {
+                required: true,
+            },
+            name: {
+                required: true,
+            },
+            username: {
+                required: true,
+                remote: '<?php echo site_url('company_admin/settings/check_useremail') ?>'
+            },
+            email: {
+                required: true,
+                email: true,
+                remote: '<?php echo site_url('company_admin/settings/check_useremail') ?>'
+            },
+        },
+        messages: {
+            company_name: {
+                required: "Please enter Company name",
+            },
+            name: {
+                required: "Please enter firstanme lastname",
+            },
+            username: {
+                required: "Please enter username",
+                remote: jQuery.validator.format("Username already exist!")
+            },
+            email: {
+                required: "Please enter email",
+                email: "Email is not in valid format",
+                remote: jQuery.validator.format("Email already exist!")
+            },
+        },
+    });
+    //-- Validate edit profile form
+    $(document).on('click', '.edit_profile_btn', function () {
+        if ($("#edit-profile-form").valid()) {
+            $("#edit-profile-form").submit();
+        }
+    });
     $(function () {
 
         // We can attach the `fileselect` event to all file inputs on the page

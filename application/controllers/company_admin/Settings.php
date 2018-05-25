@@ -18,10 +18,126 @@ class Settings extends MY_Controller {
      * @author KU
      */
     public function index() {
+        $this->form_validation->set_rules('company_name', 'Company name', 'trim|required');
+        $this->form_validation->set_rules('name', 'Name', 'trim|required');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|callback_username_validation');
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|callback_email_validation');
+        $user_id = $this->session->userdata('userGUID');
         $companyGUID = $this->session->userdata('companyGUID');
-        $data['user'] = $this->session->userdata();
-        $data['company'] = $this->settings_model->get_all_details(TBL_COMPANY, ['companyGUID' => $companyGUID])->row_array();
-        $this->template->load('default', 'company_admin/settings/index', $data);
+
+        if ($this->form_validation->run() == true) {
+            $name = htmlentities($this->input->post('name'));
+            $name_arr = $this->split_name($name);
+            $updateArr = [
+                'firstName' => $name_arr[0],
+                'lastName' => $name_arr[1],
+                'username' => htmlentities($this->input->post('username')),
+                'emailAddress' => htmlentities($this->input->post('email')),
+            ];
+            $this->settings_model->insert_update('update', TBL_LOGIN_DETAILS, $updateArr, ['userGUID' => $user_id]);
+
+            $updateCompArr = array(
+                'companyName' => htmlentities($this->input->post('company_name')),
+                'phoneNumber' => htmlentities($this->input->post('phone_number')),
+                'smsNotification' => htmlentities($this->input->post('sms_notifications')),
+                'smsNotification1' => htmlentities($this->input->post('sms_notifications1')),
+                'addressLine1' => htmlentities($this->input->post('address')),
+            );
+            $this->settings_model->insert_update('update', TBL_COMPANY, $updateCompArr, ['companyGUID' => $companyGUID]);
+
+            //-- Update user session data
+            $user_ssn_data = array();
+            $user_ssn_data['firstName'] = $updateArr['firstName'];
+            $user_ssn_data['lastName'] = $updateArr['lastName'];
+            $user_ssn_data['username'] = $updateArr['username'];
+            $user_ssn_data['emailAddress'] = $updateArr['emailAddress'];
+
+            $this->session->set_userdata($user_ssn_data);
+
+            $this->session->set_flashdata('success', 'Information updated successfully!');
+            redirect('settings');
+        } else {
+
+            $data['user'] = $this->session->userdata();
+            $data['company'] = $this->settings_model->get_all_details(TBL_COMPANY, ['companyGUID' => $companyGUID])->row_array();
+            $this->template->load('default', 'company_admin/settings/index', $data);
+        }
+    }
+
+    /**
+     * Callback Validate function to check unique email validation
+     * @return boolean
+     */
+    public function email_validation() {
+        $user_id = $this->session->userdata('userGUID');
+        $result = $this->settings_model->get_all_details(TBL_LOGIN_DETAILS, ['emailAddress' => trim($this->input->post('email')), 'userGUID!=' => $user_id])->row_array();
+        if (!empty($result)) {
+            $this->form_validation->set_message('email_validation', 'Email Already exist!');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
+    /**
+     * Callback Validate function to check username validation
+     * @return boolean
+     */
+    public function username_validation() {
+        $user_id = $this->session->userdata('userGUID');
+        $result = $this->settings_model->get_all_details(TBL_LOGIN_DETAILS, ['username' => trim($this->input->post('username')), 'userGUID!=' => $user_id])->row_array();
+        if (!empty($result)) {
+            $this->form_validation->set_message('username_validation', 'Username Already exist!');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
+    /**
+     * Separate first-name and last-name from full name
+     * Uses regex that accepts any word character or hyphen in last name
+     * @param string $name
+     * @return array
+     * @author KU
+     */
+    public function split_name($name = null) {
+        $name = trim($name);
+        $last_name = (strpos($name, ' ') === false) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $name);
+        $first_name = trim(preg_replace('#' . $last_name . '#', '', $name));
+        return array($first_name, $last_name);
+    }
+
+    /**
+     * Check user email exist or not for edit profile page
+     * @author KU
+     */
+    public function check_useremail() {
+        $requested_email = trim($this->input->get('email'));
+        $user_id = $this->session->userdata('userGUID');
+        $user = $this->settings_model->get_all_details(TBL_LOGIN_DETAILS, ['emailAddress' => $requested_email, 'userGUID!=' => $user_id])->row_array();
+        if (!empty($user)) {
+            echo "false";
+        } else {
+            echo "true";
+        }
+        exit;
+    }
+
+    /**
+     * Check username exist or not for edit profile page
+     * @author KU
+     */
+    public function check_username() {
+        $requested_username = trim($this->input->get('username'));
+        $user_id = $this->session->userdata('userGUID');
+        $user = $this->settings_model->get_all_details(TBL_LOGIN_DETAILS, ['username' => $requested_username, 'userGUID!=' => $user_id])->row_array();
+        if (!empty($user)) {
+            echo "false";
+        } else {
+            echo "true";
+        }
+        exit;
     }
 
     //-- Manage Areas
@@ -38,7 +154,7 @@ class Settings extends MY_Controller {
     }
 
     /**
-     * Get all the data of areas for lsiting datatable.
+     * Get all the data of areas for listing datatable.
      * @param --
      * @return JSON
      * @author PAV

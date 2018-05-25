@@ -841,7 +841,7 @@
                         title: 'Warning notice',
 //                        text: 'No data exists for this timeframe. Page will auto redirect to live tracking page.',
                         text: 'No data exists for this timeframe. Popup will display live tracking of vehicle.',
-                        addclass: 'bg-warning',
+//                        addclass: 'bg-warning',
                         buttons: {
                             sticker: false
                         },
