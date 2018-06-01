@@ -47,6 +47,15 @@ class Operation extends MY_Controller {
             $pre_datetime = date('Y-m-d H:i:s', strtotime(str_replace(',', '', $this->input->get('track_start_date') . ' ' . $time)));
             $time = ($this->input->get('track_end_time') == '') ? '11:30 PM' : $this->input->get('track_end_time');
             $post_datetime = date('Y-m-d H:i:s', strtotime(str_replace(',', '', $this->input->get('track_end_date') . ' ' . $time)));
+
+            //-- If request is for last use then get $pre_datetime and $post_datetime 
+            if ($this->input->get('last_use') == 1) {
+                $last_datetime = $this->track_model->get_last_gps_by_sessionID(['v.deviceGUID' => $deviceGUID]);
+                if (!empty($last_datetime)) {
+                    $post_datetime = $last_datetime['timeStamp'];
+                    $pre_datetime = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($post_datetime)));
+                }
+            }
         } else {
             $pre_datetime = date('Y-m-d H:i:s', (time() - 86400)); //345600
             $post_datetime = date('Y-m-d H:i:s', time());
@@ -55,6 +64,17 @@ class Operation extends MY_Controller {
             $return_arr = $this->get_device_json(constant($deviceGUID . '_json'));
             $device_arr = $return_arr['reverse_device_Array'];
             $vehicle_latlong = [];
+            //-- If request is for last use then get $pre_datetime and $post_datetime 
+            if ($this->input->get('last_use') == 1) {
+                foreach ($device_arr as $k => $v) {
+                    if ($v['k'] == 'LOC:lon') {
+                        $post_datetime = date('Y-m-d H:i:s', floor($device_arr[0]['t'] / 1000));
+                        $pre_datetime = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($post_datetime)));
+                        break;
+                    }
+                }
+            }
+
             foreach ($device_arr as $k => $v) {
                 if (date('Y-m-d H:i:s', floor($v['t'] / 1000)) > $pre_datetime && date('Y-m-d H:i:s', floor($v['t'] / 1000)) < $post_datetime) {
                     $key_ind = (string) $v['t'];
