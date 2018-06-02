@@ -803,11 +803,17 @@
             url: href,
             dataType: 'json',
             success: function (data) {
+                //Reset variables 
+                start_point = [];
+                lat_lng = [];
+                path = [];
+                prev_latlng = '';
+                cnt = 0;
+
                 $('#custom_loading').hide();
                 $('#individual-overview').modal();
                 $('#vehicle_title').html(data.deviceGUID);
                 var deviceGUID = data.deviceGUID;
-
 
                 gps_track = data.vehicle_latlong;
                 last_index = gps_track.length - 1;

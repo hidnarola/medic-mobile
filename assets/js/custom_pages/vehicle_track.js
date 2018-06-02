@@ -70,11 +70,12 @@ function google_route_livemap(deviceGUID) {
             '</div>' +
             '<div class="iw-bottom-gradient"></div>' +
             '</div>';
+    /*
     google.maps.event.addListener(vmarker, 'mouseover', function () {
         infoWindow.close();
         infoWindow.setContent(content);
         infoWindow.open(vmap, this);
-    });
+    });*/
     google.maps.event.addListener(infoWindow, 'domready', function () {
         var iwOuter = $('.gm-style-iw');
         var iwBackground = iwOuter.prev();
@@ -149,11 +150,12 @@ function google_route_live_track(deviceGUID) {
             '</div>' +
             '<div class="iw-bottom-gradient"></div>' +
             '</div>';
+    /*
     google.maps.event.addListener(vmarker, 'mouseover', function () {
         infoWindow.close();
         infoWindow.setContent(content);
         infoWindow.open(vmap, this);
-    });
+    });*/
     google.maps.event.addListener(infoWindow, 'domready', function () {
         var iwOuter = $('.gm-style-iw');
         var iwBackground = iwOuter.prev();
@@ -299,11 +301,12 @@ function normal_livemap(deviceGUID) {
             '</div>' +
             '<div class="iw-bottom-gradient"></div>' +
             '</div>';
+    /*
     google.maps.event.addListener(vmarker, 'mouseover', function () {
         infoWindow.close();
         infoWindow.setContent(content);
         infoWindow.open(vmap, this);
-    });
+    });*/
     google.maps.event.addListener(infoWindow, 'domready', function () {
         var iwOuter = $('.gm-style-iw');
         var iwBackground = iwOuter.prev();
@@ -371,11 +374,12 @@ function noraml_live_track(deviceGUID) {
             '</div>' +
             '<div class="iw-bottom-gradient"></div>' +
             '</div>';
+    /*
     google.maps.event.addListener(vmarker, 'mouseover', function () {
         infoWindow.close();
         infoWindow.setContent(content);
         infoWindow.open(vmap, this);
-    });
+    });*/
     google.maps.event.addListener(infoWindow, 'domready', function () {
         var iwOuter = $('.gm-style-iw');
         var iwBackground = iwOuter.prev();
