@@ -67,8 +67,8 @@ class Operation extends MY_Controller {
             //-- If request is for last use then get $pre_datetime and $post_datetime 
             if ($this->input->get('last_use') == 1) {
                 foreach ($device_arr as $k => $v) {
-                    if ($v['k'] == 'LOC:lon') {
-                        $post_datetime = date('Y-m-d H:i:s', floor($device_arr[0]['t'] / 1000));
+                    if ($v['k'] == 'LOC:lon' || $v['k'] == 'LOC:lat') {
+                        $post_datetime = date('Y-m-d H:i:s', floor($v['t'] / 1000));
                         $pre_datetime = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($post_datetime)));
                         break;
                     }
@@ -76,7 +76,9 @@ class Operation extends MY_Controller {
             }
 
             foreach ($device_arr as $k => $v) {
-                if (date('Y-m-d H:i:s', floor($v['t'] / 1000)) > $pre_datetime && date('Y-m-d H:i:s', floor($v['t'] / 1000)) < $post_datetime) {
+                $check_date = date('Y-m-d H:i:s', floor($v['t'] / 1000));
+//                if (($check_date > $pre_datetime && $check_date < $post_datetime)) {
+                if (($check_date > $pre_datetime && $check_date < $post_datetime) || ($check_date == $pre_datetime) || ($check_date == $post_datetime)) {
                     $key_ind = (string) $v['t'];
                     if ($v['k'] == 'LOC:lon') {
                         $vehicle_latlong[$key_ind]['longitude'] = $v['v'];
