@@ -42,17 +42,30 @@ class Operation extends MY_Controller {
      */
     public function track_vehicle($deviceGUID = null) {
         $data['title'] = 'Vehicle - Live Tracking';
+        $data['track_heading'] = $this->input->get('track_time');
+        $data['last_active'] = '';
+        $data['vehicle_status'] = '<h6 class="offline">Offline</h6>';
+        $last_hour = date("Y/m/d H:i:s", strtotime("-30 minutes"));
+
         if ($this->input->get()) {
+
             $time = ($this->input->get('track_start_time') == '') ? '12:00 AM' : $this->input->get('track_start_time');
             $pre_datetime = date('Y-m-d H:i:s', strtotime(str_replace(',', '', $this->input->get('track_start_date') . ' ' . $time)));
             $time = ($this->input->get('track_end_time') == '') ? '11:30 PM' : $this->input->get('track_end_time');
             $post_datetime = date('Y-m-d H:i:s', strtotime(str_replace(',', '', $this->input->get('track_end_date') . ' ' . $time)));
 
+            $last_datetime = $this->track_model->get_last_gps_by_sessionID(['v.deviceGUID' => $deviceGUID]);
+            if (!empty($last_datetime)) {
+                $data['last_active'] = date('Y-m-d h:i:s A', strtotime($last_datetime['timeStamp']));
+                if (strtotime($last_datetime['timeStamp']) >= strtotime($last_hour)) {
+                    $data['vehicle_status'] = '<h6 class="online">Online</h6>';
+                }
+            }
             //-- If request is for last use then get $pre_datetime and $post_datetime 
             if ($this->input->get('last_use') == 1) {
-                $last_datetime = $this->track_model->get_last_gps_by_sessionID(['v.deviceGUID' => $deviceGUID]);
                 if (!empty($last_datetime)) {
                     $post_datetime = $last_datetime['timeStamp'];
+                    $data['track_heading'] = date('Y-m-d h:i:s A', strtotime($post_datetime));
                     $pre_datetime = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($post_datetime)));
                 }
             }
@@ -64,15 +77,24 @@ class Operation extends MY_Controller {
             $return_arr = $this->get_device_json(constant($deviceGUID . '_json'));
             $device_arr = $return_arr['reverse_device_Array'];
             $vehicle_latlong = [];
+            $last_datetime = null;
+            foreach ($device_arr as $k => $v) {
+                if ($v['k'] == 'LOC:lon' || $v['k'] == 'LOC:lat') {
+                    $last_datetime = date('Y-m-d H:i:s', floor($v['t'] / 1000));
+                    break;
+                }
+            }
+            if (strtotime($last_datetime) >= strtotime($last_hour)) {
+                $data['vehicle_status'] = '<h6 class="online">Online</h6>';
+            }
+            $data['last_active'] = date('Y-m-d h:i:s A', strtotime($last_datetime));
+
             //-- If request is for last use then get $pre_datetime and $post_datetime 
             if ($this->input->get('last_use') == 1) {
-                foreach ($device_arr as $k => $v) {
-                    if ($v['k'] == 'LOC:lon' || $v['k'] == 'LOC:lat') {
-                        $post_datetime = date('Y-m-d H:i:s', floor($v['t'] / 1000));
-                        $pre_datetime = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($post_datetime)));
-                        break;
-                    }
-                }
+                $post_datetime = $last_datetime;
+                $pre_datetime = date('Y-m-d H:i:s', strtotime('-1 day', strtotime($post_datetime)));
+
+                $data['track_heading'] = date('Y-m-d h:i:s A', strtotime($post_datetime));
             }
 
             foreach ($device_arr as $k => $v) {

@@ -210,7 +210,7 @@
                         </span>-->
                         <h3><div id="vehicle_title">91-BJD-1/35264</div></h3>
                         <p>Carrying 2 equipment</p>
-                        <h6 class="online">Online</h6>
+                        <div id="vehicle_status"><h6 class="online">Online</h6></div>
 
                         <div class="activation-info">
                             <table class="table">
@@ -219,7 +219,7 @@
                                         <table>
                                             <tr>
                                                 <td>Last active</td>
-                                                <td>Less than a minute ago</td>
+                                                <td><div id="last_active_txt"></div></td>
                                             </tr>
                                             <tr>
                                                 <td>Operator</td>
@@ -397,7 +397,7 @@
                                     <span>22.8.</span>
                                     <span>23.8.</span>
                                     <span>24.8.</span>-->
-                                    <strong>TODAY</strong>
+                                    <div id="tracking_heading"><strong>TODAY</strong></div>
                                 </div>
                                 <div class="map" id="vehicle_map" style="height: 540px">
                                     <img src="assets/images/map.jpg" alt="">
@@ -731,9 +731,9 @@
             var last_hour = "?track_start_date=" + date + "&track_start_time=" + (d.getHours() - 1) + ":" + d.getMinutes() + ":" + d.getSeconds() + "&track_end_date=" + date + "&track_end_time=" + time;
             var last_two_hour = "?track_start_date=" + date + "&track_start_time=" + (d.getHours() - 2) + ":" + d.getMinutes() + ":" + d.getSeconds() + "&track_end_date=" + date + "&track_end_time=" + time;
             var last_three_hour = "?track_start_date=" + date + "&track_start_time=" + (d.getHours() - 3) + ":" + d.getMinutes() + ":" + d.getSeconds() + "&track_end_date=" + date + "&track_end_time=" + time;
-            var today = "?track_start_date=" + date + "&track_start_time=00:00:01" + "&track_end_date=" + date + "&track_end_time=23:30:00";
-            var yesterday = "?track_start_date=" + (d.getDate() - 1) + " " + MONTH_NAMES[d.getMonth()] + ", " + d.getFullYear() + "&track_start_time=00:00:01" + "&track_end_date=" + (d.getDate() - 1) + "&track_end_time=23:30:00";
-            var last_use = "?last_use=1";
+            var today = "?track_start_date=" + date + "&track_start_time=00:00:01" + "&track_end_date=" + date + "&track_end_time=23:30:00&track_time=Today";
+            var yesterday = "?track_start_date=" + (d.getDate() - 1) + " " + MONTH_NAMES[d.getMonth()] + ", " + d.getFullYear() + "&track_start_time=00:00:01" + "&track_end_date=" + (d.getDate() - 1) + "&track_end_time=23:30:00&track_time=Yesterday";
+            var last_use = "?last_use=1&track_time=Lastuse";
             var content = '<div>' +
                     '<label><b>Track</b> : ' + vehicle_data[key]['deviceGUID'] + '</label>' +
                     '<ul style="padding-left:16px;margin-bottom:0px">' +
@@ -811,7 +811,12 @@
                 cnt = 0;
 
                 $('#custom_loading').hide();
+                $('#tracking_heading').html();
                 $('#individual-overview').modal();
+                $('#tracking_heading').html('<strong>' + data.track_heading + '</strong>');
+                $('#last_active_txt').html(data.last_active);
+                $('#vehicle_status').html(data.vehicle_status);
+
                 $('#vehicle_title').html(data.deviceGUID);
                 var deviceGUID = data.deviceGUID;
 
@@ -828,7 +833,7 @@
                     fullscreenControlOptions: {
                         position: google.maps.ControlPosition.RIGHT_BOTTOM
                     },
-//                    mapTypeId: google.maps.MapTypeId.HYBRID
+                    mapTypeId: google.maps.MapTypeId.HYBRID
                 };
 
                 vmap = new google.maps.Map(document.getElementById("vehicle_map"), mapOptions);
@@ -905,7 +910,7 @@
 
         $('#custom_timeframe_modal').modal('hide');
 //        var href = '?track_start_date=' + $('#txt_track_start_date').val() + '&track_start_time=' + $('#txt_track_start_time').val() + '&track_end_date=' + $('#txt_track_end_date').val() + '&track_end_time=' + $('#txt_track_end_time').val();
-        var href = site_url + "company_admin/operation/track_vehicle/" + $('#txt_deviceGUID').val() + '/?track_start_date=' + txt_track_start_date + '&track_start_time=' + txt_track_start_time + '&track_end_date=' + txt_track_end_date + '&track_end_time=' + txt_track_end_time;
+        var href = site_url + "company_admin/operation/track_vehicle/" + $('#txt_deviceGUID').val() + '/?track_start_date=' + txt_track_start_date + '&track_start_time=' + txt_track_start_time + '&track_end_date=' + txt_track_end_date + '&track_end_time=' + txt_track_end_time + '&track_time=Custom';
         display_vmap(href);
 //        window.location.href = site_url + 'track/vehicle/' + $('#txt_deviceGUID').val() + '/' + href;
     });
