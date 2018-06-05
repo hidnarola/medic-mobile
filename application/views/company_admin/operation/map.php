@@ -409,7 +409,7 @@
                                         <li>
                                             <div class="loader-box-body">
                                                 <h4>Next scheduled service</h4>
-                                                <h3>1.10.2017</h3>
+                                                <div id="next_schedule_service"><h3>1.10.2017</h3></div>
                                             </div>
                                         </li>
                                         <li>
@@ -699,6 +699,7 @@
         var mapOptions = {
             zoom: 16,
             center: new google.maps.LatLng(vehicle_latlong[0]),
+            mapTypeId: google.maps.MapTypeId.HYBRID
         };
         map = new google.maps.Map(document.getElementById("map"), mapOptions);
         stopmap = new google.maps.Map(document.getElementById("stopmap"), mapOptions); //-- Initialize stopmap
@@ -816,6 +817,11 @@
                 $('#tracking_heading').html('<strong>' + data.track_heading + '</strong>');
                 $('#last_active_txt').html(data.last_active);
                 $('#vehicle_status').html(data.vehicle_status);
+                console.log('vehicle_details', data.vehicle_details);
+
+                if (data.vehicle_details != null) {
+                    $('#next_schedule_service').html('<h3>' + data.vehicle_details.lastServiceDate + '</h3>');
+                }
 
                 $('#vehicle_title').html(data.deviceGUID);
                 var deviceGUID = data.deviceGUID;

@@ -45,6 +45,8 @@ class Operation extends MY_Controller {
         $data['track_heading'] = $this->input->get('track_time');
         $data['last_active'] = '';
         $data['vehicle_status'] = '<h6 class="offline">Offline</h6>';
+        $data['vehicle_details'] = $this->vehicle_model->get_vehicle_details($deviceGUID);
+
         $last_hour = date("Y/m/d H:i:s", strtotime("-30 minutes"));
 
         if ($this->input->get()) {
