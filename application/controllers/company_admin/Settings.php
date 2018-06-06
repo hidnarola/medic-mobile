@@ -65,6 +65,29 @@ class Settings extends MY_Controller {
     }
 
     /**
+     * Update password functionality
+     */
+    public function updatepassword() {
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[5]');
+        $this->form_validation->set_rules('con_password', 'Confirm Password', 'trim|required|matches[password]|min_length[5]');
+
+        if ($this->form_validation->run() == true) {
+            $user_id = $this->session->userdata('userGUID');
+
+            $updateArr = [
+                'passwordHash' => md5($this->input->post('password')),
+            ];
+            $this->settings_model->insert_update('update', TBL_LOGIN_DETAILS, $updateArr, ['userGUID' => $user_id]);
+            $this->session->set_flashdata('success', 'Password updated successfully!');
+            redirect('settings');
+        } else {
+            $data['user'] = $this->session->userdata();
+            $data['company'] = $this->settings_model->get_all_details(TBL_COMPANY, ['companyGUID' => $companyGUID])->row_array();
+            $this->template->load('default', 'company_admin/settings/index', $data);
+        }
+    }
+
+    /**
      * Callback Validate function to check unique email validation
      * @return boolean
      */

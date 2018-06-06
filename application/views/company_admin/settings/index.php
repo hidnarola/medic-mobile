@@ -72,8 +72,23 @@
                                                             <input type="file" style="display: none;">
                                                         </label>-->
                         </div>
-                    </div>	
-                    <button type="submit">CHANGE PASSWORD</button>
+                    </div>
+                    <div class="password_div" style="display: none">
+                        <form method="post" id="change_pwd_frm" action="<?php echo site_url('company_admin/settings/updatepassword') ?>">
+                            <div class="password-input">
+                                <label>New Password</label>
+                                <input type="password" name="password" id="password" placeholder="Enter new password" class="input-edit"/>
+                                <label id="password-error" class="error" for="password"><?php echo form_error('password') ?></label>
+                            </div>    
+                            <div class="password-input">
+                                <label>Confirm Password</label>
+                                <input type="password" name="con_password" id="con_password" placeholder="Confirm your password" class="input-edit"/>
+                                <label id="con_password-error" class="error" for="con_password"><?php echo form_error('con_password') ?></label>
+                            </div>
+                            <button type="button" id="update_pwd_btn">UPDATE PASSWORD</button>
+                        </form>
+                    </div>
+                    <button type="button" id="change_pwd_btn">CHANGE PASSWORD</button>
                 </div>
             </div>
 
@@ -473,11 +488,34 @@
 </section>
 <script type="text/javascript">
     var success_msg = "<?php echo $success_msg ?>";
+    $(document).on('click', '#change_pwd_btn', function () {
+        $('.password_div').show();
+        $('#change_pwd_btn').hide();
+    });
+    $(document).on('click', '#update_pwd_btn', function () {
+        if ($('#change_pwd_frm').valid()) {
+            $('#change_pwd_frm').submit();
+        }
+    });
+    // Edit profile form validation
+    $("#change_pwd_frm").validate({
+        rules: {
+            password: {
+                required: true,
+                minlength: 5,
+            },
+            con_password: {
+                required: true,
+                minlength: 5,
+                equalTo: "#password"
+            },
+        },
+    });
     $(document).ready(function () {
         if (success_msg != '') {
             new PNotify({
                 title: 'Success',
-                text: 'Information updated successfully!',
+                text: success_msg,
                 buttons: {
                     sticker: false
                 },
@@ -529,7 +567,6 @@
         }
     });
     $(function () {
-
         // We can attach the `fileselect` event to all file inputs on the page
         $(document).on('change', ':file', function () {
             var input = $(this),
