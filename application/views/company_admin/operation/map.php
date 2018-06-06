@@ -817,7 +817,6 @@
                 $('#tracking_heading').html('<strong>' + data.track_heading + '</strong>');
                 $('#last_active_txt').html(data.last_active);
                 $('#vehicle_status').html(data.vehicle_status);
-                console.log('vehicle_details', data.vehicle_details);
 
                 if (data.vehicle_details != null) {
                     $('#next_schedule_service').html('<h3>' + data.vehicle_details.lastServiceDate + '</h3>');
@@ -830,7 +829,8 @@
                 last_index = gps_track.length - 1;
                 mapOptions = {
                     zoom: 19,
-                    center: new google.maps.LatLng({lat: 54.602129, lng: -7.302873}),
+//                    center: new google.maps.LatLng({lat: 54.602129, lng: -7.302873}),
+                    center: new google.maps.LatLng(parseFloat(gps_track[last_index]['latitude'].replace('"', '')), parseFloat(gps_track[last_index]['longitude'].replace('"', ''))),
                     mapTypeControl: true,
                     mapTypeControlOptions: {
                         position: google.maps.ControlPosition.LEFT_BOTTOM
