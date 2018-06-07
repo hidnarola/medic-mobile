@@ -11,13 +11,13 @@
 .logout-icon a:hover svg path{fill:#d52b1f;  stroke:#d52b1f;}
 .user-txt {font-size: 14px;color: white;margin: 0 20px 0 0;}
 label.error{color: red;}
+.admin-nav ul li {font-family: Folio Condensed;font-size: 18px;line-height: normal;letter-spacing: normal;text-align: left;color: #fff;text-transform: uppercase;}
 
 /** PAV css **/
 .required:after { content: " *";color:#F44336;}
 .cbg-black-100{ background-color: #000000ad; color:#fff; }
 .cbg-black-200{ background-color: #000000cf; color:#fff; }
 .cbg-black-300{ background-color: #000; color:#fff; }
-.dataTables_length{ float:left; }
 .modal-open{ padding-right:3px !important; }
 .panel,
 .dataTables_wrapper{ box-shadow:0px 10px 30px -7px rgba(0,0,0,0.4); }   

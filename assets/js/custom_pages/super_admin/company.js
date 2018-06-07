@@ -1,8 +1,8 @@
 /****************************************************************************
-        This function is used to display list of records in datatable
-****************************************************************************/
+ This function is used to display list of records in datatable
+ ****************************************************************************/
 $(function () {
-    $('.datatable-basic').dataTable({
+    $('#company_table').dataTable({
         autoWidth: false,
         processing: true,
         serverSide: true,
@@ -32,7 +32,7 @@ $(function () {
                 data: "action",
                 render: function (data, type, full, meta) {
                     action = '';
-                    action += '<a href="' + site_url + 'manage_company/edit/' + btoa(full.companyGUID) + '" id="' + btoa(full.companyGUID) + '" class="btn custom_dt_action_button btn-xs edit" title="Edit">Edit</a>';
+                    action += '<a href="' + site_url + 'manage_company/edit/' + btoa(full.companyGUID) + '" id="' + btoa(full.companyGUID) + '" class="btn btn-xs edit_btn" title="Edit">Edit</a>';
                     //action += '&nbsp;&nbsp;<a href="' + site_url + 'manage_company/delete/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_alert(this)" title="Delete">Delete</a>';
                     return action;
                 },
@@ -45,14 +45,14 @@ $(function () {
         minimumResultsForSearch: Infinity,
         width: 'auto'
     });
-    $('.dataTables_filter input[type=search]').attr('placeholder', 'Type to filter...');
-    var add_button = '<div class="text-right"><a href="' + site_url + 'manage_company/add" class="btn bg-primary btn-labeled custom_add_button"><b><i class="icon-plus-circle2"></i></b> Add Company</a></div>';
-    $('.datatable-header').append(add_button);
+//    $('.dataTables_filter input[type=search]').attr('placeholder', 'Type to filter...');
+//    var add_button = '<div class="text-right"><a href="' + site_url + 'manage_company/add" class="btn bg-primary btn-labeled custom_add_button"><b><i class="icon-plus-circle2"></i></b> Add Company</a></div>';
+//    $('.datatable-header').append(add_button);
 });
 
 /****************************************************************************
-                This function is used to validate form
-****************************************************************************/
+ This function is used to validate form
+ ****************************************************************************/
 var validator = $("#add_compnay_form").validate({ignore: 'input[type=hidden], .select2-search__field, #txt_status', // ignore hidden fields
     errorClass: 'validation-error-label', successClass: 'validation-valid-label',
     highlight: function (element, errorClass) {
@@ -93,14 +93,14 @@ var validator = $("#add_compnay_form").validate({ignore: 'input[type=hidden], .s
         }
     },
     rules: {
-        name: { required: true },
-        address: { required: true },
-        txt_fname: { required: true },
-        txt_lname: { required: true },
-        txt_uname: { required: true },
-        txt_email: { required: true, email: true },
-        txt_pass : { minlength : 8 },
-        txt_cpass : {  minlength : 8, equalTo : "#txt_pass" }
+        name: {required: true},
+        address: {required: true},
+        txt_fname: {required: true},
+        txt_lname: {required: true},
+        txt_uname: {required: true},
+        txt_email: {required: true, email: true},
+        txt_pass: {minlength: 8},
+        txt_cpass: {minlength: 8, equalTo: "#txt_pass"}
     },
     submitHandler: function (form) {
         form.submit();
