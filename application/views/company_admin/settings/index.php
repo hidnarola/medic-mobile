@@ -534,7 +534,7 @@
             },
             username: {
                 required: true,
-                remote: '<?php echo site_url('company_admin/settings/check_useremail') ?>'
+                remote: '<?php echo site_url('company_admin/settings/check_username') ?>'
             },
             email: {
                 required: true,

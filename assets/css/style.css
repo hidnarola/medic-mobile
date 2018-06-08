@@ -59,12 +59,11 @@ button:focus, :focus, input:focus, textarea:focus, select:focus {outline:0; outl
 .couple-notification-head{ margin:0 0 48px;}
 .notification-head{ text-align:left; align-items:center; margin:0 0 21px; min-height:48px;}
 
-.notification-head big{  font-family:'Helvetica Neue'; font-size: 16px; font-weight:700; line-height:17px; color:#fff; padding-left:20px;}
+.notification-head big{font-family:'Helvetica Neue'; font-size: 16px; font-weight:700; line-height:17px; color:#fff; padding-left:20px;}
 .notification-head small{ margin-left:auto; font-family:'Helvetica Neue'; font-size: 28px; font-weight:700; line-height:17px; color:#fff; min-width:30px; text-align: center;}
 
-.notification-body { flex-direction:column; width: 100%;}
-.notification-body h4 {margin:0 0 10px; padding:3px 5px; font-size:100%; line-height:100%; text-align:left; align-items:center; border:1px solid transparent;
-                       display: -webkit-box!important; display: -ms-flexbox!important; display: flex!important;}
+.notification-body {flex-direction:column; width: 100%;}
+.notification-body h4 {margin:0 0 10px; padding:3px 5px; font-size:100%; line-height:100%; text-align:left; align-items:center; border:1px solid transparent;display: -webkit-box!important; display: -ms-flexbox!important; display: flex!important;}
 .notification-body h4:last-child{ margin-bottom:0;}
 .notification-body h4 big{font-family:'Helvetica Neue'; font-size:16px; font-weight:700; text-align: left; color: #fff; }
 .notification-body h4:hover big{color:#d52b1f;}
@@ -290,7 +289,6 @@ a.dropdown-item{font-family:'Helvetica Neue'; font-size:13px; text-align:left; p
 
 .card-header-body{position:relative;padding:0 0 0 54px;}
 .card-header-img{ background:#000; border:2px solid #a3bd0b; width:42px; height:42px; display:block; position:absolute; border-radius:80px; top:0; left:0;}
-/*.card-header-img i{background: url(../images/loader-track.svg) no-repeat center 40% / 30px auto; width: 40px; height: 40px; display: block;}*/
 .card-header-img i{background: url(../images/loader-track.png) no-repeat center 40% / 30px auto; width: 40px; height: 40px; display: block;}
 .card-header-body h3{ margin:0; padding:0; font-family:'Helvetica Neue'; font-size:11px; text-align:left; color:#fff;}
 .card-header-body p{ margin:0; padding:0; font-family:'Helvetica Neue'; font-size:8px; text-align:left; color:#fff;}
@@ -352,8 +350,7 @@ a.dropdown-item{font-family:'Helvetica Neue'; font-size:13px; text-align:left; p
 .operator-wrap ul li{ width:25%; padding:0 15px;}
 .operator-box{background-color:#ffffff13; border:solid 1px #484848; padding:15px; height:204px;}
 .operator-box p{font-family:'Helvetica Neue'; font-size: 16px; font-weight:700; line-height:17px; text-align: center; color: #fff; margin:0; padding:0; min-height: 34px;}
-.operator-box h4{ margin:0; padding:0; font-family:'Helvetica Neue'; font-size:50px; font-weight:700; line-height:100%; text-align:center; color:#fff;    height: 140px;
-                  display: flex; justify-content: center; align-items: center;}
+.operator-box h4{ margin:0; padding:0; font-family:'Helvetica Neue'; font-size:50px; font-weight:700; line-height:100%; text-align:center; color:#fff; height: 140px;display: flex; justify-content: center; align-items: center;}
 .operator-box h4 span{ margin-right:6px;}
 
 .user-icon{border:2px solid #a3bd0b; width:28px; height:28px; border-radius:80px; margin-right:8px; position:absolute; top:50%; left:0; transform:translateY(-50%);}
@@ -368,7 +365,7 @@ a.dropdown-item{font-family:'Helvetica Neue'; font-size:13px; text-align:left; p
 .individual-overview .close{ font-family:'Helvetica Neue'; font-size: 13px; font-weight:400; line-height:14px; text-align: center; color: #fff; background:url('../images/close-icon.svg') no-repeat right 0 / 13px auto; padding:0 20px 0 0; opacity:1;}
 .individual-overview .close span{font-family:'Helvetica Neue'; font-size: 13px; font-weight:400; line-height:14px; text-align: center; color: #fff;}
 .user-popup{display:block; text-align:left; margin:0 0 15px;}
-.user-popup img{    display: inline-block; vertical-align: top; max-width: 64px;}
+.user-popup img{ display: inline-block; vertical-align: top; max-width: 64px;}
 .user-popup span{ width:50px; height: 50px; background: #000; border: 2px solid #fff; margin: 0 auto 20px; display: block; border-radius: 80px;}
 .user-popup span.bdr-red{ border:2px solid #d52b1f;}
 .user-popup h3{ margin:0 0 0 10px; padding:0;font-family:'Helvetica Neue'; font-size:30px; font-weight:700; text-align:center; color: #fff; display: inline-block; vertical-align: top; line-height:34px; }
@@ -399,7 +396,7 @@ a.dropdown-item{font-family:'Helvetica Neue'; font-size:13px; text-align:left; p
 .operation-saferty ul{ list-style:none; margin:0; padding:0; text-align:center;}
 .operation-saferty ul li{ width:48%; display:inline-block; vertical-align:top;}
 .operation-saferty ul li h3{ margin:0 0 14px; padding:0;  font-family:'Helvetica Neue'; font-size: 32px; font-weight:700; color: #ffffff; line-height:36px;} 
-.operation-saferty ul li span{  font-family:'Helvetica Neue'; font-size: 32px; font-weight:700; color: #fff; line-height:36px; display:inline-block; vertical-align:top; margin:0 5px 0 0;}
+.operation-saferty ul li span{font-family:'Helvetica Neue'; font-size: 32px; font-weight:700; color: #fff; line-height:36px; display:inline-block; vertical-align:top; margin:0 5px 0 0;}
 .operation-saferty ul li i.star-icon{ background-size:33px 31px; width:33px; height:31px; }
 .operation-saferty ul li i.circle-icon{ background-size:48px 48px; width:48px; height:48px;}
 
@@ -510,7 +507,7 @@ a.dropdown-item{font-family:'Helvetica Neue'; font-size:13px; text-align:left; p
 .general-info-l-body table tr td{border:0; font-family:'Helvetica Neue'; font-weight:700; line-height:30px; text-align:left; color: #fff;}
 .general-info-l-body table tr td:first-child{ font-size:14px;  min-width:252px;}
 .general-info-l-body table tr td:last-child{ font-size:12px;  min-width:260px;}
-.general-info-r{ widtH:50%;}
+.general-info-r{ width: 50%;}
 
 .general-info-r button{  border:2px solid #fff; background:transparent;  font-family:'Helvetica Neue'; font-size:13px; font-weight:700; line-height:18px; text-align:center; color:#fff; padding:12px; width:260px; margin:0 auto; display:block;}
 .general-info-r-head { margin:0 0 25px; justify-content:center;}
@@ -597,7 +594,6 @@ input:checked + .slider:before { -webkit-transform: translateX(26px); -ms-transf
 .upload-delete>span{ width:40px; height:40px; margin:0 12px 0 0; background:#8d8d8d; display:inline-block; vertical-align: middle;}
 .upload-delete>a {font-family:'Helvetica Neue'; font-size: 11px; font-weight:700; text-align:center; color: #d52b1f; text-transform: uppercase; line-height: 28px; margin-right:10px; display:inline-block; vertical-align:middle;}
 
-.btm-btn-l{}
 .btm-btn-l button{ border:2px solid #fff; padding:10px; line-height:18px; width:211px; display:inline-block; vertical-align:top;font-family:'Helvetica Neue';
                    font-size: 13px; font-weight:700; text-align: center; color: #fff; text-transform:uppercase; background:transparent;}
 .btm-btn-l button+button{ margin-left:33px;} 
@@ -704,8 +700,7 @@ input:checked + .slider:before { -webkit-transform: translateX(26px); -ms-transf
 .password-input{ display:inline-block; vertical-align:top; max-width:210px; text-align:left; margin:0 0 15px;}
 .password-input label.error {color: red; font-weight: 300; font-size: 13px; letter-spacing: 0; margin: 0; line-height: normal;}
 .password-input label{font-size: 14px; border: 0; font-family: 'Helvetica Neue'; font-weight: 700; line-height: 30px; text-align: left; color: #fff;}
-.password-input input{background: #fff; color: #000; font-size:12px; font-weight:700; border:0; width:100%; line-height:34px; padding:0 10px; font-family:'Helvetica Neue'; font-size:12px;
-font-weight:700; text-align:left; margin:0 0 5px; opacity:1; border-radius:0; box-shadow:none;}
+.password-input input{background: #fff; color: #000; font-size:12px; font-weight:700; border:0; width:100%; line-height:34px; padding:0 10px; font-family:'Helvetica Neue'; font-size:12px;font-weight:700; text-align:left; margin:0 0 5px; opacity:1; border-radius:0; box-shadow:none;}
 
 #company_table_wrapper .datatable-header{display: inline-block; vertical-align: top; width: 100%; border: 1px solid #fff; padding: 15px; width: 100%;}
 #company_table_wrapper .dataTables_filter{float:left;}
@@ -729,3 +724,17 @@ font-weight:700; text-align:left; margin:0 0 5px; opacity:1; border-radius:0; bo
 table.table a.edit_btn{color:#d52b1f; font-size:12px;}
 table.table tr:hover a.edit_btn{color:#fff; text-decoration:underline; }
 .srh-table table tbody tr td.dataTables_empty{ font-size:13px; color:#fff; padding:12px 15px;}
+
+.add-form-wrap{display:flex; width:100%; padding:25px 0 0;}
+.add-form-wrap .form-group label{ color:#fff; font-size:13px; display:block;}
+.add-form-l{width:44%; display:flex; flex-wrap:wrap}
+.add-form-l .form-group{ width:48%; margin-bottom:0; }
+.add-form-l .form-group:nth-child(2n+2){ margin-left:auto; }
+.add-form-r{width:52%; margin-left:auto;}
+
+.add-form-btn button{background:#d52b1f !important; color:#fff; border:2px solid #d52b1f; line-height:20px; padding:7px 10px; text-align: center; font-size: 15px; width: 110px; border-radius: 4px;}
+.add-form-btn button:hover{background:transparent !important; color:#d52b1f}
+.add-form-btn a{background:transparent !important; border:2px solid #fff; color:#fff; line-height:20px; padding:7px 10px; text-align: center; font-size: 15px; width: 110px; border-radius: 4px;}
+.add-form-btn a:hover{background:#fff !important; color:#000; text-decoration:none;}
+.add-form-wrap .form-control {padding: 10px; line-height: 20px; font-size: 13px;}
+.panel.panel-body.login-form {box-shadow:none !important;}

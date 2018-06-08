@@ -10,7 +10,8 @@
 .logout-icon a {display: block;}
 .logout-icon a:hover svg path{fill:#d52b1f;  stroke:#d52b1f;}
 .user-txt {font-size: 14px;color: white;margin: 0 20px 0 0;}
-label.error{color: red;}
+label.error{color: red !important;}
+label.validation-error-label{color: red !important;margin:5px 0 0 0}
 .admin-nav ul li {font-family: Folio Condensed;font-size: 18px;line-height: normal;letter-spacing: normal;text-align: left;color: #fff;text-transform: uppercase;}
 
 /** PAV css **/
@@ -94,8 +95,8 @@ body::-webkit-scrollbar-thumb { background-color: #FF5722; outline: 1px solid #F
 .sidenav .nav > li > a:focus{background-color: transparent !important;}
 
 .sidenav a:hover {color: #f1f1f1;}
-
 .sidenav .closebtn {font-size: 36px;margin-left: 50px;}
+
 
 
 @media screen and (max-height: 450px) {

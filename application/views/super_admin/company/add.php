@@ -30,95 +30,77 @@ if (isset($dataArr)) {
                             <div class="col-md-12">
                                 <form method="post" action="<?php echo site_url($form_action); ?>" id="add_compnay_form" enctype="multipart/form-data">
                                     <div class="panel panel-body login-form">
-                                        <fieldset>
-                                            <legend class="text-semibold"><i class="icon-truck position-left"></i> Location details</legend>
-                                            <div class="form-group has-feedback">
-                                                <label class="control-label required">Company Name</label>
-                                                <input type="text" class="form-control" name="name" id="name" placeholder="Company Name" value="<?php echo (isset($dataArr)) ? $dataArr['companyName'] : set_value('name'); ?>">
-                                                <?php echo '<label id="name_error2" class="validation-error-label" for="name">' . form_error('name') . '</label>'; ?>
-                                            </div>
-                                            <div class="form-group has-feedback">
-                                                <label class="control-label required">Address</label>
-                                                <input type="text" class="form-control" name="address" id="address" placeholder="Company Address" value="<?php echo (isset($dataArr)) ? $dataArr['addressLine1'] : set_value('address'); ?>">
-                                                <?php echo '<label id="address_error2" class="validation-error-label" for="address">' . form_error('address') . '</label>'; ?>
-                                                <div id="map_canvas" style="min-height:300px"></div>
-                                            </div>
-                                            <input type="hidden" name="latitude" id="latitude" value="<?php echo (isset($dataArr)) ? $dataArr['latitude'] : '39.2904'; ?>">
-                                            <input type="hidden" name="longitude" id="longitude" value="<?php echo (isset($dataArr)) ? $dataArr['longitude'] : '-76.6122'; ?>">
-                                            <input type="hidden" name="city" id="city" value="<?php echo (isset($dataArr)) ? $dataArr['town_city'] : 'Baltimore'; ?>">
-                                            <input type="hidden" name="country" id="country" value="<?php echo (isset($dataArr)) ? $dataArr['country'] : 'United States'; ?>">
-                                            <input type="hidden" name="state" id="state" value="<?php echo (isset($dataArr)) ? $dataArr['country_state'] : 'Maryland'; ?>">
-                                            <input type="hidden" name="postal_code" id="postal_code" value="<?php echo (isset($dataArr)) ? $dataArr['postcode_zipcode'] : '21202'; ?>">
-                                        </fieldset>
-
-                                        <fieldset>
-                                            <legend class="text-semibold"><i class="icon-truck position-left"></i> Login details</legend>
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div class="form-group has-feedback">
-                                                        <label class="control-label required">First Name</label>
-                                                        <input type="text" class="form-control" name="txt_fname" id="txt_fname" placeholder="First Name" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['firstName'] : set_value('txt_fname'); ?>">
-                                                    </div>
+                                        <?php
+                                        if (!isset($LoginDetailsArr)) {
+                                            $field_attribute = $label_attribute = 'required';
+                                        } else {
+                                            $field_attribute = 'readonly';
+                                            $label_attribute = '';
+                                        }
+                                        ?>
+                                        <div class="add-form-wrap">
+                                            <div class="add-form-l">
+                                                <div class="form-group has-feedback">
+                                                    <label class="control-label required">Company Name</label>
+                                                    <input type="text" class="form-control" name="name" id="name" placeholder="Company Name" value="<?php echo (isset($dataArr)) ? $dataArr['companyName'] : set_value('name'); ?>">
+                                                    <?php echo '<label id="name-error" class="validation-error-label" for="name">' . form_error('name') . '</label>'; ?>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group has-feedback">
-                                                        <label class="control-label required">Last Name</label>
-                                                        <input type="text" class="form-control" name="txt_lname" id="txt_lname" placeholder="Last Name" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['lastName'] : set_value('txt_lname'); ?>">
-                                                    </div>
+                                                <div class="form-group has-feedback"></div>
+                                                <div class="form-group has-feedback">
+                                                    <label class="control-label <?php echo $label_attribute ?>">First Name</label>
+                                                    <input type="text" class="form-control" name="txt_fname" id="txt_fname" placeholder="First Name" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['firstName'] : set_value('txt_fname'); ?>" <?php echo $field_attribute ?>>
+                                                    <?php echo '<label id="txt_fname-error" class="validation-error-label" for="txt_fname">' . form_error('txt_fname') . '</label>'; ?>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group has-feedback">
-                                                        <label class="control-label required">Username</label>
-                                                        <input type="text" class="form-control" name="txt_uname" id="txt_uname" placeholder="User Name" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['username'] : set_value('txt_uname'); ?>">
-                                                    </div>
+                                                <div class="form-group has-feedback">
+                                                    <label class="control-label <?php echo $label_attribute ?>">Last Name</label>
+                                                    <input type="text" class="form-control" name="txt_lname" id="txt_lname" placeholder="Last Name" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['lastName'] : set_value('txt_lname'); ?>" <?php echo $field_attribute ?>>
+                                                    <?php echo '<label id="txt_lname-error" class="validation-error-label" for="txt_lname">' . form_error('txt_lname') . '</label>'; ?>
+                                                </div>    
+                                                <div class="form-group has-feedback">
+                                                    <label class="control-label <?php echo $label_attribute ?>">Username</label>
+                                                    <input type="text" class="form-control" name="txt_uname" id="txt_uname" placeholder="User Name" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['username'] : set_value('txt_uname'); ?>" <?php echo $field_attribute ?>>
+                                                    <?php echo '<label id="txt_uname-error" class="validation-error-label" for="txt_uname">' . form_error('txt_uname') . '</label>'; ?>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group has-feedback">
-                                                        <label class="control-label required">Email</label>
-                                                        <input type="text" class="form-control" name="txt_email" id="txt_email" placeholder="Email" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['emailAddress'] : set_value('txt_email'); ?>">
-                                                    </div>
+                                                <div class="form-group has-feedback">
+                                                    <label class="control-label <?php echo $label_attribute ?>">Email</label>
+                                                    <input type="email" class="form-control" name="txt_email" id="txt_email" placeholder="Email" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['emailAddress'] : set_value('txt_email'); ?>" <?php echo $field_attribute ?>>
+                                                    <?php echo '<label id="txt_email-error" class="validation-error-label" for="txt_email">' . form_error('txt_email') . '</label>'; ?>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group has-feedback">
-                                                        <label class="control-label <?php
-                                                        if (!isset($LoginDetailsArr)) {
-                                                            echo 'required';
-                                                        }
-                                                        ?>">Password</label>
-                                                        <input type="text" class="form-control" name="txt_pass" id="txt_pass" placeholder="Password" value="<?php echo set_value('txt_pass'); ?>" <?php
-                                                        if (!isset($LoginDetailsArr)) {
-                                                            echo 'required';
-                                                        } else {
-                                                            echo 'readonly';
-                                                        }
-                                                        ?>>
-                                                    </div>
+                                                <div class="form-group has-feedback">
+                                                    <label class="control-label <?php
+                                                    if (!isset($LoginDetailsArr)) {
+                                                        echo 'required';
+                                                    }
+                                                    ?>">Password</label>
+                                                    <input type="text" class="form-control" name="txt_pass" id="txt_pass" placeholder="Password" value="<?php echo set_value('txt_pass'); ?>" <?php echo $field_attribute ?>>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group has-feedback">
-                                                        <label class="control-label <?php
-                                                        if (!isset($LoginDetailsArr)) {
-                                                            echo 'required';
-                                                        }
-                                                        ?>">Confirm Password</label>
-                                                        <input type="text" class="form-control" name="txt_cpass" id="txt_cpass" placeholder="Confirm Password" value="<?php echo set_value('txt_cpass'); ?>" <?php
-                                                        if (!isset($LoginDetailsArr)) {
-                                                            echo 'required';
-                                                        } else {
-                                                            echo 'readonly';
-                                                        }
-                                                        ?>>
-                                                    </div>
+                                                <div class="form-group has-feedback">
+                                                    <label class="control-label <?php
+                                                    if (!isset($LoginDetailsArr)) {
+                                                        echo 'required';
+                                                    }
+                                                    ?>">Confirm Password</label>
+                                                    <input type="text" class="form-control" name="txt_cpass" id="txt_cpass" placeholder="Confirm Password" value="<?php echo set_value('txt_cpass'); ?>" <?php echo $field_attribute ?>>
                                                 </div>
                                             </div>
-                                        </fieldset>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <button type="submit" class="btn bg-success custom_save_button">Save</button>
-                                                    <a class="btn bg-danger custom_cancel_button" href="<?php echo site_url('manage_company'); ?>">Cancel</a>
+                                            <div class="add-form-r">
+                                                <div class="form-group has-feedback">
+                                                    <label class="control-label required">Address</label>
+                                                    <input type="text" class="form-control" name="address" id="address" placeholder="Company Address" value="<?php echo (isset($dataArr)) ? $dataArr['addressLine1'] : set_value('address'); ?>">
+                                                    <?php echo '<label id="address_error2" class="validation-error-label" for="address">' . form_error('address') . '</label>'; ?>
+                                                    <div id="map_canvas" style="min-height:300px"></div>
                                                 </div>
-                                            </div>
+                                                <input type="hidden" name="latitude" id="latitude" value="<?php echo (isset($dataArr)) ? $dataArr['latitude'] : '39.2904'; ?>">
+                                                <input type="hidden" name="longitude" id="longitude" value="<?php echo (isset($dataArr)) ? $dataArr['longitude'] : '-76.6122'; ?>">
+                                                <input type="hidden" name="city" id="city" value="<?php echo (isset($dataArr)) ? $dataArr['town_city'] : 'Baltimore'; ?>">
+                                                <input type="hidden" name="country" id="country" value="<?php echo (isset($dataArr)) ? $dataArr['country'] : 'United States'; ?>">
+                                                <input type="hidden" name="state" id="state" value="<?php echo (isset($dataArr)) ? $dataArr['country_state'] : 'Maryland'; ?>">
+                                                <input type="hidden" name="postal_code" id="postal_code" value="<?php echo (isset($dataArr)) ? $dataArr['postcode_zipcode'] : '21202'; ?>">
+                                            </div>    
+                                        </div>    
+                                        <div class=" add-form-btn">
+                                            <button type="submit" class="custom_save_button">Save</button>
+                                            <a class="custom_cancel_button" href="<?php echo site_url('manage_company'); ?>">Cancel</a>
                                         </div>
                                     </div>
                                 </form>
@@ -130,8 +112,27 @@ if (isset($dataArr)) {
         </div>
     </div>	
 </section>
-
-<script src="assets/js/custom_pages/super_admin/company.js"></script>
+<?php
+$edit = 0;
+$unique_id = '';
+$company_id = '';
+if (isset($LoginDetailsArr)) {
+    $edit = 1;
+    $unique_id = $LoginDetailsArr['userGUID'];
+    $company_id = $dataArr['companyGUID'];
+}
+?>
+<script type="text/javascript">
+    uname_ajax = '<?php echo site_url('super_admin/company/check_username') ?>';
+    email_ajax = '<?php echo site_url('super_admin/company/check_useremail') ?>';
+    company_ajax = '<?php echo site_url('super_admin/company/check_comapnyname') ?>';
+    edit = <?php echo $edit ?>;
+    if (edit == 1) {
+        uname_ajax += '/<?php echo $unique_id ?>';
+        email_ajax += '/<?php echo $unique_id ?>';
+        company_ajax = '/<?php echo $company_id ?>';
+    }
+</script>
 <script type="text/javascript">
     /*********************************************************
      Map Integration
@@ -388,7 +389,7 @@ if (isset($dataArr)) {
                     latLng: marker.getPosition()
                 }, function (responses) {
                     if (responses && responses.length > 0) {
-                        console.log(results[0]);
+                        console.log(responses[0]);
                         $('#address').val(responses[0].formatted_address);
                         $("#latitude").val(marker.getPosition().lat());
                         $("#longitude").val(marker.getPosition().lng());
@@ -452,4 +453,76 @@ if (isset($dataArr)) {
             });
         }
 <?php } ?>
+</script>
+<script type="text/javascript">
+
+    /****************************************************************************
+     This function is used to validate form
+     ****************************************************************************/
+    var validator = $("#add_compnay_form").validate({ignore: 'input[type=hidden], .select2-search__field, #txt_status', // ignore hidden fields
+        errorClass: 'validation-error-label', successClass: 'validation-valid-label',
+        highlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+        },
+        unhighlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+        },
+        errorPlacement: function (error, element) {
+            $(element).parent().find('.form_success_vert_icon').remove();
+            if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container')) {
+                if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                    error.appendTo(element.parent().parent().parent().parent());
+                } else {
+                    error.appendTo(element.parent().parent().parent().parent().parent());
+                }
+            } else if (element.parents('div').hasClass('checkbox') || element.parents('div').hasClass('radio')) {
+                error.appendTo(element.parent().parent().parent());
+            } else if (element.parents('div').hasClass('has-feedback') || element.hasClass('select2-hidden-accessible')) {
+                error.appendTo(element.parent());
+            } else if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
+                error.appendTo(element.parent().parent());
+            } else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
+                error.appendTo(element.parent().parent());
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        validClass: "validation-valid-label",
+        success: function (element) {
+            if ($(element).parent('div').hasClass('media-body')) {
+                $(element).parent().find('.form_success_vert_icon').remove();
+                $(element).remove();
+            } else {
+                $(element).parent().find('.form_success_vert_icon').remove();
+                $(element).parent().append('<div class="form_success_vert_icon form-control-feedback"><i class="icon-checkmark-circle"></i></div>');
+                $(element).remove();
+            }
+        },
+        rules: {
+            name: {required: true, remote: company_ajax},
+            address: {required: true},
+            txt_fname: {required: true},
+            txt_lname: {required: true},
+            txt_uname: {required: true, remote: uname_ajax},
+            txt_email: {required: true, email: true, remote: email_ajax},
+            txt_pass: {minlength: 8},
+            txt_cpass: {minlength: 8, equalTo: "#txt_pass"}
+        },
+        messages: {
+            name: {remote: jQuery.validator.format("Company name already exist!")},
+            txt_uname: {
+                remote: jQuery.validator.format("Username already exist!"),
+            },
+            txt_email: {
+                remote: jQuery.validator.format("Email already exist!"),
+            },
+        },
+        submitHandler: function (form) {
+            form.submit();
+            $('.custom_save_button').prop('disabled', true);
+        },
+        invalidHandler: function () {
+            $('.custom_save_button').prop('disabled', false);
+        }
+    });
 </script>

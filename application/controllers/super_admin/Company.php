@@ -6,7 +6,7 @@ class Company extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model(array('company_model'));
+        $this->load->model(array('company_model', 'settings_model'));
         if (!get_AdminLogin('A')) {
             redirect('dashboard');
         }
@@ -152,6 +152,67 @@ class Company extends MY_Controller {
             redirect('manage_company');
         }
         $this->template->load('default_admin', 'super_admin/company/add', $data);
+    }
+
+    /**
+     * Check email validation for unique email
+     * @param string $userGUID Edit time 
+     * @author KU
+     */
+    public function check_useremail($userGUID = null) {
+        $requested_email = trim($this->input->get('txt_email'));
+        if ($userGUID != '') {
+            $where = ['emailAddress' => $requested_email, 'userGUID!=' => $userGUID];
+        } else {
+            $where = ['emailAddress' => $requested_email];
+        }
+        $user = $this->settings_model->get_all_details(TBL_LOGIN_DETAILS, $where)->row_array();
+        if (!empty($user)) {
+            echo "false";
+        } else {
+            echo "true";
+        }
+        exit;
+    }
+
+    /**
+     * Check unique username exist or not for edit profile page
+     * @author KU
+     */
+    public function check_username($userGUID = null) {
+        $requested_username = trim($this->input->get('txt_uname'));
+        if ($userGUID != '') {
+            $where = ['username' => $requested_username, 'userGUID!=' => $userGUID];
+        } else {
+            $where = ['username' => $requested_username];
+        }
+        $user = $this->settings_model->get_all_details(TBL_LOGIN_DETAILS, $where)->row_array();
+        if (!empty($user)) {
+            echo "false";
+        } else {
+            echo "true";
+        }
+        exit;
+    }
+
+    /**
+     * Check company name is unique or not
+     * @author KU
+     */
+    public function check_comapnyname($companyGUID = null) {
+        $requested_name = trim($this->input->get('name'));
+        if ($companyGUID != '') {
+            $where = ['companyName' => $requested_name, 'companyGUID!=' => $companyGUID];
+        } else {
+            $where = ['companyName' => $requested_name];
+        }
+        $company = $this->settings_model->get_all_details(TBL_COMPANY, $where)->row_array();
+        if (!empty($company)) {
+            echo "false";
+        } else {
+            echo "true";
+        }
+        exit;
     }
 
 }
