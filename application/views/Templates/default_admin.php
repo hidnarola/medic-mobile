@@ -25,6 +25,8 @@
         <script type="text/javascript">
             var site_url = "<?php echo site_url() ?>";
             var base_url = "<?php echo base_url() ?>";
+            var s_msg = "<?php echo $this->session->flashdata('success') ?>";
+            var e_msg = "<?php echo $this->session->flashdata('error') ?>";
         </script>
 
         <title>Mobile Medic</title>
@@ -69,7 +71,7 @@
     </head>
     <body>
         <header class="header">
-            <div class="container">
+            <div class="container admin-container">
                 <div class="row">
                     <div class="logo"><a href="<?php echo site_url('/'); ?>"><img src="assets/images/logo.png" alt=""/></a></div>
                     <div class="nav admin-nav">
@@ -112,7 +114,7 @@
                 </svg>
             </div>
         </div>
-        <section class="select-services">
+        <section class="select-services admin-topheader">
             <div class="container">
                 <div class="row">
                     <div class="setting-nav">
@@ -120,7 +122,7 @@
                             <li class="<?php echo ($class == 'company') ? 'active' : '' ?>"><a href="<?php echo site_url('manage_company') ?>">Manage Company</a></li>
                             <li class="<?php echo ($class == 'users') ? 'active' : '' ?>"><a href="<?php echo site_url('users') ?>">Manage System Users</a></li>
                             <li class="<?php echo ($class == 'vehicles') ? 'active' : '' ?>"><a href="<?php echo site_url('vehicles') ?>">Manage Vehicles</a></li>
-                            <li class="<?php echo ($class == 'operators') ? 'active' : '' ?>"><a href="<?php echo site_url('operators') ?>">Manage Operators</a></li>
+                            <li class="<?php echo ($class == 'operators') ? 'active' : '' ?>"><a href="<?php echo site_url('settings/manage_operators') ?>">Manage Operators</a></li>
                             <li class="<?php echo ($class == 'regions') ? 'active' : '' ?>"><a href="<?php echo site_url('regions') ?>">Manage Regions</a></li>
                         </ul>
                     </div>  

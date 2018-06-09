@@ -6,7 +6,7 @@ if (isset($dataArr)) {
     $form_action = 'manage_company/add';
 }
 ?>
-<section class="home-content padding-none">
+<section class="home-content padding-none admin-content">
     <div class="container">
         <div class="row">
             <div class="panel-content d-flex">
@@ -19,7 +19,7 @@ if (isset($dataArr)) {
                         </li>
                         <li class="trends-nav active">
                             <a href="<?php echo site_url('manage_company/add') ?>">
-                                <span>Add New</span>
+                                <span><?php echo (isset($dataArr)) ? "Edit" : "Add New"; ?></span>
                             </a>
                         </li>
                     </ul>
@@ -45,7 +45,6 @@ if (isset($dataArr)) {
                                                     <input type="text" class="form-control" name="name" id="name" placeholder="Company Name" value="<?php echo (isset($dataArr)) ? $dataArr['companyName'] : set_value('name'); ?>">
                                                     <?php echo '<label id="name-error" class="validation-error-label" for="name">' . form_error('name') . '</label>'; ?>
                                                 </div>
-                                                <div class="form-group has-feedback"></div>
                                                 <div class="form-group has-feedback">
                                                     <label class="control-label <?php echo $label_attribute ?>">First Name</label>
                                                     <input type="text" class="form-control" name="txt_fname" id="txt_fname" placeholder="First Name" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['firstName'] : set_value('txt_fname'); ?>" <?php echo $field_attribute ?>>
@@ -130,7 +129,7 @@ if (isset($LoginDetailsArr)) {
     if (edit == 1) {
         uname_ajax += '/<?php echo $unique_id ?>';
         email_ajax += '/<?php echo $unique_id ?>';
-        company_ajax = '/<?php echo $company_id ?>';
+        company_ajax += '/<?php echo $company_id ?>';
     }
 </script>
 <script type="text/javascript">
@@ -360,7 +359,6 @@ if (isset($LoginDetailsArr)) {
                     geocoder.geocode({'latLng': new google.maps.LatLng(position.coords.latitude, position.coords.longitude)}, function (results, status) {
                         if (status == google.maps.GeocoderStatus.OK) {
                             if (results[0]) {
-                                console.log(results[0]);
                                 $('#address').val(results[0].formatted_address);
                                 $('#latitude').val(results[0].geometry.location.lat)
                                 $('#longitude').val(results[0].geometry.location.lng)
@@ -389,7 +387,6 @@ if (isset($LoginDetailsArr)) {
                     latLng: marker.getPosition()
                 }, function (responses) {
                     if (responses && responses.length > 0) {
-                        console.log(responses[0]);
                         $('#address').val(responses[0].formatted_address);
                         $("#latitude").val(marker.getPosition().lat());
                         $("#longitude").val(marker.getPosition().lng());

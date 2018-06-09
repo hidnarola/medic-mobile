@@ -68,6 +68,7 @@ class Settings extends MY_Controller {
      * Update password functionality
      */
     public function updatepassword() {
+        $companyGUID = $this->session->userdata('companyGUID');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[5]');
         $this->form_validation->set_rules('con_password', 'Confirm Password', 'trim|required|matches[password]|min_length[5]');
 

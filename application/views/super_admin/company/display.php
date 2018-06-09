@@ -1,4 +1,4 @@
-<section class="home-content padding-none">
+<section class="home-content padding-none admin-content">
     <div class="container">
         <div class="row">
             <div class="panel-content d-flex">

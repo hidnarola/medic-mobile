@@ -729,7 +729,8 @@ table.table tr:hover a.edit_btn{color:#fff; text-decoration:underline; }
 .add-form-wrap .form-group label{ color:#fff; font-size:13px; display:block;}
 .add-form-l{width:44%; display:flex; flex-wrap:wrap}
 .add-form-l .form-group{ width:48%; margin-bottom:0; }
-.add-form-l .form-group:nth-child(2n+2){ margin-left:auto; }
+.add-form-l .form-group:nth-child(2n+1){ margin-left:auto; }
+.add-form-l .form-group.has-feedback:nth-child(1){ width:100%; padding-right:52%;}
 .add-form-r{width:52%; margin-left:auto;}
 
 .add-form-btn button{background:#d52b1f !important; color:#fff; border:2px solid #d52b1f; line-height:20px; padding:7px 10px; text-align: center; font-size: 15px; width: 110px; border-radius: 4px;}
