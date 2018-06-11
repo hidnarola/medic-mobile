@@ -24,6 +24,7 @@ class Company extends MY_Controller {
      */
     public function display_company() {
         $data['title'] = 'List of Company';
+        $data['heading'] = 'Manage Company';
         $this->template->load('default_admin', 'super_admin/company/display', $data);
     }
 
@@ -55,6 +56,8 @@ class Company extends MY_Controller {
      */
     public function add_company() {
         $data['title'] = 'Add Company';
+        $data['heading'] = 'Manage Company';
+
         $this->form_validation->set_rules('name', 'Company Name', 'trim|required|max_length[128]');
         $this->form_validation->set_rules('address', 'Company Address', 'trim|required');
         if ($this->form_validation->run() == true) {
@@ -127,6 +130,8 @@ class Company extends MY_Controller {
      */
     public function edit_company($id = '') {
         $data['title'] = 'Edit Company';
+        $data['heading'] = 'Manage Company';
+
         $record_id = base64_decode($id);
         $data['dataArr'] = $this->company_model->get_all_details(TBL_COMPANY, array('companyGUID' => $record_id))->row_array();
         $data['LoginDetailsArr'] = $this->company_model->get_all_details(TBL_LOGIN_DETAILS, array('companyGUID' => $record_id))->row_array();

@@ -25,6 +25,8 @@
         <script type="text/javascript">
             var site_url = "<?php echo site_url() ?>";
             var base_url = "<?php echo base_url() ?>";
+            var s_msg = "<?php echo $this->session->flashdata('success') ?>";
+            var e_msg = "<?php echo $this->session->flashdata('error') ?>";
         </script>
 
         <title>Mobile Medic</title>

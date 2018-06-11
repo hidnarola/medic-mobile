@@ -76,7 +76,14 @@
                     <div class="logo"><a href="<?php echo site_url('/'); ?>"><img src="assets/images/logo.png" alt=""/></a></div>
                     <div class="nav admin-nav">
                         <ul>
-                            <li>Manage Company</li>
+                            <li>
+                                <?php
+                                if (isset($heading))
+                                    echo $heading;
+                                else
+                                    echo "Manage Company";
+                                ?>
+                            </li>
                         </ul>
                     </div>
                     <div class="header-r">

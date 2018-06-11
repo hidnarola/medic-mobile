@@ -13,6 +13,7 @@
 label.error{color: red !important;}
 label.validation-error-label{color: red !important;margin:5px 0 0 0}
 .admin-nav ul li {font-family: Folio Condensed;font-size: 18px;line-height: normal;letter-spacing: normal;text-align: left;color: #fff;text-transform: uppercase;}
+.admin-topheader .setting-nav{margin: 15px 0 15px;}
 
 /** PAV css **/
 .required:after { content: " *";color:#F44336;}

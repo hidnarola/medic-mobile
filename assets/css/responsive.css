@@ -1,10 +1,11 @@
+@media(min-width:1025px) and (max-width:1139px){
+.add-usr-div .add-form-l{width:75%;}
+}
 @media(max-width:1024px){
 .latest-message-table,
 .srh-table {overflow:auto;}
 .srh-table table,
 .latest-message-table table {min-width:1024px;}
-
-
 
 }
 
@@ -52,7 +53,7 @@
 #exampleModal .modal-dialog {width:96%;}
 .service-info .loader-box-body h3 { font-size: 30px;  word-wrap: break-word;}
 .service-info .loader-box-body {min-height: 170px;}
-
+.add-usr-div .add-form-l{width:75%;}
 }
 
 
@@ -64,7 +65,7 @@
 .admin-topheader .setting-nav ul li {width:30%; padding:8px 15px; margin: 0;}
 .admin-content .left-nav {background: #2d2d2d; width: 150px; margin-left: 0; }
 .admin-content .right-panel {    width: calc(100% - 160px);padding: 0 10px 0 0; margin-left: auto;}
-
+.add-usr-div .add-form-l{width:85%;}
 
 }
 
@@ -188,8 +189,6 @@
 .csv-note p br{ display:none;}
 .import-data h2{ display:none;}
 
-.add-form-l, 
-.add-form-r{ width:100%; margin:0 0 20px;}
 .add-form-l .form-group{ width:100%; margin-bottom:10px; }
 .add-form-l .form-group.has-feedback:nth-child(1){ padding:0;}
 .add-form-l .form-group:nth-child(2n+1){ margin-left:0;}
@@ -202,7 +201,8 @@
 .admin-content .latest-message-table, 
 .admin-content .srh-table{overflow:scroll; }
 .admin-content .dataTables_wrapper {min-width: 1024px;}
-
+.add-form-l .form-group.company-name{display:none;}
+.add-usr-div .add-form-l{width:100%;}
 }
 
 @media(max-width:499px){

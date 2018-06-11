@@ -111,4 +111,7 @@ $route['operation/machines'] = 'company_admin/operation/machines';
 $route['operation/visits'] = 'company_admin/operation/visits';
 $route['operation/operators'] = 'company_admin/operation/operators';
 
-
+//-- Super Admin Users route
+$route['users'] = 'super_admin/users/display_users';
+$route['users/add'] = 'super_admin/users/add';
+$route['users/edit/(:any)'] = 'super_admin/users/edit/$1';

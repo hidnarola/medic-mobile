@@ -45,6 +45,7 @@ if (isset($dataArr)) {
                                                     <input type="text" class="form-control" name="name" id="name" placeholder="Company Name" value="<?php echo (isset($dataArr)) ? $dataArr['companyName'] : set_value('name'); ?>">
                                                     <?php echo '<label id="name-error" class="validation-error-label" for="name">' . form_error('name') . '</label>'; ?>
                                                 </div>
+                                                <div class="form-group company-name"></div>
                                                 <div class="form-group has-feedback">
                                                     <label class="control-label <?php echo $label_attribute ?>">First Name</label>
                                                     <input type="text" class="form-control" name="txt_fname" id="txt_fname" placeholder="First Name" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['firstName'] : set_value('txt_fname'); ?>" <?php echo $field_attribute ?>>
@@ -97,7 +98,7 @@ if (isset($dataArr)) {
                                                 <input type="hidden" name="postal_code" id="postal_code" value="<?php echo (isset($dataArr)) ? $dataArr['postcode_zipcode'] : '21202'; ?>">
                                             </div>    
                                         </div>    
-                                        <div class=" add-form-btn">
+                                        <div class="add-form-btn">
                                             <button type="submit" class="custom_save_button">Save</button>
                                             <a class="custom_cancel_button" href="<?php echo site_url('manage_company'); ?>">Cancel</a>
                                         </div>
