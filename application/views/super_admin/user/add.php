@@ -11,14 +11,14 @@ if (isset($dataArr)) {
             <div class="panel-content d-flex">
                 <div class="left-nav">
                     <ul>
-                        <li class="current-nav active">
+                        <li class="current-nav">
                             <a href="<?php echo site_url('users') ?>">
                                 <span>Manage Users</span>
                             </a>
                         </li>
-                        <li class="trends-nav ">
+                        <li class="trends-nav active">
                             <a href="<?php echo site_url('users/add') ?>">
-                                <span><?php echo (isset($dataArr)) ? "Edit" : "Add New"; ?></span>
+                                <span><?php echo (isset($user)) ? "Edit" : "Add New"; ?></span>
                             </a>
                         </li>
                     </ul>
@@ -27,7 +27,7 @@ if (isset($dataArr)) {
                     <div class="content-wrapper">
                         <div class="row">
                             <div class="col-md-12">
-                                <form method="post" action="<?php echo site_url($form_action); ?>" id="add_user_form" enctype="multipart/form-data">
+                                <form method="post" id="add_user_form" enctype="multipart/form-data">
                                     <div class="panel panel-body login-form">
                                         <?php
                                         if (!isset($LoginDetailsArr)) {
@@ -41,44 +41,49 @@ if (isset($dataArr)) {
                                             <div class="add-form-l">
                                                 <div class="form-group">
                                                     <label class="control-label required">Company Name</label>
-                                                    <select name="company_name" class="form-control select-control" id="company_name">
-                                                        <?php foreach ($companies as $company) { ?>
-                                                            <option value="<?php echo $company['companyGUID'] ?>"><?php echo $company['companyName'] ?></option>
+                                                    <select name="company_name" class="form-control select-control" id="company_name" required>
+                                                        <?php
+                                                        foreach ($companies as $company) {
+                                                            $selected = '';
+                                                            if (isset($user) && $user['companyGUID'] == $company['companyGUID'])
+                                                                $selected = 'selected';
+                                                            ?>
+                                                            <option value="<?php echo $company['companyGUID'] ?>" <?php echo $selected ?>><?php echo $company['companyName'] ?></option>
                                                         <?php } ?>
                                                     </select>
                                                     <?php echo '<label id="company_name-error" class="validation-error-label" for="company_name">' . form_error('company_name') . '</label>'; ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label required">First Name</label>
-                                                    <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['firstName'] : set_value('txt_fname'); ?>" required>
+                                                    <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name" value="<?php echo (isset($user)) ? $user['firstName'] : set_value('txt_fname'); ?>" required>
                                                     <?php echo '<label id="firstname-error" class="validation-error-label" for="firstname">' . form_error('firstname') . '</label>'; ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label required">Last Name</label>
-                                                    <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['lastName'] : set_value('lastname'); ?>" required>
+                                                    <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name" value="<?php echo (isset($user)) ? $user['lastName'] : set_value('lastname'); ?>" required>
                                                     <?php echo '<label id="lastname-error" class="validation-error-label" for="lastname">' . form_error('lastname') . '</label>'; ?>
                                                 </div>    
                                                 <div class="form-group">
                                                     <label class="control-label required">Username</label>
-                                                    <input type="text" class="form-control" name="username" id="username" placeholder="User Name" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['username'] : set_value('username'); ?>" required>
+                                                    <input type="text" class="form-control" name="username" id="username" placeholder="User Name" value="<?php echo (isset($user)) ? $user['username'] : set_value('username'); ?>" required>
                                                     <?php echo '<label id="username-error" class="validation-error-label" for="username">' . form_error('username') . '</label>'; ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label required">Email</label>
-                                                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['email'] : set_value('email'); ?>" required>
+                                                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo (isset($user)) ? $user['emailAddress'] : set_value('email'); ?>" required>
                                                     <?php echo '<label id="email-error" class="validation-error-label" for="email">' . form_error('email') . '</label>'; ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label required">Password</label>
-                                                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" value="<?php echo set_value('txt_pass'); ?>" required>
+                                                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" value="<?php echo set_value('txt_pass'); ?>" <?php if (!isset($user)) echo "required" ?>>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="control-label required">Confirm Password</label>
-                                                    <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Confirm Password" value="<?php echo set_value('txt_cpass'); ?>" <?php echo $field_attribute ?>>
+                                                    <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Confirm Password" value="<?php echo set_value('txt_cpass'); ?>" <?php if (!isset($user)) echo "required" ?>>
                                                 </div>
                                             </div>
                                         </div>    
-                                        <div class=" add-form-btn">
+                                        <div class="add-form-btn">
                                             <button type="submit" class="custom_save_button">Save</button>
                                             <a class="custom_cancel_button" href="<?php echo site_url('users'); ?>">Cancel</a>
                                         </div>
@@ -96,31 +101,20 @@ if (isset($dataArr)) {
 $edit = 0;
 $unique_id = '';
 $company_id = '';
-if (isset($LoginDetailsArr)) {
+if (isset($user)) {
     $edit = 1;
-    $unique_id = $LoginDetailsArr['userGUID'];
-    $company_id = $dataArr['companyGUID'];
+    $unique_id = $user['userGUID'];
 }
 ?>
 <script type="text/javascript">
     uname_ajax = '<?php echo site_url('super_admin/company/check_username') ?>';
     email_ajax = '<?php echo site_url('super_admin/company/check_useremail') ?>';
-    company_ajax = '<?php echo site_url('super_admin/company/check_comapnyname') ?>';
+
     edit = <?php echo $edit ?>;
     if (edit == 1) {
         uname_ajax += '/<?php echo $unique_id ?>';
         email_ajax += '/<?php echo $unique_id ?>';
-        company_ajax += '/<?php echo $company_id ?>';
     }
-</script>
-<script type="text/javascript">
-    /*********************************************************
-     Map Integration
-     **********************************************************/
-    var map;
-
-</script>
-<script type="text/javascript">
 
     /****************************************************************************
      This function is used to validate form
@@ -165,21 +159,19 @@ if (isset($LoginDetailsArr)) {
             }
         },
         rules: {
-            name: {required: true, remote: company_ajax},
-            address: {required: true},
-            txt_fname: {required: true},
-            txt_lname: {required: true},
-            txt_uname: {required: true, remote: uname_ajax},
-            txt_email: {required: true, email: true, remote: email_ajax},
+            company_name: {required: true},
+            firstname: {required: true},
+            lastname: {required: true},
+            username: {required: true, remote: uname_ajax},
+            email: {required: true, email: true, remote: email_ajax},
             txt_pass: {minlength: 8},
             txt_cpass: {minlength: 8, equalTo: "#txt_pass"}
         },
         messages: {
-            name: {remote: jQuery.validator.format("Company name already exist!")},
-            txt_uname: {
+            username: {
                 remote: jQuery.validator.format("Username already exist!"),
             },
-            txt_email: {
+            email: {
                 remote: jQuery.validator.format("Email already exist!"),
             },
         },

@@ -35,6 +35,27 @@ class Users_model extends MY_Model {
         }
     }
 
+    /**
+     * Get all companies
+     * @author KU
+     */
+    public function get_companies() {
+        $query = $this->db->get(TBL_COMPANY);
+        $data = $query->result_array();
+        return $data;
+    }
+
+    /**
+     * Get user details by userGUID
+     * @param string $id userGUID 
+     * @return array
+     */
+    public function get_user_by_id($id) {
+        $this->db->where('userGUID', $id);
+        $query = $this->db->get(TBL_LOGIN_DETAILS);
+        return $query->row_array();
+    }
+
 }
 
 /* End of file Users_model.php */

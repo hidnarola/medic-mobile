@@ -5,7 +5,7 @@
                 <div class="left-nav">
                     <ul>
                         <li class="current-nav active">
-                            <a href="<?php echo site_url('company') ?>">
+                            <a href="<?php echo site_url('manage_company') ?>">
                                 <span>Manage Company</span>
                             </a>
                         </li>

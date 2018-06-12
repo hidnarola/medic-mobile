@@ -11,7 +11,7 @@ class Login extends MY_Controller {
     }
 
     /**
-     * This function is used to Logeed in user
+     * This function is used to Logged in user
      * @param --
      * @return --
      * @author PAV
@@ -68,7 +68,7 @@ class Login extends MY_Controller {
                     $user_ssn_data['logged_in'] = 1;
 
                     $this->session->set_userdata($user_ssn_data);
-                    $this->session->set_flashdata('success', 'You have successfully logged in.');
+//                    $this->session->set_flashdata('success', 'You have successfully logged in.');
                     redirect(site_url('dashboard'));
                 } else {
                     $this->session->set_flashdata('error', 'Username and password did not match.');
