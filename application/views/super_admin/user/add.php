@@ -53,6 +53,7 @@ if (isset($dataArr)) {
                                                     </select>
                                                     <?php echo '<label id="company_name-error" class="validation-error-label" for="company_name">' . form_error('company_name') . '</label>'; ?>
                                                 </div>
+                                                <div class="form-group"></div>
                                                 <div class="form-group">
                                                     <label class="control-label required">First Name</label>
                                                     <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name" value="<?php echo (isset($user)) ? $user['firstName'] : set_value('txt_fname'); ?>" required>
@@ -80,6 +81,28 @@ if (isset($dataArr)) {
                                                 <div class="form-group">
                                                     <label class="control-label required">Confirm Password</label>
                                                     <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Confirm Password" value="<?php echo set_value('txt_cpass'); ?>" <?php if (!isset($user)) echo "required" ?>>
+                                                </div>
+                                                <div class="radiobtn-div">
+                                                    <label class="control-label required">Role</label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="user_role" value="1" <?php
+                                                        if (isset($user)) {
+                                                            if ($user['tier'] == 1)
+                                                                echo 'checked';
+                                                        }else {
+                                                            echo 'checked';
+                                                        }
+                                                        ?>>Super User
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="user_role" value="2" <?php if (isset($user) && $user['tier'] == 2) echo 'checked' ?>>Master User
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="user_role" value="3" <?php if (isset($user) && $user['tier'] == 3) echo 'checked' ?>>Standard User
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="user_role" value="4" <?php if (isset($user) && $user['tier'] == 4) echo 'checked' ?>>Services User
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>    

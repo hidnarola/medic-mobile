@@ -68,6 +68,7 @@ class Users extends MY_Controller {
                 'username' => htmlentities($this->input->post('username')),
                 'emailAddress' => htmlentities($this->input->post('email')),
                 'companyGUID' => $this->input->post('company_name'),
+                'tier' => $this->input->post('user_role'),
                 'isAdmin' => 0,
                 'passwordHash' => md5($this->input->post('password'))
             );
@@ -126,7 +127,8 @@ class Users extends MY_Controller {
                     'lastName' => htmlentities($this->input->post('lastname')),
                     'username' => htmlentities($this->input->post('username')),
                     'emailAddress' => htmlentities($this->input->post('email')),
-                    'companyGUID' => $this->input->post('company_name')
+                    'companyGUID' => $this->input->post('company_name'),
+                    'tier' => $this->input->post('user_role'),
                 );
                 if ($this->input->post('password') != '') {
                     $updateArr['passwordHash'] = md5($this->input->post('password'));

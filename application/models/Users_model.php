@@ -14,7 +14,7 @@ class Users_model extends MY_Model {
      * @return integer/array
      */
     public function get_users($type = 'result') {
-        $columns = ['l.username', 'l.firstName', 'l.lastName', 'l.emailAddress', 'c.companyName'];
+        $columns = ['l.username', 'l.firstName', 'l.lastName', 'l.emailAddress', 'l.tier', 'c.companyName'];
         $keyword = $this->input->get('search');
         $this->db->select('l.*,c.companyName');
         if (!empty($keyword['value'])) {

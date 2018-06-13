@@ -26,6 +26,7 @@
                                     <th>First name</th>
                                     <th>Last name</th>
                                     <th>Email</th>
+                                    <th>Access Level</th>
                                     <th>Company</th>
                                     <th>Action</th>
                                 </tr>
@@ -74,6 +75,24 @@
                 {
                     data: "emailAddress",
                     visible: true,
+                },
+                {
+                    data: "tier",
+                    render: function (data, type, full, meta) {
+                        if (data == 1) {
+                            return 'Super User';
+                        } else if (data == 2) {
+                            return 'Master User';
+                        } else if (data == 3) {
+                            return 'Standard User';
+                        } else if (data == 4) {
+                            return 'Service User';
+                        } else {
+                            return '';
+                        }
+
+                    },
+                    sortable: false,
                 },
                 {
                     data: "companyName",

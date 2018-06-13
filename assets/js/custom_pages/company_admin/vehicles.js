@@ -62,8 +62,8 @@ $(function () {
         width: 'auto'
     });
     $('.dataTables_filter input[type=search]').attr('placeholder', 'Type to filter...');
-    var add_button = '<div class="text-right"><a href="' + site_url + 'settings/manage_vehicles/add" class="btn bg-warning btn-labeled custom_add_button"><b><i class="icon-plus-circle2"></i></b> Add Vehicles</a></div>';
-    $('.datatable-header').append(add_button);
+//    var add_button = '<div class="text-right"><a href="' + site_url + 'settings/manage_vehicles/add" class="btn bg-warning btn-labeled custom_add_button"><b><i class="icon-plus-circle2"></i></b> Add Vehicles</a></div>';
+//    $('.datatable-header').append(add_button);
 });
 
 /****************************************************************************

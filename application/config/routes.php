@@ -111,7 +111,23 @@ $route['operation/machines'] = 'company_admin/operation/machines';
 $route['operation/visits'] = 'company_admin/operation/visits';
 $route['operation/operators'] = 'company_admin/operation/operators';
 
-//-- Super Admin Users route
+//-- Super Admin Routes
+//-- Users routes
 $route['users'] = 'super_admin/users/display_users';
 $route['users/add'] = 'super_admin/users/add';
 $route['users/edit/(:any)'] = 'super_admin/users/edit/$1';
+
+//-- Regions routes
+$route['regions'] = 'super_admin/regions/display_areas';
+$route['regions/add'] = 'super_admin/regions/add_areas';
+$route['regions/edit/(:any)'] = 'super_admin/regions/edit_areas/$1';
+
+//-- Operator routes
+$route['operators'] = 'super_admin/operators/display_operators';
+$route['operators/add'] = 'super_admin/operators/add_operators';
+$route['operators/edit/(:any)'] = 'super_admin/operators/edit_operators/$1';
+
+//-- Vehicle routes
+$route['vehicles'] = 'super_admin/vehicles/display_vehicles';
+$route['vehicles/add'] = 'super_admin/vehicles/add_vehicles';
+$route['vehicles/edit/(:any)'] = 'super_admin/vehicles/edit_vehicles/$1';

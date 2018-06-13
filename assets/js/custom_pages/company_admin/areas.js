@@ -70,8 +70,8 @@ $(function () {
                 data: "action",
                 render: function (data, type, full, meta) {
                     action = '';
-                    action += '<a href="javascript:void(0);" style="padding-right: 10px;border-right:2px solid #455A64" title="View" id="\'' + btoa(full.depotGUID) + '\'" class="area_view_btn">View</a>';
-                    action += '<a href="' + site_url + 'settings/manage_areas/edit/' + btoa(full.depotGUID) + '" id="' + btoa(full.depotGUID) + '" style="padding: 0 10px;" title="Edit">Edit</a>';
+                    action += '<a href="javascript:void(0);" style="padding-right: 10px;border-right:2px solid #455A64" title="View" id="\'' + btoa(full.depotGUID) + '\'" class="area_view_btn edit_btn">View</a>';
+                    action += '<a href="' + site_url + 'settings/manage_areas/edit/' + btoa(full.depotGUID) + '" id="' + btoa(full.depotGUID) + '" style="padding: 0 10px;" class="edit_btn" title="Edit">Edit</a>';
                     //action += '&nbsp;&nbsp;<a href="' + site_url + 'manage_company/delete/' + btoa(full.id) + '" class="btn custom_dt_action_button btn-xs" onclick="return confirm_alert(this)" title="Delete">Delete</a>';
                     return action;
                 },
@@ -86,8 +86,8 @@ $(function () {
         width: 'auto'
     });
     $('.dataTables_filter input[type=search]').attr('placeholder', 'Type to filter...');
-    var add_button = '<div class="text-right"><a href="' + site_url + 'settings/manage_areas/add" class="btn bg-warning btn-labeled custom_add_button"><b><i class="icon-plus-circle2"></i></b> Add Areas</a></div>';
-    $('.datatable-header').append(add_button);
+//    var add_button = '<div class="text-right"><a href="' + site_url + 'settings/manage_areas/add" class="btn bg-warning btn-labeled custom_add_button"><b><i class="icon-plus-circle2"></i></b> Add Areas</a></div>';
+//    $('.datatable-header').append(add_button);
 });
 
 /****************************************************************************

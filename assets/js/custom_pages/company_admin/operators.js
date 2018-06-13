@@ -87,8 +87,8 @@ $(function () {
         width: 'auto'
     });
     $('.dataTables_filter input[type=search]').attr('placeholder', 'Type to filter...');
-    var add_button = '<div class="text-right"><a href="javascript:void(0)" class="btn bg-warning btn-labeled custom_add_operators_btn"><b><i class="icon-plus-circle2"></i></b> Add Operators</a></div>';
-    $('.datatable-header').append(add_button);
+//    var add_button = '<div class="text-right"><a href="javascript:void(0)" class="btn bg-warning btn-labeled custom_add_operators_btn"><b><i class="icon-plus-circle2"></i></b> Add Operators</a></div>';
+//    $('.datatable-header').append(add_button);
 });
 
 $(document).on('click', '.custom_add_operators_btn', function () {
