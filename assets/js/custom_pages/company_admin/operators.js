@@ -73,7 +73,7 @@ $(function () {
                 data: "action",
                 render: function (data, type, full, meta) {
                     //action = '<a href="javascript:void(0);" id="' + btoa(full.operativeGUID) + '" class="view_operator" style="font-size: 14px;font-weight: 500;padding-right: 10px;border-right:2px solid #bbbbbb" title="View">View</a>';
-                    action = '<a href="javascript:void(0);" id="' + btoa(full.operativeGUID) + '" class="edit_operator" style="padding:0 10px;" title="Edit">Edit</a>';
+                    action = '<a href="javascript:void(0);" id="' + btoa(full.operativeGUID) + '" class="edit_operator edit_btn" style="padding:0 10px;" title="Edit">Edit</a>';
                     return action;
                 },
                 className: "action dt-head-center",

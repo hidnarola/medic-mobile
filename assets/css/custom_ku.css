@@ -16,34 +16,36 @@ label.validation-error-label{color: red !important;margin:5px 0 0 0}
 .admin-topheader .setting-nav{margin: 15px 0 15px;}
 .radiobtn-div .control-label{display: block;}
 .radiobtn-div label{color: #fff;font-size: 13px;}
+/*.dataTable thead .sorting_asc:after {content: '\e9c2';}
+.dataTable thead .sorting_desc:after {content: '\e9c1';}*/
 
 /** PAV css **/
-.required:after { content: " *";color:#F44336;}
-.cbg-black-100{ background-color: #000000ad; color:#fff; }
-.cbg-black-200{ background-color: #000000cf; color:#fff; }
-.cbg-black-300{ background-color: #000; color:#fff; }
-.modal-open{ padding-right:3px !important; }
+.required:after {content: " *";color:#F44336;}
+.cbg-black-100{background-color: #000000ad; color:#fff; }
+.cbg-black-200{background-color: #000000cf; color:#fff; }
+.cbg-black-300{background-color: #000; color:#fff; }
+.modal-open{padding-right:3px !important; }
 .panel,
-.dataTables_wrapper{ box-shadow:0px 10px 30px -7px rgba(0,0,0,0.4); }   
+.dataTables_wrapper{box-shadow:0px 10px 30px -7px rgba(0,0,0,0.4); }   
 .dataTables_wrapper .action a{font-size:14px;font-weight:500;color:#00000087;}
 .dataTables_wrapper .action a:hover{color:#000000d6;}
 .custom_save_button{width: 90px;display: inline-block;float: left;margin-right: 15px; border:none;padding:8px 12px;font-weight:400;}
 .custom_cancel_button{width: 90px;display: inline-block;float: left;font-weight:400;}
-.custom_dt_action_button{ font-weight:500; color:#222832; border:2px solid #222832; background-color:#fff; text-transform: uppercase; margin-bottom:3px !important;}
+.custom_dt_action_button{font-weight:500; color:#222832; border:2px solid #222832; background-color:#fff; text-transform: uppercase; margin-bottom:3px !important;}
 .custom_dt_action_button:hover,
 .custom_dt_action_button:focus,
 .custom_action_button:hover,
-.custom_action_button:focus{ color: #fff;opacity: 0.90;background-color:#222832;}
-.dt-head-center{ text-align: center }
+.custom_action_button:focus{color: #fff;opacity: 0.90;background-color:#222832;}
+.dt-head-center{ext-align: center }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus {background-color: #ff5722;}
 
-.operations_date_range #date_range{ width:auto;border-width: 2px;}
+.operations_date_range #date_range{width:auto;border-width: 2px;}
 .ranges ul li.active,
 .daterangepicker td.active,
 .daterangepicker td.active:hover,
-.daterangepicker td.active:focus{ background-color: #ff5722; }
+.daterangepicker td.active:focus{background-color: #ff5722; }
 
 .pagination > .active > a,
 .pagination > .active > span,
@@ -52,16 +54,16 @@ label.validation-error-label{color: red !important;margin:5px 0 0 0}
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {background-color: #ff5722;border-color: #ff5722;}
 
-.page-container{ padding-bottom:0px !important; }
-.modal-backdrop.in{ opacity: 0.8; }
+.page-container{padding-bottom:0px !important; }
+.modal-backdrop.in{opacity: 0.8; }
 
 /*****************************************************************
                 Custom Form Validation success Tick
 *****************************************************************/
 .form_success_icon{right:10px;color:#00bcd4;}
-.form_success_vert_icon { color: #00bcd4; }
+.form_success_vert_icon {color: #00bcd4; }
 .form-horizontal .has-feedback > .form-control-feedback,
-.select_form_group .form-control-feedback{ right: 30px !important; }
+.select_form_group .form-control-feedback{right: 30px !important; }
 
 /*****************************************************************
                         Custom Scroll
@@ -84,7 +86,7 @@ body::-webkit-scrollbar-thumb { background-color: #FF5722; outline: 1px solid #F
 /*****************************************************************
                         Mobile Sidebar
 *****************************************************************/
-.sidenav .navigation.admin-sidebar li a{ font-size:12px; }
+.sidenav .navigation.admin-sidebar li a{font-size:12px; }
 .sidenav {height: 100%;width: 0;position: fixed;z-index: 1;top: 0;left: 0;background-color: #142029f2;overflow-x: hidden;transition: 0.5s;z-index:1111;}
 
 .sidenav a {padding: 8px 8px 8px 32px;text-decoration: none;font-size: 15px;color: #fff;display: block;transition: 0.3s;}

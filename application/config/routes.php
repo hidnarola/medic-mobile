@@ -116,6 +116,7 @@ $route['operation/operators'] = 'company_admin/operation/operators';
 $route['users'] = 'super_admin/users/display_users';
 $route['users/add'] = 'super_admin/users/add';
 $route['users/edit/(:any)'] = 'super_admin/users/edit/$1';
+$route['users/delete/(:any)'] = 'super_admin/users/delete/$1';
 
 //-- Regions routes
 $route['regions'] = 'super_admin/regions/display_areas';

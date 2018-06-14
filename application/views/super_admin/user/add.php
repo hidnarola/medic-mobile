@@ -1,10 +1,3 @@
-<?php
-if (isset($dataArr)) {
-    $form_action = 'users/edit/' . base64_encode($dataArr['companyGUID']);
-} else {
-    $form_action = 'users/add';
-}
-?>
 <section class="home-content padding-none admin-content">
     <div class="container">
         <div class="row">
@@ -187,8 +180,8 @@ if (isset($user)) {
             lastname: {required: true},
             username: {required: true, remote: uname_ajax},
             email: {required: true, email: true, remote: email_ajax},
-            txt_pass: {minlength: 8},
-            txt_cpass: {minlength: 8, equalTo: "#txt_pass"}
+            password: {minlength: 8},
+            confirm_password: {minlength: 8, equalTo: "#password"}
         },
         messages: {
             username: {
@@ -197,6 +190,9 @@ if (isset($user)) {
             email: {
                 remote: jQuery.validator.format("Email already exist!"),
             },
+            confirm_password: {
+                equalTo: jQuery.validator.format("Password does not march"),
+            }
         },
         submitHandler: function (form) {
             form.submit();

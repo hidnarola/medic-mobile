@@ -81,7 +81,7 @@
                                 if (isset($heading))
                                     echo $heading;
                                 else
-                                    echo "age Company";
+                                    echo "Manage Company";
                                 ?>
                             </li>
                         </ul>

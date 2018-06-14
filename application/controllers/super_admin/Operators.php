@@ -25,6 +25,8 @@ class Operators extends MY_Controller {
      */
     public function display_operators() {
         $data['title'] = 'List Of Operators';
+        $data['heading'] = 'Manage Operators';
+
         $data['locationArr'] = $this->settings_model->get_depot_by_company()->result_array();
         $this->template->load('default_admin', 'super_admin/operator/listing', $data);
     }
@@ -57,6 +59,8 @@ class Operators extends MY_Controller {
      */
     public function add_operators() {
         $data['locationArr'] = $this->settings_model->get_depot_by_company()->result_array();
+        $data['heading'] = 'Manage Operators';
+
         $this->form_validation->set_rules('txt_base_depot', 'Base Depot', 'trim|required');
         $this->form_validation->set_rules('txt_surname', 'Surname', 'trim|required|max_length[45]');
         $this->form_validation->set_rules('txt_forename', 'Forename', 'trim|required|max_length[45]');
@@ -132,6 +136,8 @@ class Operators extends MY_Controller {
      * @author PAV
      */
     public function edit_operators($id = '') {
+        $data['heading'] = 'Manage Operators';
+
         $record_id = base64_decode($id);
         $this->form_validation->set_rules('txt_base_depot', 'Base Depot', 'trim|required');
         $this->form_validation->set_rules('txt_surname', 'Surname', 'trim|required|max_length[45]');

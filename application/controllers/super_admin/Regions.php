@@ -6,7 +6,7 @@ class Regions extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('users_model','settings_model');
+        $this->load->model('users_model', 'settings_model');
         //-- Check if logged in user is admin if not admin than redirect user back to dashboard page
         if (!get_AdminLogin('A')) {
             redirect('dashboard');
@@ -20,6 +20,7 @@ class Regions extends MY_Controller {
      * @author PAV
      */
     public function display_areas() {
+        $data['heading'] = 'Manage Regions';
         $data['title'] = 'List of Areas';
         $this->template->load('default_admin', 'super_admin/region/listing', $data);
     }
@@ -51,6 +52,7 @@ class Regions extends MY_Controller {
      * @author PAV
      */
     public function add_areas() {
+        $data['heading'] = 'Manage Regions';
         $data['title'] = 'Add Areas';
         $Sec_managerGUID = '';
         $this->form_validation->set_rules('txt_depot_name', 'Depot Name', 'trim|required|max_length[128]');
@@ -99,6 +101,8 @@ class Regions extends MY_Controller {
      */
     public function edit_areas($id = '') {
         $data['title'] = 'Edit Areas';
+        $data['heading'] = 'Manage Regions';
+
         $record_id = base64_decode($id);
         $data['dataArr'] = $dataArr = $this->settings_model->get_area_details_by_id($record_id)->row_array();
         $data['regionArr'] = $this->settings_model->get_all_details(TBL_REGION, array('companyGUID' => get_AdminLogin('COMP_GUID')), array(array('field' => 'regionName', 'type' => 'asc')))->result_array();

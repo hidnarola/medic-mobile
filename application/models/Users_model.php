@@ -22,6 +22,7 @@ class Users_model extends MY_Model {
             $this->db->where($where);
         }
         $this->db->where('isAdmin', 0);
+        $this->db->where('is_delete', 0);
         $this->db->join(TBL_COMPANY . ' c', 'c.companyGUID=l.companyGUID', 'left');
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
         if ($type == 'count') {
@@ -52,6 +53,7 @@ class Users_model extends MY_Model {
      */
     public function get_user_by_id($id) {
         $this->db->where('userGUID', $id);
+        $this->db->where('is_delete', 0);
         $query = $this->db->get(TBL_LOGIN_DETAILS);
         return $query->row_array();
     }

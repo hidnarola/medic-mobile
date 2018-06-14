@@ -1,3 +1,4 @@
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <section class="home-content padding-none admin-content">
     <div class="container">
         <div class="row">
@@ -116,4 +117,19 @@
             width: 'auto'
         });
     });
+    function confirm_alert(e) {
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this user!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                window.location.href = $(e).attr('href');
+                return true;
+            }
+        });
+        return false;
+    }
 </script>

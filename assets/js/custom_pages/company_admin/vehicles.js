@@ -47,8 +47,8 @@ $(function () {
             {
                 data: "action",
                 render: function (data, type, full, meta) {
-                    action = '<a href="javascript:void(0);" style="padding-right: 10px;border-right:2px solid #bbbbbb" title="View" id="\'' + btoa(full.depotGUID) + '\'">View</a>';
-                    action += '<a href="' + site_url + 'settings/manage_vehicles/edit/' + btoa(full.vehicleGUID) + '" id="' + btoa(full.vehicleGUID) + '" style="padding:0 10px;" title="Edit">Edit</a>';
+                    action = '<a href="javascript:void(0);" style="padding-right: 10px;border-right:2px solid #bbbbbb" title="View" id="\'' + btoa(full.depotGUID) + '\'" class="edit_btn">View</a>';
+                    action += '<a href="' + site_url + 'settings/manage_vehicles/edit/' + btoa(full.vehicleGUID) + '" id="' + btoa(full.vehicleGUID) + '" style="padding:0 10px;" title="Edit" class="edit_btn">Edit</a>';
                     return action;
                 },
                 className: "action dt-head-center",

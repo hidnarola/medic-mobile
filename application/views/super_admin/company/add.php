@@ -46,6 +46,26 @@ if (isset($dataArr)) {
                                                     <?php echo '<label id="name-error" class="validation-error-label" for="name">' . form_error('name') . '</label>'; ?>
                                                 </div>
                                                 <div class="form-group company-name"></div>
+                                                <div class="form-group">
+                                                    <label class="control-label required">City</label>
+                                                    <input type="text" class="form-control" name="city" id="city" placeholder="City" value="<?php echo (isset($dataArr)) ? $dataArr['town_city'] : 'Baltimore'; ?>" required>
+                                                    <?php echo '<label id="city-error" class="validation-error-label" for="city">' . form_error('city') . '</label>'; ?>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label required">State</label>
+                                                    <input type="text" class="form-control" name="state" id="state" placeholder="State" value="<?php echo (isset($dataArr)) ? $dataArr['country_state'] : 'Maryland'; ?>" required>
+                                                    <?php echo '<label id="state-error" class="validation-error-label" for="state">' . form_error('state') . '</label>'; ?>
+                                                </div>
+                                                 <div class="form-group">
+                                                    <label class="control-label required">Postal Code</label>
+                                                    <input type="text" class="form-control" name="postal_code" id="postal_code" placeholder="Postal code" value="<?php echo (isset($dataArr)) ? $dataArr['postcode_zipcode'] : '21202'; ?>" required>
+                                                    <?php echo '<label id="postal_code-error" class="validation-error-label" for="postal_code">' . form_error('postal_code') . '</label>'; ?>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label required">Country</label>
+                                                    <input type="text" class="form-control" name="country" id="country" placeholder="Country" value="<?php echo (isset($dataArr)) ? $dataArr['country'] : 'Maryland'; ?>" required>
+                                                    <?php echo '<label id="country-error" class="validation-error-label" for="country">' . form_error('country') . '</label>'; ?>
+                                                </div>
                                                 <div class="form-group has-feedback">
                                                     <label class="control-label <?php echo $label_attribute ?>">First Name</label>
                                                     <input type="text" class="form-control" name="txt_fname" id="txt_fname" placeholder="First Name" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['firstName'] : set_value('txt_fname'); ?>" <?php echo $field_attribute ?>>
@@ -92,10 +112,10 @@ if (isset($dataArr)) {
                                                 </div>
                                                 <input type="hidden" name="latitude" id="latitude" value="<?php echo (isset($dataArr)) ? $dataArr['latitude'] : '39.2904'; ?>">
                                                 <input type="hidden" name="longitude" id="longitude" value="<?php echo (isset($dataArr)) ? $dataArr['longitude'] : '-76.6122'; ?>">
-                                                <input type="hidden" name="city" id="city" value="<?php echo (isset($dataArr)) ? $dataArr['town_city'] : 'Baltimore'; ?>">
-                                                <input type="hidden" name="country" id="country" value="<?php echo (isset($dataArr)) ? $dataArr['country'] : 'United States'; ?>">
-                                                <input type="hidden" name="state" id="state" value="<?php echo (isset($dataArr)) ? $dataArr['country_state'] : 'Maryland'; ?>">
-                                                <input type="hidden" name="postal_code" id="postal_code" value="<?php echo (isset($dataArr)) ? $dataArr['postcode_zipcode'] : '21202'; ?>">
+                                                <!--<input type="hidden" name="city" id="city" value="<?php echo (isset($dataArr)) ? $dataArr['town_city'] : 'Baltimore'; ?>">-->
+                                                <!--<input type="hidden" name="country" id="country" value="<?php echo (isset($dataArr)) ? $dataArr['country'] : 'United States'; ?>">-->
+                                                <!--<input type="hidden" name="state" id="state" value="<?php echo (isset($dataArr)) ? $dataArr['country_state'] : 'Maryland'; ?>">-->
+                                                <!--<input type="hidden" name="postal_code" id="postal_code" value="<?php echo (isset($dataArr)) ? $dataArr['postcode_zipcode'] : '21202'; ?>">-->
                                             </div>    
                                         </div>    
                                         <div class="add-form-btn">

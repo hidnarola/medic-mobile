@@ -20,6 +20,7 @@ class Vehicles extends MY_Controller {
      * @author PAV
      */
     public function display_vehicles() {
+        $data['heading'] = 'Manage Vehicles';
         $data['title'] = 'List Of Vehicles';
         $this->template->load('default_admin', 'super_admin/vehicle/listing', $data);
     }
@@ -52,6 +53,7 @@ class Vehicles extends MY_Controller {
      */
     public function add_vehicles() {
         $data['title'] = 'Add Vehicles';
+        $data['heading'] = 'Manage Vehicles';
         $data['depotArray'] = $this->settings_model->get_all_details(TBL_DEPOT, array(), array(array('field' => 'depotName', 'type' => 'ASC')))->result_array();
         $data['used_depotGUID'] = array_column($this->vehicle_model->get_vehicle_depot(), 'baseDepotGUID');
         $this->form_validation->set_rules('txt_device_id', 'Device ID', 'trim|required|max_length[45]|is_unique[vehicle.deviceGUID]');
@@ -114,6 +116,7 @@ class Vehicles extends MY_Controller {
      */
     public function edit_vehicles($id = '') {
         $data['title'] = 'Edit Vehicles';
+        $data['heading'] = 'Manage Vehicles';
         $record_id = base64_decode($id);
         $data['depotArray'] = $this->settings_model->get_all_details(TBL_DEPOT, array(), array(array('field' => 'depotName', 'type' => 'ASC')))->result_array();
         $data['used_depotGUID'] = array_column($this->vehicle_model->get_vehicle_depot(), 'baseDepotGUID');

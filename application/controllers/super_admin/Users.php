@@ -53,7 +53,7 @@ class Users extends MY_Controller {
         $data['companies'] = $this->users_model->get_companies();
 
         $this->form_validation->set_rules('company_name', 'Company Name', 'trim|required');
-        $this->form_validation->set_rules('username', 'Username', 'trim|required');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[3]');
         $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
         $this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'required');
@@ -188,23 +188,26 @@ class Users extends MY_Controller {
     }
 
     /**
-     * Check company name is unique or not
+     * Delete user (Make is_delete 1)
+     * @param string $userGUID
      * @author KU
      */
-    public function check_comapnyname($companyGUID = null) {
-        $requested_name = trim($this->input->get('name'));
-        if ($companyGUID != '') {
-            $where = ['companyName' => $requested_name, 'companyGUID!=' => $companyGUID];
+    public function delete($userGUID = null) {
+        if (!is_null($userGUID)) {
+            // Decode userGUID
+            $user_id = base64_decode($userGUID);
+            $user = $this->users_model->get_user_by_id($user_id);  //-- check user exist or not of this user_id
+            if (!empty($user)) {
+                $this->users_model->insert_update('update', TBL_LOGIN_DETAILS, ['is_delete' => 1], array('userGUID' => $user_id));
+                $this->session->set_flashdata('success', 'User has been deleted successfully.');
+            } else {
+                $this->session->set_flashdata('error', 'Something went wrong! Please try again later.');
+            }
+            redirect('users');
         } else {
-            $where = ['companyName' => $requested_name];
+            $this->session->set_flashdata('error', 'Something went wrong! Please try again later.');
+            redirect('users');
         }
-        $company = $this->settings_model->get_all_details(TBL_COMPANY, $where)->row_array();
-        if (!empty($company)) {
-            echo "false";
-        } else {
-            echo "true";
-        }
-        exit;
     }
 
 }

@@ -29,6 +29,22 @@ $(function () {
                 visible: true,
             },
             {
+                data: "town_city",
+                visible: true,
+            },
+            {
+                data: "country_state",
+                visible: true,
+            },
+            {
+                data: "postcode_zipcode",
+                visible: true,
+            },
+            {
+                data: "country",
+                visible: true,
+            },
+            {
                 data: "action",
                 render: function (data, type, full, meta) {
                     action = '';

@@ -24,6 +24,10 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Address</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Zipcode</th>
+                                    <th>Country</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

@@ -56,20 +56,25 @@ class Login extends MY_Controller {
             if (!empty($data_exists)) {
                 $_auth_data = $this->login_model->check_login_validation($username, $password);
                 if (!empty($_auth_data)) {
-                    $user_ssn_data = array();
-                    $user_ssn_data['userGUID'] = $_auth_data['userGUID'];
-                    $user_ssn_data['firstName'] = $_auth_data['firstName'];
-                    $user_ssn_data['lastName'] = $_auth_data['lastName'];
-                    $user_ssn_data['username'] = $_auth_data['username'];
-                    $user_ssn_data['DOB'] = $_auth_data['DOB'];
-                    $user_ssn_data['emailAddress'] = $_auth_data['emailAddress'];
-                    $user_ssn_data['companyGUID'] = $_auth_data['companyGUID'];
-                    $user_ssn_data['isAdmin'] = $_auth_data['isAdmin'];
-                    $user_ssn_data['logged_in'] = 1;
+                    if ($_auth_data['is_delete'] == 0) {
+                        $user_ssn_data = array();
+                        $user_ssn_data['userGUID'] = $_auth_data['userGUID'];
+                        $user_ssn_data['firstName'] = $_auth_data['firstName'];
+                        $user_ssn_data['lastName'] = $_auth_data['lastName'];
+                        $user_ssn_data['username'] = $_auth_data['username'];
+                        $user_ssn_data['DOB'] = $_auth_data['DOB'];
+                        $user_ssn_data['emailAddress'] = $_auth_data['emailAddress'];
+                        $user_ssn_data['companyGUID'] = $_auth_data['companyGUID'];
+                        $user_ssn_data['isAdmin'] = $_auth_data['isAdmin'];
+                        $user_ssn_data['logged_in'] = 1;
 
-                    $this->session->set_userdata($user_ssn_data);
+                        $this->session->set_userdata($user_ssn_data);
 //                    $this->session->set_flashdata('success', 'You have successfully logged in.');
-                    redirect(site_url('dashboard'));
+                        redirect(site_url('dashboard'));
+                    } else {
+                        $this->session->set_flashdata('error', 'User is blocekd! Please contact your system Administrator.');
+                        redirect('/');
+                    }
                 } else {
                     $this->session->set_flashdata('error', 'Username and password did not match.');
                     redirect('/');

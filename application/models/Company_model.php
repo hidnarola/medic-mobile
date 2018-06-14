@@ -11,11 +11,14 @@ class Company_model extends MY_Model {
      * @author PAV
      */
     public function get_company_data($type) {
-        $columns = ['c.companyGUID', 'c.companyName', 'c.addressLine1'];
+        $columns = ['c.companyGUID', 'c.companyName', 'c.addressLine1', 'c.town_city', 'c.country_state', 'c.postcode_zipcode', 'c.country'];
         $keyword = $this->input->get('search');
         $this->db->select('c.*');
         if (!empty($keyword['value'])) {
-            $where = '(c.companyName LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR c.addressLine1 LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR c.addressLine2 LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR c.town_city LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR c.country_state LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR c.postcode_zipcode LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR c.addressLine1 LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ')';
+            $where = '(c.companyName LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR c.addressLine1 LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . 
+                    ' OR c.addressLine2 LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . 
+                    ' OR c.town_city LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR c.country_state LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') .
+                    ' OR c.postcode_zipcode LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR c.country LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ')';
             $this->db->where($where);
         }
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
