@@ -6,7 +6,7 @@ class Vehicles extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model(array('settings_model', 'users_model'));
+        $this->load->model(array('vehicle_model', 'settings_model', 'users_model'));
         //-- Check if logged in user is admin if not admin than redirect user back to dashboard page
         if (!get_AdminLogin('A')) {
             redirect('dashboard');
@@ -32,10 +32,10 @@ class Vehicles extends MY_Controller {
      * @author PAV
      */
     public function get_vehicles_data() {
-        $final['recordsTotal'] = $this->settings_model->get_vehicles_data('count');
+        $final['recordsTotal'] = $this->vehicle_model->get_results('count');
         $final['redraw'] = 1;
         $final['recordsFiltered'] = $final['recordsTotal'];
-        $vehicles = $this->settings_model->get_vehicles_data('result')->result_array();
+        $vehicles = $this->vehicle_model->get_results('result');
         $start = $this->input->get('start') + 1;
         foreach ($vehicles as $key => $val) {
             $vehicles[$key] = $val;

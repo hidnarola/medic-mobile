@@ -8,7 +8,7 @@
 /*logout icon*/
 .logout-icon{margin: 0 0 0 20px;}
 .logout-icon a {display: block;}
-.logout-icon a:hover svg path{fill:#d52b1f;  stroke:#d52b1f;}
+.logout-icon a:hover svg path{fill:#d52b1f; stroke:#d52b1f;}
 .user-txt {font-size: 14px;color: white;margin: 0 20px 0 0;}
 label.error{color: red !important;}
 label.validation-error-label{color: red !important;margin:5px 0 0 0}

@@ -1,6 +1,6 @@
-$(function(){
+$(function () {
     $('.txt_tyre_details').each(function () {
-        $(this).rules("add", { required: true });
+        $(this).rules("add", {required: true});
     });
 
     $('#txt_fuel_type,#txt_licence_type').on('change', function () {
@@ -8,8 +8,8 @@ $(function(){
     });
 });
 /****************************************************************************
-        This function is used to display list of records in datatable
-****************************************************************************/
+ This function is used to display list of records in datatable
+ ****************************************************************************/
 $(function () {
     $('.datatable-basic').dataTable({
         autoWidth: false,
@@ -22,8 +22,16 @@ $(function () {
         },
         dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
         order: [[0, "desc"]],
-        ajax: site_url + 'company_admin/settings/get_vehicles_data',
+        ajax: site_url + 'super_admin/vehicles/get_vehicles_data',
         columns: [
+            {
+                data: "sr_no",
+                visible: true
+            },
+            {
+                data: "companyName",
+                visible: true
+            },
             {
                 data: "registration",
                 visible: true
@@ -48,7 +56,7 @@ $(function () {
                 data: "action",
                 render: function (data, type, full, meta) {
                     action = '<a href="javascript:void(0);" style="padding-right: 10px;border-right:2px solid #bbbbbb" title="View" id="\'' + btoa(full.depotGUID) + '\'" class="edit_btn">View</a>';
-                    action += '<a href="' + site_url + 'settings/manage_vehicles/edit/' + btoa(full.vehicleGUID) + '" id="' + btoa(full.vehicleGUID) + '" style="padding:0 10px;" title="Edit" class="edit_btn">Edit</a>';
+                    action += '<a href=javascript:void(0); data-href="' + site_url + 'settings/manage_vehicles/edit/' + btoa(full.vehicleGUID) + '" id="' + btoa(full.vehicleGUID) + '" style="padding:0 10px;" title="Edit" class="edit_btn">Edit</a>';
                     return action;
                 },
                 className: "action dt-head-center",
@@ -67,8 +75,8 @@ $(function () {
 });
 
 /****************************************************************************
-                This function is used to validate form
-****************************************************************************/
+ This function is used to validate form
+ ****************************************************************************/
 var validator = $("#add_vehicle_form").validate({ignore: 'input[type=hidden], .select2-search__field, #txt_status', // ignore hidden fields
     errorClass: 'validation-error-label', successClass: 'validation-valid-label',
     highlight: function (element, errorClass) {
@@ -109,16 +117,16 @@ var validator = $("#add_vehicle_form").validate({ignore: 'input[type=hidden], .s
         }
     },
     rules: {
-        txt_device_id : { required: true, remote: remoteEnURL },
-        txt_base_depot: { required: true, maxlength: 45 },
-        txt_reg_no: { required: true, maxlength: 10 },
-        txt_vin_no: { required: true, maxlength: 17 },
-        txt_fuel_type: { required: true },
-        txt_licence_type: { required: true },
-        txt_curr_odo: { required: true, number: true, min:0 }
+        txt_device_id: {required: true, remote: remoteEnURL},
+        txt_base_depot: {required: true, maxlength: 45},
+        txt_reg_no: {required: true, maxlength: 10},
+        txt_vin_no: {required: true, maxlength: 17},
+        txt_fuel_type: {required: true},
+        txt_licence_type: {required: true},
+        txt_curr_odo: {required: true, number: true, min: 0}
     },
     messages: {
-        txt_device_id :{
+        txt_device_id: {
             remote: $.validator.format("This Device ID already exist!")
         }
     },

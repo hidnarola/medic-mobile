@@ -10,7 +10,7 @@
                             </a>
                         </li>
                         <li class="trends-nav ">
-                            <a href="<?php echo site_url('vehicles/add') ?>">
+                            <a href="javascript:void(0)<?php echo site_url('vehicles/add') ?>">
                                 <span>Add Vehicle</span>
                             </a>
                         </li>
@@ -21,6 +21,8 @@
                         <table class="table datatable-basic table-hover" id="users_table">
                             <thead>
                                 <tr>
+                                    <th>#</th>
+                                    <th>Company</th>
                                     <th>Reg No.</th>
                                     <th>VIN No.</th>
                                     <th>Fuel type</th>
