@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Manage vehicles functionality
+ * @author KU
+ */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Vehicles extends MY_Controller {
@@ -15,9 +19,7 @@ class Vehicles extends MY_Controller {
 
     /**
      * Display vehicles listing
-     * @param --
-     * @return --
-     * @author PAV
+     * @author KU
      */
     public function display_vehicles() {
         $data['heading'] = 'Manage Vehicles';
@@ -26,10 +28,9 @@ class Vehicles extends MY_Controller {
     }
 
     /**
-     * Get all the data of vehicles for listing datatable.
-     * @param --
+     * Get vehicles data for data-table listing
+     * @author KU
      * @return JSON
-     * @author PAV
      */
     public function get_vehicles_data() {
         $final['recordsTotal'] = $this->vehicle_model->get_results('count');
@@ -46,10 +47,8 @@ class Vehicles extends MY_Controller {
     }
 
     /**
-     * Add new vehicles
-     * @param --
-     * @return --
-     * @author PAV
+     * Add new vehicle
+     * @author KU
      */
     public function add_vehicles() {
         $data['title'] = 'Add Vehicles';
@@ -100,7 +99,7 @@ class Vehicles extends MY_Controller {
             $is_inserted = $this->settings_model->insert_update('insert', TBL_VEHICLE, $insertArr);
             if ($is_inserted > 0) {
                 $this->session->set_flashdata('success', 'Vehicles has been added successfully.');
-                redirect('settings/manage_vehicles');
+                redirect('vehicles');
             } else {
                 $this->session->set_flashdata('success', 'Sorry something went wrong! Please try it again.');
             }
@@ -109,10 +108,10 @@ class Vehicles extends MY_Controller {
     }
 
     /**
-     * Edit user's details by it's id
-     * @param $id -> String
+     * Edit vehicle details by its id
+     * @param string $id
      * @return redirect
-     * @author PAV
+     * @author KU
      */
     public function edit_vehicles($id = '') {
         $data['title'] = 'Edit Vehicles';

@@ -10,7 +10,7 @@
                             </a>
                         </li>
                         <li class="trends-nav ">
-                            <a href="javascript:void(0)<?php echo site_url('vehicles/add') ?>">
+                            <a href="<?php echo site_url('vehicles/add') ?>">
                                 <span>Add Vehicle</span>
                             </a>
                         </li>
