@@ -1,3 +1,5 @@
+<script type="text/javascript" src="assets/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-datepicker.min.css" />
 <section class="home-content padding-none admin-content">
     <div class="container">
         <div class="row">
@@ -24,27 +26,68 @@
                                     <div class="panel panel-body login-form">
                                         <div class="add-form-wrap">
                                             <div class="add-form-l">
-                                                <div class="form-group has-feedback">
+                                                <div class="form-group">
+                                                    <label class="control-label required">Company Name</label>
+                                                    <select name="company_name" class="form-control select-control" id="company_name" required>
+                                                        <option value="">Select Company</option>
+                                                        <?php
+                                                        foreach ($companies as $company) {
+                                                            $selected = '';
+                                                            if (isset($dataArr) && $dataArr['companyGUID'] == $company['companyGUID'])
+                                                                $selected = 'selected';
+                                                            ?>
+                                                            <option value="<?php echo $company['companyGUID'] ?>" <?php echo $selected ?>><?php echo $company['companyName'] ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                    <?php echo '<label id="company_name-error" class="validation-error-label" for="company_name">' . form_error('company_name') . '</label>'; ?>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label required">Base Depot</label>
+                                                    <select class="form-control select-control" name="txt_base_depot" id="txt_base_depot">
+                                                        <option value="">Select&hellip;</option>
+                                                        <?php foreach ($depotArray as $k => $v) { ?>
+                                                            <?php
+                                                            if (in_array($v['depotGUID'], $used_depotGUID)) {
+                                                                if (isset($dataArr) && $dataArr['baseDepotGUID'] == $v['depotGUID']) {
+                                                                    $disabled = '';
+                                                                } else {
+                                                                    $disabled = 'disabled';
+                                                                }
+                                                            } else {
+                                                                $disabled = '';
+                                                            }
+                                                            ?>
+                                                            <option value="<?php echo $v['depotGUID']; ?>" <?php
+                                                            if (isset($dataArr) && $dataArr['baseDepotGUID'] == $v['depotGUID']) {
+                                                                echo 'selected';
+                                                            }
+                                                            ?> <?php echo $disabled; ?>><?php echo $v['depotName']; ?></option>
+                                                                <?php } ?>
+                                                    </select>
+                                                    <?php echo '<label id="txt_base_depot-error" class="validation-error-label" for="txt_base_depot">' . form_error('txt_base_depot') . '</label>'; ?>
+                                                </div>
+                                                <div class="form-group">
                                                     <label class="control-label required">Registration No.</label>
                                                     <input type="text" class="form-control" placeholder="Enter Registration No" name="txt_reg_no" id="txt_reg_no" value="<?php echo (isset($dataArr)) ? $dataArr['registration'] : set_value('txt_reg_no'); ?>">
-                                                    <?php echo '<label id="txt_reg_no_error2" class="validation-error-label" for="txt_reg_no">' . form_error('txt_reg_no') . '</label>'; ?>
+                                                    <?php echo '<label id="txt_reg_no-error" class="validation-error-label" for="txt_reg_no">' . form_error('txt_reg_no') . '</label>'; ?>
                                                 </div>
-                                                <div class="form-group has-feedback">
-                                                    <label class="control-label required">Vehicle Description</label>
-                                                    <textarea class="form-control" placeholder="Enter Short Description" name="txt_vehicle_desc" id="txt_vehicle_desc"><?php echo (isset($dataArr)) ? $dataArr['description'] : set_value('txt_vehicle_desc'); ?></textarea>
-                                                    <?php echo '<label id="txt_vehicle_desc_error2" class="validation-error-label" for="txt_vehicle_desc">' . form_error('txt_vehicle_desc') . '</label>'; ?>
-                                                </div>
-                                                <div class="form-group has-feedback">
+                                                <div class="form-group">
                                                     <label class="control-label required">Telematics ID</label>
                                                     <input type="text" class="form-control" placeholder="Enter Device ID" id="txt_device_id" name="txt_device_id" value="<?php echo (isset($dataArr)) ? $dataArr['deviceGUID'] : set_value('txt_device_id'); ?>">
-                                                    <?php echo '<label id="txt_device_id_error2" class="validation-error-label" for="txt_device_id">' . form_error('txt_device_id') . '</label>'; ?>
+                                                    <?php echo '<label id="txt_device_id-error" class="validation-error-label" for="txt_device_id">' . form_error('txt_device_id') . '</label>'; ?>
                                                 </div>
-                                                <div class="form-group has-feedback">
+                                                <div class="form-group">
+                                                    <label class="control-label required">Vehicle Description</label>
+                                                    <textarea class="form-control" placeholder="Enter Short Description" name="txt_vehicle_desc" id="txt_vehicle_desc"><?php echo (isset($dataArr)) ? $dataArr['description'] : set_value('txt_vehicle_desc'); ?></textarea>
+                                                    <?php echo '<label id="txt_vehicle_desc-error" class="validation-error-label" for="txt_vehicle_desc">' . form_error('txt_vehicle_desc') . '</label>'; ?>
+                                                </div>
+                                                <div class="form-group"></div>
+                                                <div class="form-group">
                                                     <label class="control-label">VIN No.</label>
                                                     <input type="text" class="form-control" placeholder="Enter VIN No." name="txt_vin_no" id="txt_vin_no" value="<?php echo (isset($dataArr)) ? $dataArr['vin'] : set_value('txt_vin_no'); ?>">
-                                                    <?php echo '<label id="txt_vin_no_error2" class="validation-error-label" for="txt_vin_no">' . form_error('txt_vin_no') . '</label>'; ?>
+                                                    <?php echo '<label id="txt_vin_no-error" class="validation-error-label" for="txt_vin_no">' . form_error('txt_vin_no') . '</label>'; ?>
                                                 </div>
-                                                <div class="form-group has-feedback select_form_group">
+                                                <div class="form-group select_form_group">
                                                     <label class="control-label required">Fuel Type</label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">
@@ -69,39 +112,15 @@
                                                             ?>>Gasoline</option>
                                                         </select>
                                                     </div>
-                                                    <?php echo '<label id="txt_fuel_type_error2" class="validation-error-label" for="txt_fuel_type">' . form_error('txt_fuel_type') . '</label>'; ?>
+                                                    <?php echo '<label id="txt_fuel_type-error" class="validation-error-label" for="txt_fuel_type">' . form_error('txt_fuel_type') . '</label>'; ?>
                                                 </div>
-                                                <div class="form-group has-feedback">
+                                                <div class="form-group">
                                                     <label class="control-label required">Current ODO Reading</label>
                                                     <input type="text" placeholder="Enter Current ODO" class="form-control" name="txt_curr_odo" id="txt_curr_odo" value="<?php echo (isset($dataArr)) ? $dataArr['odoReading'] : set_value('txt_curr_odo'); ?>">
-                                                    <?php echo '<label id="txt_curr_odo_error2" class="validation-error-label" for="txt_curr_odo">' . form_error('txt_curr_odo') . '</label>'; ?>
+                                                    <?php echo '<label id="txt_curr_odo-error" class="validation-error-label" for="txt_curr_odo">' . form_error('txt_curr_odo') . '</label>'; ?>
                                                 </div>
-                                                <div class="form-group has-feedback">
-                                                    <label class="control-label required">Base Depot</label>
-                                                    <select class="form-control select-control" name="txt_base_depot" id="txt_base_depot">
-                                                        <option value="">Select&hellip;</option>
-                                                        <?php foreach ($depotArray as $k => $v) { ?>
-                                                            <?php
-                                                            if (in_array($v['depotGUID'], $used_depotGUID)) {
-                                                                if (isset($dataArr) && $dataArr['baseDepotGUID'] == $v['depotGUID']) {
-                                                                    $disabled = '';
-                                                                } else {
-                                                                    $disabled = 'disabled';
-                                                                }
-                                                            } else {
-                                                                $disabled = '';
-                                                            }
-                                                            ?>
-                                                            <option value="<?php echo $v['depotGUID']; ?>" <?php
-                                                            if (isset($dataArr) && $dataArr['baseDepotGUID'] == $v['depotGUID']) {
-                                                                echo 'selected';
-                                                            }
-                                                            ?> <?php echo $disabled; ?>><?php echo $v['depotName']; ?></option>
-                                                                <?php } ?>
-                                                    </select>
-                                                    <?php echo '<label id="txt_base_depot_error2" class="validation-error-label" for="txt_base_depot">' . form_error('txt_base_depot') . '</label>'; ?>
-                                                </div>
-                                                <div class="form-group has-feedback select_form_group">
+
+                                                <div class="form-group select_form_group">
                                                     <label class="control-label required">Licence Type</label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon">
@@ -161,10 +180,10 @@
                                                             ?>>TRAILER</option>
                                                         </select>
                                                     </div>
-                                                    <?php echo '<label id="txt_licence_type_error2" class="validation-error-label" for="txt_licence_type">' . form_error('txt_licence_type') . '</label>'; ?>
+                                                    <?php echo '<label id="txt_licence_type-error" class="validation-error-label" for="txt_licence_type">' . form_error('txt_licence_type') . '</label>'; ?>
                                                 </div>
 
-                                                <div class="form-group has-feedback">
+                                                <div class="form-group">
                                                     <div class="checkbox">
                                                         <label><input type="checkbox" name="txt_reset_counter" id="txt_reset_counter" <?php echo (isset($dataArr) && $dataArr['resetServiceCounter'] == 1) ? 'checked' : ''; ?>>Re-set Counter Service</label>
                                                     </div>
@@ -260,61 +279,61 @@
                                             <div class="add-form-r">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <div class="form-group has-feedback">
+                                                        <div class="form-group">
                                                             <label class="control-label">Service Intervals</label>
                                                             <input type="text" class="form-control" placeholder="Enter Service Intervals" id="txt_service_intervals" name="txt_service_intervals" value="<?php echo (isset($dataArr)) ? $dataArr['serviceIntervals'] : set_value('txt_service_intervals'); ?>">
                                                         </div>
-                                                        <div class="form-group has-feedback">
+                                                        <div class="form-group">
                                                             <label class="control-label">Last Service Date</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="icon-calendar2"></i></span>
-                                                                <input type="text" class="form-control pickadate-accessibility" placeholder="Enter Last Service Date" name="txt_last_service_date" id="txt_last_service_date" value="<?php echo (isset($dataArr)) ? date('d F, Y', strtotime($dataArr['lastServiceDate'])) : set_value('txt_last_service_date'); ?>">
+                                                                <input type="text" class="form-control pickadate-accessibility dateselect" placeholder="Enter Last Service Date" name="txt_last_service_date" id="txt_last_service_date" value="<?php echo (isset($dataArr)) ? date('d F, Y', strtotime($dataArr['lastServiceDate'])) : set_value('txt_last_service_date'); ?>">
                                                             </div>
                                                         </div>
-                                                        <div class="form-group has-feedback">
+                                                        <div class="form-group">
                                                             <label class="control-label">Last Service ODO</label>
                                                             <input type="text" class="form-control" placeholder="Enter Last Service ODO" name="txt_last_service_odo" id="txt_last_service_odo" value="<?php echo (isset($dataArr)) ? $dataArr['lastServiceODO'] : set_value('txt_last_service_odo'); ?>">
                                                         </div>
-                                                        <div class="form-group has-feedback">
+                                                        <div class="form-group">
                                                             <label class="control-label">Next Service Due</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="icon-calendar2"></i></span>
-                                                                <input type="text" class="form-control pickadate-accessibility" placeholder="Enter Next Service Due" name="txt_next_service_due" id="txt_next_service_due" value="<?php echo (isset($dataArr)) ? date('d F, Y', strtotime($dataArr['nextServiceDue'])) : set_value('txt_next_service_due'); ?>">
+                                                                <input type="text" class="form-control pickadate-accessibility dateselect" placeholder="Enter Next Service Due" name="txt_next_service_due" id="txt_next_service_due" value="<?php echo (isset($dataArr)) ? date('d F, Y', strtotime($dataArr['nextServiceDue'])) : set_value('txt_next_service_due'); ?>">
                                                             </div>
                                                         </div>
-                                                        <div class="form-group has-feedback">
+                                                        <div class="form-group">
                                                             <label class="control-label">Road Duty Due</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="icon-calendar2"></i></span>
-                                                                <input type="text" class="form-control pickadate-accessibility" placeholder="Enter Road Due Date" name="txt_road_due_date" id="txt_road_due_date" value="<?php echo (isset($dataArr)) ? date('d F, Y', strtotime($dataArr['roadDutyDue'])) : set_value('txt_road_due_date'); ?>">
+                                                                <input type="text" class="form-control pickadate-accessibility dateselect" placeholder="Enter Road Due Date" name="txt_road_due_date" id="txt_road_due_date" value="<?php echo (isset($dataArr)) ? date('d F, Y', strtotime($dataArr['roadDutyDue'])) : set_value('txt_road_due_date'); ?>">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <div class="form-group has-feedback">
+                                                        <div class="form-group">
                                                             <label class="control-label">Inspection Intervals</label>
                                                             <input type="text" class="form-control" placeholder="Enter Inspection Intervals" id="txt_inspeaction_intervals" name="txt_inspection_intervals" value="<?php echo (isset($dataArr)) ? $dataArr['inspectionIntervals'] : set_value('txt_inspeaction_intervals'); ?>">
                                                         </div>
-                                                        <div class="form-group has-feedback">
+                                                        <div class="form-group">
                                                             <label class="control-label">Last Inspection Date</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="icon-calendar2"></i></span>
-                                                                <input type="text" class="form-control pickadate-accessibility" placeholder="Enter Last Inspection Date" name="txt_last_inspection_date" id="txt_last_inspection_date" value="<?php echo (isset($dataArr)) ? date('d F, Y', strtotime($dataArr['lastInspectionDate'])) : set_value('txt_last_inspection_date'); ?>">
+                                                                <input type="text" class="form-control pickadate-accessibility dateselect" placeholder="Enter Last Inspection Date" name="txt_last_inspection_date" id="txt_last_inspection_date" value="<?php echo (isset($dataArr)) ? date('d F, Y', strtotime($dataArr['lastInspectionDate'])) : set_value('txt_last_inspection_date'); ?>">
                                                             </div>
                                                         </div>
-                                                        <div class="form-group has-feedback">
+                                                        <div class="form-group">
                                                             <label class="control-label">Last Service ODO</label>
                                                             <input type="text" class="form-control" placeholder="Enter Last Service ODO" name="txt_last_inspection_odo" id="txt_last_inspection_odo" value="<?php echo (isset($dataArr)) ? $dataArr['lastInspectionODO'] : set_value('txt_last_inspection_odo'); ?>">
                                                         </div>
-                                                        <div class="form-group has-feedback">
+                                                        <div class="form-group">
                                                             <label class="control-label">Next Inscpection ODO</label>
                                                             <input type="text" class="form-control" placeholder="Enter Last Inspection ODO" name="txt_next_inspection_due" id="txt_next_inspection_due" value="<?php echo (isset($dataArr)) ? $dataArr['nextInspectionDue'] : set_value('txt_next_inspection_due'); ?>">
                                                         </div>
-                                                        <div class="form-group has-feedback">
+                                                        <div class="form-group">
                                                             <label class="control-label">Insurance Due</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="icon-calendar2"></i></span>
-                                                                <input type="text" class="form-control pickadate-accessibility" placeholder="Enter Insurance Due" name="txt_insurance_due" id="txt_insurance_due" value="<?php echo (isset($dataArr)) ? date('d F, Y', strtotime($dataArr['insuranceDue'])) : set_value('txt_insurance_due'); ?>">
+                                                                <input type="text" class="form-control pickadate-accessibility dateselect" placeholder="Enter Insurance Due" name="txt_insurance_due" id="txt_insurance_due" value="<?php echo (isset($dataArr)) ? date('d F, Y', strtotime($dataArr['insuranceDue'])) : set_value('txt_insurance_due'); ?>">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -323,7 +342,7 @@
                                         </div>
                                         <div class="add-form-btn">
                                             <button type="submit" class="custom_save_button">Submit</button>
-                                            <a class="custom_cancel_button" href="<?php echo site_url('settings/manage_vehicles'); ?>">Cancel</a>
+                                            <a class="custom_cancel_button" href="<?php echo site_url('vehicles'); ?>">Cancel</a>
                                         </div>
                                     </div>
                                 </form>
@@ -335,6 +354,12 @@
         </div>
     </div>
 </section>
+<?php
+$baseDepot = '';
+if (isset($dataArr)) {
+    $baseDepot = $dataArr['baseDepotGUID'];
+}
+?>
 <script>
     var remoteEnURL = site_url + "company_admin/settings/checkUnique_device_id";
 <?php if (isset($dataArr)) { ?>
@@ -345,6 +370,27 @@
 <script src="assets/js/custom_pages/company_admin/vehicles.js"></script>
 <script>
     $(function () {
+        $('#company_name').change(function () {
+            company = $(this).val();
+            baseDepot = '<?php echo $baseDepot ?>';
+            //-- Get all depots based on company ID
+            $.ajax({
+                url: site_url + 'super_admin/vehicles/get_basedepot',
+                type: "POST",
+                data: {company: company, baseDepot: baseDepot},
+                success: function (response) {
+                    $('#txt_base_depot')
+                            .find('option')
+                            .remove()
+                            .end()
+                            .append(response);
+                }
+            });
+        });
+//        $('.dateselect').datepicker({
+//            format: "mm/dd/yyyy"
+//        });
+
         /*
          $('.pickadate-accessibility').pickadate({
          labelMonthNext: 'Go to the next month',

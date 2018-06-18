@@ -68,7 +68,7 @@ class Vehicle_model extends MY_Model {
 
         if (!empty($keyword['value'])) {
             $where = '(c.companyName LIKE ' . $this->db->escape('%' . $keyword['value'] . '%')
-                    . ' OR v.registration LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . 
+                    . ' OR v.registration LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') .
                     ' OR v.vin LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR v.fuelType LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR v.licenceType LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR v.numberOfAxles LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR v.axle1TyreSize LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR v.resetServiceCounter LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ')';
             $this->db->where($where);
         }
@@ -82,6 +82,36 @@ class Vehicle_model extends MY_Model {
             $query = $this->db->get(TBL_VEHICLE . ' v');
             return $query->result_array();
         }
+    }
+
+    /**
+     * Get all company depots
+     * @param string $company companyGUID
+     * @author KU
+     */
+    public function get_depots($company) {
+        $this->db->select('d.depotGUID,d.depotName');
+
+        $this->db->join(TBL_REGION . ' r', 'd.regionGUID=r.regionGUID', 'LEFT');
+        $this->db->where('companyGUID', $company);
+
+        $query = $this->db->get(TBL_DEPOT . ' d');
+        return $query->result_array();
+    }
+
+    /**
+     * Get vehicle details of vehicle by vehicle GUID 
+     * @param string $vehicleGUID
+     * @return array
+     * @author KU
+     */
+    public function get_vehicle_by_id($vehicleGUID) {
+        $this->db->select('v.*,r.companyGUID');
+        $this->db->join(TBL_DEPOT . ' d', 'v.baseDepotGUID=d.depotGUID', 'LEFT');
+        $this->db->join(TBL_REGION . ' r', 'd.regionGUID=r.regionGUID', 'LEFT');
+        $this->db->where('v.vehicleGUID', $vehicleGUID);
+        $result = $this->db->get(TBL_VEHICLE . ' v');
+        return $result->row_array();
     }
 
 }

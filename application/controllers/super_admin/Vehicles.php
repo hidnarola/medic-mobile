@@ -53,8 +53,13 @@ class Vehicles extends MY_Controller {
     public function add_vehicles() {
         $data['title'] = 'Add Vehicles';
         $data['heading'] = 'Manage Vehicles';
-        $data['depotArray'] = $this->settings_model->get_all_details(TBL_DEPOT, array(), array(array('field' => 'depotName', 'type' => 'ASC')))->result_array();
+        $data['companies'] = $this->vehicle_model->sql_select(TBL_COMPANY, 'companyGUID,companyName');
+
+//        $data['depotArray'] = $this->settings_model->get_all_details(TBL_DEPOT, array(), array(array('field' => 'depotName', 'type' => 'ASC')))->result_array();
+        $data['depotArray'] = [];
         $data['used_depotGUID'] = array_column($this->vehicle_model->get_vehicle_depot(), 'baseDepotGUID');
+
+        $this->form_validation->set_rules('company_name', 'Company Name', 'trim|required');
         $this->form_validation->set_rules('txt_device_id', 'Device ID', 'trim|required|max_length[45]|is_unique[vehicle.deviceGUID]');
         $this->form_validation->set_rules('txt_base_depot', 'Base Depot', 'trim|required|max_length[45]');
         $this->form_validation->set_rules('txt_reg_no', 'Registration No', 'trim|required|max_length[10]');
@@ -116,16 +121,23 @@ class Vehicles extends MY_Controller {
     public function edit_vehicles($id = '') {
         $data['title'] = 'Edit Vehicles';
         $data['heading'] = 'Manage Vehicles';
+        $data['companies'] = $this->vehicle_model->sql_select(TBL_COMPANY, 'companyGUID,companyName');
+
         $record_id = base64_decode($id);
         $data['depotArray'] = $this->settings_model->get_all_details(TBL_DEPOT, array(), array(array('field' => 'depotName', 'type' => 'ASC')))->result_array();
+
         $data['used_depotGUID'] = array_column($this->vehicle_model->get_vehicle_depot(), 'baseDepotGUID');
-        $data['dataArr'] = $this->settings_model->get_all_details(TBL_VEHICLE, array('vehicleGUID' => $record_id))->row_array();
+//        $data['dataArr'] = $this->settings_model->get_all_details(TBL_VEHICLE, array('vehicleGUID' => $record_id))->row_array();
+        $data['dataArr'] = $this->vehicle_model->get_vehicle_by_id($record_id);
+
+        $this->form_validation->set_rules('company_name', 'Company Name', 'trim|required');
         $this->form_validation->set_rules('txt_device_id', 'Device ID', 'trim|required|max_length[45]');
         $this->form_validation->set_rules('txt_base_depot', 'Base Depot', 'trim|required|max_length[45]');
         $this->form_validation->set_rules('txt_reg_no', 'Registration No', 'trim|required|max_length[10]');
         $this->form_validation->set_rules('txt_vin_no', 'VIN No', 'trim|required|max_length[17]');
         $this->form_validation->set_rules('txt_fuel_type', 'Fuel Type', 'trim|required');
         $this->form_validation->set_rules('txt_licence_type', 'License Type', 'trim|required');
+
         if ($this->form_validation->run() == true) {
             $vehicle_type = $this->input->post('vehicle_type');
             if (!in_array($vehicle_type, array('car', 'van', 'flatbed_lorry', 'articulated_lorry', 'forklift_truck'))) {
@@ -163,7 +175,7 @@ class Vehicles extends MY_Controller {
             );
             $is_inserted = $this->settings_model->insert_update('update', TBL_VEHICLE, $updateArr, array('vehicleGUID' => $record_id));
             $this->session->set_flashdata('success', 'Vehicles has been updated successfully.');
-            redirect('settings/manage_vehicles');
+            redirect('vehicles');
         }
         $this->template->load('default_admin', 'super_admin/vehicle/add', $data);
     }
@@ -181,6 +193,31 @@ class Vehicles extends MY_Controller {
         } else {
             echo "true";
         }
+        exit;
+    }
+
+    /**
+     * Get all depots of selected company and display it in dropdown
+     * @author KU
+     */
+    public function get_basedepot() {
+        $company = $this->input->post('company');
+        $baseDepot = $this->input->post('baseDepot');
+
+        $all_depots = $this->vehicle_model->get_depots($company);
+        $used_depotGUID = array_column($this->vehicle_model->get_vehicle_depot(), 'baseDepotGUID');
+        $str = '<option value="">Select</option>';
+
+        foreach ($all_depots as $k => $v) {
+            $disabled = '';
+            if (in_array($v['depotGUID'], $used_depotGUID) && ($baseDepot != $v['depotGUID'])) {
+                $disabled = 'disabled';
+            }
+
+            $str .= '<option value="' . $v['depotGUID'] . '" ' . $disabled . '>' . $v['depotName'] . '</option>';
+        }
+
+        echo $str;
         exit;
     }
 
