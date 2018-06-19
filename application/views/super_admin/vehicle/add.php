@@ -1,5 +1,7 @@
-<script type="text/javascript" src="assets/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-datepicker.min.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+<!--<script type="text/javascript" src="assets/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-datepicker.min.css" />-->
 <section class="home-content padding-none admin-content">
     <div class="container">
         <div class="row">
@@ -287,7 +289,7 @@
                                                             <label class="control-label">Last Service Date</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="icon-calendar2"></i></span>
-                                                                <input type="text" class="form-control pickadate-accessibility dateselect" placeholder="Enter Last Service Date" name="txt_last_service_date" id="txt_last_service_date" value="<?php echo (isset($dataArr)) ? date('d F, Y', strtotime($dataArr['lastServiceDate'])) : set_value('txt_last_service_date'); ?>">
+                                                                <input type="text" class="form-control pickadate-accessibility dateselect" placeholder="Enter Last Service Date" name="txt_last_service_date" id="txt_last_service_date" value="<?php echo (isset($dataArr)) ? date('d/m/Y', strtotime($dataArr['lastServiceDate'])) : set_value('txt_last_service_date'); ?>">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -298,14 +300,14 @@
                                                             <label class="control-label">Next Service Due</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="icon-calendar2"></i></span>
-                                                                <input type="text" class="form-control pickadate-accessibility dateselect" placeholder="Enter Next Service Due" name="txt_next_service_due" id="txt_next_service_due" value="<?php echo (isset($dataArr)) ? date('d F, Y', strtotime($dataArr['nextServiceDue'])) : set_value('txt_next_service_due'); ?>">
+                                                                <input type="text" class="form-control pickadate-accessibility dateselect" placeholder="Enter Next Service Due" name="txt_next_service_due" id="txt_next_service_due" value="<?php echo (isset($dataArr)) ? date('d/m/Y', strtotime($dataArr['nextServiceDue'])) : set_value('txt_next_service_due'); ?>">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="control-label">Road Duty Due</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="icon-calendar2"></i></span>
-                                                                <input type="text" class="form-control pickadate-accessibility dateselect" placeholder="Enter Road Due Date" name="txt_road_due_date" id="txt_road_due_date" value="<?php echo (isset($dataArr)) ? date('d F, Y', strtotime($dataArr['roadDutyDue'])) : set_value('txt_road_due_date'); ?>">
+                                                                <input type="text" class="form-control pickadate-accessibility dateselect" placeholder="Enter Road Due Date" name="txt_road_due_date" id="txt_road_due_date" value="<?php echo (isset($dataArr)) ? date('d/m/Y', strtotime($dataArr['roadDutyDue'])) : set_value('txt_road_due_date'); ?>">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -318,22 +320,22 @@
                                                             <label class="control-label">Last Inspection Date</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="icon-calendar2"></i></span>
-                                                                <input type="text" class="form-control pickadate-accessibility dateselect" placeholder="Enter Last Inspection Date" name="txt_last_inspection_date" id="txt_last_inspection_date" value="<?php echo (isset($dataArr)) ? date('d F, Y', strtotime($dataArr['lastInspectionDate'])) : set_value('txt_last_inspection_date'); ?>">
+                                                                <input type="text" class="form-control pickadate-accessibility dateselect" placeholder="Enter Last Inspection Date" name="txt_last_inspection_date" id="txt_last_inspection_date" value="<?php echo (isset($dataArr)) ? date('d/m/Y', strtotime($dataArr['lastInspectionDate'])) : set_value('txt_last_inspection_date'); ?>">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label">Last Service ODO</label>
-                                                            <input type="text" class="form-control" placeholder="Enter Last Service ODO" name="txt_last_inspection_odo" id="txt_last_inspection_odo" value="<?php echo (isset($dataArr)) ? $dataArr['lastInspectionODO'] : set_value('txt_last_inspection_odo'); ?>">
+                                                            <label class="control-label">Last Inspection ODO</label>
+                                                            <input type="text" class="form-control" placeholder="Enter Last Inspection ODO" name="txt_last_inspection_odo" id="txt_last_inspection_odo" value="<?php echo (isset($dataArr)) ? $dataArr['lastInspectionODO'] : set_value('txt_last_inspection_odo'); ?>">
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label">Next Inscpection ODO</label>
+                                                            <label class="control-label">Next Inspection Due</label>
                                                             <input type="text" class="form-control" placeholder="Enter Last Inspection ODO" name="txt_next_inspection_due" id="txt_next_inspection_due" value="<?php echo (isset($dataArr)) ? $dataArr['nextInspectionDue'] : set_value('txt_next_inspection_due'); ?>">
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="control-label">Insurance Due</label>
-                                                            <div class="input-group">
+                                                            <div class="input-group date">
                                                                 <span class="input-group-addon"><i class="icon-calendar2"></i></span>
-                                                                <input type="text" class="form-control pickadate-accessibility dateselect" placeholder="Enter Insurance Due" name="txt_insurance_due" id="txt_insurance_due" value="<?php echo (isset($dataArr)) ? date('d F, Y', strtotime($dataArr['insuranceDue'])) : set_value('txt_insurance_due'); ?>">
+                                                                <input type="text" class="form-control pickadate-accessibility dateselect" placeholder="Enter Insurance Due" name="txt_insurance_due" id="txt_insurance_due" value="<?php echo (isset($dataArr)) ? date('d/m/Y', strtotime($dataArr['insuranceDue'])) : set_value('txt_insurance_due'); ?>">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -387,9 +389,10 @@ if (isset($dataArr)) {
                 }
             });
         });
-//        $('.dateselect').datepicker({
-//            format: "mm/dd/yyyy"
-//        });
+        $('.dateselect').datepicker({
+            autoclose: true,
+            format: "dd/mm/yyyy"
+        });
 
         /*
          $('.pickadate-accessibility').pickadate({

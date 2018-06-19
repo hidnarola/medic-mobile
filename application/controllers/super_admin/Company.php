@@ -61,8 +61,9 @@ class Company extends MY_Controller {
         $this->form_validation->set_rules('name', 'Company Name', 'trim|required|max_length[128]');
         $this->form_validation->set_rules('address', 'Company Address', 'trim|required');
         if ($this->form_validation->run() == true) {
+            $companyGUID = Uuid_v4();
             $insertArr = array(
-                'companyGUID' => Uuid_v4(),
+                'companyGUID' => $companyGUID,
                 'companyName' => htmlentities($this->input->post('name')),
                 'addressLine1' => htmlentities($this->input->post('address')),
                 'addressLine2' => '',
@@ -79,8 +80,9 @@ class Company extends MY_Controller {
             $is_comp_insert = $this->company_model->insert_update('insert', TBL_COMPANY, $insertArr);
             extract($insertArr);
             $password = htmlentities($this->input->post('txt_pass')); //randomPassword();
+            $userGUID = Uuid_v4();
             $insertArr2 = array(
-                'userGUID' => Uuid_v4(),
+                'userGUID' => $userGUID,
                 'firstName' => htmlentities($this->input->post('txt_fname')),
                 'lastName' => htmlentities($this->input->post('txt_lname')),
                 'username' => htmlentities($this->input->post('txt_uname')),
@@ -93,10 +95,10 @@ class Company extends MY_Controller {
             extract($insertArr2);
             $email_var = array(
                 'userGUID' => $userGUID,
-                'firstName' => $firstName,
-                'lastName' => $lastName,
-                'username' => $username,
-                'emailAddress' => $emailAddress,
+                'firstName' => htmlentities($this->input->post('txt_fname')),
+                'lastName' => htmlentities($this->input->post('txt_lname')),
+                'username' => htmlentities($this->input->post('txt_uname')),
+                'emailAddress' => htmlentities($this->input->post('txt_email')),
                 'password' => $password
             );
             $message = $this->load->view('email_template/default_header.php', $email_var, true);
@@ -106,7 +108,7 @@ class Company extends MY_Controller {
                 'mail_type' => 'html',
                 'from_mail_id' => $this->config->item('smtp_user'),
                 'from_mail_name' => 'Medic Mobile',
-                'to_mail_id' => $emailAddress,
+                'to_mail_id' => htmlentities($this->input->post('txt_email')),
                 'cc_mail_id' => '',
                 'subject_message' => 'Company Registration',
                 'body_messages' => $message

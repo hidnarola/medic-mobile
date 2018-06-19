@@ -102,7 +102,7 @@ class Vehicles extends MY_Controller {
                 'is_google_route' => ($this->input->post('txt_google_route') == 'on') ? 1 : 0
             );
             $is_inserted = $this->settings_model->insert_update('insert', TBL_VEHICLE, $insertArr);
-            if ($is_inserted > 0) {
+            if ($is_inserted > 0) { 
                 $this->session->set_flashdata('success', 'Vehicles has been added successfully.');
                 redirect('vehicles');
             } else {
@@ -219,6 +219,17 @@ class Vehicles extends MY_Controller {
 
         echo $str;
         exit;
+    }
+
+    /**
+     * Ajax call to this function get vehicle data
+     * @author KU
+     */
+    public function view($vehicleGUID = NULL) {
+        $vehicleGUID = base64_decode($vehicleGUID);
+        $data['viewArr'] = $this->vehicle_model->get_vehicle_by_id($vehicleGUID);
+        return $this->load->view('super_admin/vehicle/view', $data);
+        die;
     }
 
 }

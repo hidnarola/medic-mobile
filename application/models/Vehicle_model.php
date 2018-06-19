@@ -106,9 +106,10 @@ class Vehicle_model extends MY_Model {
      * @author KU
      */
     public function get_vehicle_by_id($vehicleGUID) {
-        $this->db->select('v.*,r.companyGUID');
+        $this->db->select('v.*,r.companyGUID,c.companyName,d.depotName');
         $this->db->join(TBL_DEPOT . ' d', 'v.baseDepotGUID=d.depotGUID', 'LEFT');
         $this->db->join(TBL_REGION . ' r', 'd.regionGUID=r.regionGUID', 'LEFT');
+        $this->db->join(TBL_COMPANY . ' c', 'r.companyGUID=c.companyGUID', 'LEFT');
         $this->db->where('v.vehicleGUID', $vehicleGUID);
         $result = $this->db->get(TBL_VEHICLE . ' v');
         return $result->row_array();
