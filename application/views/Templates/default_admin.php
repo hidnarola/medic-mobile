@@ -129,7 +129,7 @@
                             <li class="<?php echo ($class == 'company') ? 'active' : '' ?>"><a href="<?php echo site_url('manage_company') ?>">Manage Company</a></li>
                             <li class="<?php echo ($class == 'users') ? 'active' : '' ?>"><a href="<?php echo site_url('users') ?>">Manage System Users</a></li>
                             <li class="<?php echo ($class == 'vehicles') ? 'active' : '' ?>"><a href="<?php echo site_url('vehicles') ?>">Manage Vehicles</a></li>
-                            <li class="<?php echo ($class == 'operators') ? 'active' : '' ?>"><a href="javascript:void(0);<?php echo site_url('operators') ?>">Manage Operators</a></li>
+                            <li class="<?php echo ($class == 'operators') ? 'active' : '' ?>"><a href="<?php echo site_url('operators') ?>">Manage Operators</a></li>
                             <li class="<?php echo ($class == 'regions') ? 'active' : '' ?>"><a href="javascript:void(0);<?php echo site_url('regions') ?>">Manage Regions</a></li>
                         </ul>
                     </div>  

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Manage vehicles functionality
+ * Manage vehicles functionality : Super Admin
  * @author KU
  */
 defined('BASEPATH') OR exit('No direct script access allowed');

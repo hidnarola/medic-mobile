@@ -16,6 +16,7 @@ label.validation-error-label{color: red !important;margin:5px 0 0 0}
 .admin-topheader .setting-nav{margin: 15px 0 15px;}
 .radiobtn-div .control-label{display: block;}
 .radiobtn-div label{color: #fff;font-size: 13px;}
+#vehicle_body{font-size: 13px;}
 /*.dataTable thead .sorting_asc:after {content: '\e9c2';}
 .dataTable thead .sorting_desc:after {content: '\e9c1';}*/
 
@@ -36,7 +37,7 @@ label.validation-error-label{color: red !important;margin:5px 0 0 0}
 .custom_dt_action_button:focus,
 .custom_action_button:hover,
 .custom_action_button:focus{color: #fff;opacity: 0.90;background-color:#222832;}
-.dt-head-center{ext-align: center }
+.dt-head-center{text-align: center }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus {background-color: #ff5722;}

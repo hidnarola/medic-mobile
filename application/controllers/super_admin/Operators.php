@@ -1,27 +1,24 @@
 <?php
 
+/**
+ * Manage operators functionality
+ * @author KU
+ */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Operators extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model(array('users_model', 'settings_model'));
+        $this->load->model(array('operators_model', 'users_model', 'settings_model'));
         //-- Check if logged in user is admin if not admin than redirect user back to dashboard page
         if (!get_AdminLogin('A')) {
             redirect('dashboard');
         }
     }
 
-    /*     * ****************************************************
-      Manage Operators
-     * ***************************************************** */
-
     /**
      * Display Operators listing
-     * @param --
-     * @return --
-     * @author PAV
      */
     public function display_operators() {
         $data['title'] = 'List Of Operators';
@@ -32,16 +29,15 @@ class Operators extends MY_Controller {
     }
 
     /**
-     * Get all the data of operators for listing datatable.
-     * @param --
+     * Get all the data of operators for datatable listing .
+     * @author KU
      * @return JSON
-     * @author PAV
      */
     public function get_operators_data() {
-        $final['recordsTotal'] = $this->settings_model->get_operators_data('count');
+        $final['recordsTotal'] = $this->operators_model->get_all_data('count');
         $final['redraw'] = 1;
         $final['recordsFiltered'] = $final['recordsTotal'];
-        $operators = $this->settings_model->get_operators_data('result')->result_array();
+        $operators = $this->operators_model->get_all_data('result');
         $start = $this->input->get('start') + 1;
         foreach ($operators as $key => $val) {
             $operators[$key] = $val;
@@ -126,7 +122,7 @@ class Operators extends MY_Controller {
                 $this->session->set_flashdata('success', 'Sorry something went wrong! Please try it again.');
             }
         }
-        $this->template->load('default_admin', 'super_admin/settings/display_operators', $data);
+        $this->template->load('default_admin', 'super_admin/operator/add', $data);
     }
 
     /**
