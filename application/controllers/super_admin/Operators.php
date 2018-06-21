@@ -48,15 +48,15 @@ class Operators extends MY_Controller {
     }
 
     /**
-     * Add new operators
-     * @param --
-     * @return --
-     * @author PAV
+     * Add new company operator
+     * @author KU
      */
     public function add_operators() {
-        $data['locationArr'] = $this->settings_model->get_depot_by_company()->result_array();
+        $data['locationArr'] = [];
+        $data['companies'] = $this->vehicle_model->sql_select(TBL_COMPANY, 'companyGUID,companyName');
         $data['heading'] = 'Manage Operators';
 
+        $this->form_validation->set_rules('company', 'Company', 'trim|required');
         $this->form_validation->set_rules('txt_base_depot', 'Base Depot', 'trim|required');
         $this->form_validation->set_rules('txt_surname', 'Surname', 'trim|required|max_length[45]');
         $this->form_validation->set_rules('txt_forename', 'Forename', 'trim|required|max_length[45]');
@@ -97,10 +97,10 @@ class Operators extends MY_Controller {
                 }
                 extract($insertArr);
                 $email_var = array(
-                    'firstName' => $firstName,
-                    'lastName' => $lastName,
-                    'username' => $username,
-                    'emailAddress' => $email,
+                    'firstName' => htmlentities($this->input->post('txt_forename')),
+                    'lastName' => htmlentities($this->input->post('txt_surname')),
+                    'username' => htmlentities($this->input->post('txt_username')),
+                    'emailAddress' => htmlentities($this->input->post('txt_email')),
                     'password' => $password
                 );
                 $message = $this->load->view('email_template/default_header.php', $email_var, true);
@@ -110,14 +110,14 @@ class Operators extends MY_Controller {
                     'mail_type' => 'html',
                     'from_mail_id' => $this->config->item('smtp_user'),
                     'from_mail_name' => 'Medic Mobile',
-                    'to_mail_id' => $email,
+                    'to_mail_id' => htmlentities($this->input->post('txt_email')),
                     'cc_mail_id' => '',
                     'subject_message' => 'Operator Registration',
                     'body_messages' => $message
                 );
                 $email_send = common_email_send($email_array);
                 $this->session->set_flashdata('success', 'Operators has been added successfully.');
-                redirect('settings/manage_operators');
+                redirect('operators');
             } else {
                 $this->session->set_flashdata('success', 'Sorry something went wrong! Please try it again.');
             }
@@ -132,6 +132,7 @@ class Operators extends MY_Controller {
      * @author PAV
      */
     public function edit_operators($id = '') {
+        $data['locationArr'] = $this->settings_model->get_depot_by_company()->result_array();
         $data['heading'] = 'Manage Operators';
 
         $record_id = base64_decode($id);
@@ -214,6 +215,23 @@ class Operators extends MY_Controller {
         } else {
             echo "true";
         }
+        exit;
+    }
+
+    /**
+     * Get all depots of selected company and display it in dropdown
+     * @author KU
+     */
+    public function get_basedepot() {
+        $company = $this->input->post('company');
+        $all_depots = $this->operators_model->get_depots($company);
+        $str = '<option value="">Select a location</option>';
+
+        foreach ($all_depots as $k => $v) {
+            $str .= '<option value="' . $v['depotGUID'] . '">' . $v['depotName'] . '</option>';
+        }
+
+        echo $str;
         exit;
     }
 

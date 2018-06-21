@@ -59,6 +59,21 @@ class Operators_model extends MY_Model {
         return $q->row_array();
     }
 
+    /**
+     * Get all company depots
+     * @param string $company companyGUID
+     * @author KU
+     */
+    public function get_depots($company) {
+        $this->db->select('d.depotGUID,d.depotName');
+
+        $this->db->join(TBL_REGION . ' r', 'd.regionGUID=r.regionGUID', 'LEFT');
+        $this->db->where('companyGUID', $company);
+
+        $query = $this->db->get(TBL_DEPOT . ' d');
+        return $query->result_array();
+    }
+
 }
 
 /* End of file Operators_model.php */

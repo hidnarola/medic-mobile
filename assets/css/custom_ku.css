@@ -17,6 +17,7 @@ label.validation-error-label{color: red !important;margin:5px 0 0 0}
 .radiobtn-div .control-label{display: block;}
 .radiobtn-div label{color: #fff;font-size: 13px;}
 #vehicle_body{font-size: 13px;}
+.operator-license-tbl table thead tr th {font-family: 'Helvetica Neue';font-size: 13px;font-weight: normal;line-height: 16px;color: #fff;}
 /*.dataTable thead .sorting_asc:after {content: '\e9c2';}
 .dataTable thead .sorting_desc:after {content: '\e9c1';}*/
 

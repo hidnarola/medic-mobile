@@ -375,6 +375,9 @@ if (isset($dataArr)) {
         $('#company_name').change(function () {
             company = $(this).val();
             baseDepot = '<?php echo $baseDepot ?>';
+            $('#txt_base_depot')
+                    .find('option')
+                    .remove()
             //-- Get all depots based on company ID
             $.ajax({
                 url: site_url + 'super_admin/vehicles/get_basedepot',
