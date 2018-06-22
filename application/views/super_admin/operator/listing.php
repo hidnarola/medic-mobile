@@ -27,7 +27,7 @@
                                     <th>Full Name</th>
                                     <th>Birthdate</th>
                                     <th>Is Employee?</th>
-                                    <th>Qualification Details</th>
+                                    <th>Qualification</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -91,16 +91,13 @@
                     }
                 },
                 {
-                    data: "qualification_detials",
+                    data: "lic_type",
                     visible: true,
-                    render: function (data, type, full, meta) {
-                        return '';
-                    }
                 },
                 {
                     data: "action",
                     render: function (data, type, full, meta) {
-                        action = '<a href="javascript:void(0);" id="' + btoa(full.operativeGUID) + '" class="edit_operator edit_btn" style="padding:0 10px;" title="Edit">Edit</a>';
+                        action = '<a href="' + site_url + 'operators/edit/' + btoa(full.operativeGUID) + '" class="edit_btn" style="padding:0 10px;" title="Edit">Edit</a>';
                         return action;
                     },
                     sortable: false,
@@ -114,59 +111,6 @@
         });
         $('.dataTables_filter input[type=search]').attr('placeholder', 'Type to filter...');
 
-    });
-
-    $(document).on('click', '.edit_operator', function () {
-        var id = this.id;
-        $.ajax({
-            url: site_url + 'company_admin/settings/get_operators_data_ajax',
-            type: "POST",
-            dataType: "json",
-            data: {id: this.id},
-            success: function (response) {
-                var userDate = response.DOB;
-                remoteURL = site_url + "company_admin/settings/is_unique_operator_email/" + id;
-                remoteURL2 = site_url + "company_admin/settings/is_unique_operator_uname/" + id;
-                $("#add_operators_form").validate();
-                $('#txt_email').rules('add', {
-                    remote: remoteURL,
-                    messages: {
-                        remote: "Email already exists"
-                    }
-                });
-                $('#txt_username').rules('add', {
-                    remote: remoteURL2,
-                    messages: {
-                        remote: "Username already exists"
-                    }
-                });
-                $('#txt_pass').removeAttr('required');
-                $('#txt_cpass').removeAttr('required');
-                $('.div_add_operators').removeClass('hide');
-                $('html,body').animate({scrollTop: $(".div_add_operators").offset().top}, 'slow');
-                $('#add_operators_form').attr('action', 'settings/manage_operators/edit/' + id);
-                $('#txt_surname').val(response.lastName);
-                $('#txt_forename').val(response.firstName);
-                $('#txt_dob').val(moment(userDate, "YYYY-MM-DD").format("DD/MM/YYYY"));
-                $('#txt_email').val(response.email);
-                $('#txt_username').val(response.username);
-
-                $("#txt_base_depot").val(response.baseDepotGUID);
-                $("#txt_base_depot").select2();
-
-                if (response.lic_type != null && response.lic_no != null && response.exp_date != null) {
-                    var lic_type_Arr = (response.lic_type).split(':-:');
-                    var lic_no_Arr = (response.lic_no).split(':-:');
-                    var expire_date_Arr = (response.exp_date).split(':-:');
-
-                    $.each(lic_type_Arr, function (index, val) {
-                        $('input[name="txt_licence_type[]"]:eq(' + index + ')').val(val);
-                        $('input[name="txt_licence_no[]"]:eq(' + index + ')').val(lic_no_Arr[index]);
-                        $('input[name="txt_expiry_date[]"]:eq(' + index + ')').val(moment(expire_date_Arr[index], "YYYY-MM-DD").format("DD/MM/YYYY"));
-                    });
-                }
-            }
-        });
     });
 
 </script>

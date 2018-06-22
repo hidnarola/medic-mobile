@@ -2,6 +2,10 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Manage system users functionality
+ * @author KU 
+ */
 class Users extends MY_Controller {
 
     public function __construct() {
@@ -72,10 +76,10 @@ class Users extends MY_Controller {
                 'isAdmin' => 0,
                 'passwordHash' => md5($this->input->post('password'))
             );
-            $insertArr['password'] = $this->input->post('password');
 
             $is_loginDetails = $this->users_model->insert_update('insert', TBL_LOGIN_DETAILS, $insertArr);
 
+            $insertArr['password'] = $this->input->post('password');
             $message = $this->load->view('email_template/default_header.php', $insertArr, true);
             $message .= $this->load->view('email_template/comp_reg.php', $insertArr, true);
             $message .= $this->load->view('email_template/default_footer.php', $insertArr, true);

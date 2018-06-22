@@ -33,11 +33,16 @@
                                                                 <label class="required">Company</label>
                                                                 <select data-placeholder="Select a Company..." class="form-control select-control" id="company_name" name="company_name">
                                                                     <option value="">Select a Company</option>
-                                                                    <?php foreach ($companies as $k => $v) { ?>
-                                                                        <option value="<?php echo $v['companyGUID']; ?>"><?php echo $v['companyName']; ?></option>
+                                                                    <?php
+                                                                    foreach ($companies as $k => $v) {
+                                                                        $selected = '';
+                                                                        if (isset($dataArr) && $dataArr['companyGUID'] == $v['companyGUID'])
+                                                                            $selected = 'selected';
+                                                                        ?>
+                                                                        <option value="<?php echo $v['companyGUID']; ?>" <?php echo $selected ?>><?php echo $v['companyName']; ?></option>
                                                                     <?php } ?>
                                                                 </select>
-                                                                <?php echo '<label id="company_error" class="validation-error-label" for="company">' . form_error('company') . '</label>'; ?>
+                                                                <?php echo '<label id="company_name-error" class="validation-error-label" for="company_name">' . form_error('company') . '</label>'; ?>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
@@ -45,18 +50,23 @@
                                                                 <label class="required">Location</label>
                                                                 <select data-placeholder="Select a Location..." class="form-control select-control" id="txt_base_depot" name="txt_base_depot">
                                                                     <option value="">Select a location</option>
-                                                                    <?php foreach ($locationArr as $k => $v) { ?>
-                                                                        <option value="<?php echo $v['depotGUID']; ?>"><?php echo $v['depotName']; ?></option>
+                                                                    <?php
+                                                                    foreach ($locationArr as $k => $v) {
+                                                                        $selected = '';
+                                                                        if (isset($dataArr) && $dataArr['baseDepotGUID'] == $v['depotGUID'])
+                                                                            $selected = 'selected';
+                                                                        ?>
+                                                                        <option value="<?php echo $v['depotGUID']; ?>" <?php echo $selected ?>><?php echo $v['depotName']; ?></option>
                                                                     <?php } ?>
                                                                 </select>
-                                                                <?php echo '<label id="txt_base_depot_error2" class="validation-error-label" for="txt_base_depot">' . form_error('txt_base_depot') . '</label>'; ?>
+                                                                <?php echo '<label id="txt_base_depot-error" class="validation-error-label" for="txt_base_depot">' . form_error('txt_base_depot') . '</label>'; ?>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
                                                             <div class="form-group has-feedback">
                                                                 <label>Is Employee ?</label>
                                                                 <div class="checkbox checkbox-switchery">
-                                                                    <input type="checkbox" class="switchery-info" name="txt_is_employee" id="txt_is_employee" checked>
+                                                                    <input type="checkbox" class="switchery-info" name="txt_is_employee" id="txt_is_employee" <?php if (isset($dataArr) && $dataArr['employee'] == 1) echo "checked" ?>>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -68,28 +78,28 @@
                                                             <div class="form-group has-feedback">
                                                                 <label class="required">Surname</label>
                                                                 <input type="text" placeholder="Enter Surname" class="form-control" name="txt_surname" id="txt_surname" value="<?php echo (isset($dataArr)) ? $dataArr['lastName'] : set_value('txt_surname'); ?>">
-                                                                <?php echo '<label id="txt_surname_error2" class="validation-error-label" for="txt_surname">' . form_error('txt_surname') . '</label>'; ?>
+                                                                <?php echo '<label id="txt_surname-error" class="validation-error-label" for="txt_surname">' . form_error('txt_surname') . '</label>'; ?>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group has-feedback">
                                                                 <label class="required">Forename</label>
                                                                 <input type="text" placeholder="Enter Forename" class="form-control" name="txt_forename" id="txt_forename" value="<?php echo (isset($dataArr)) ? $dataArr['firstName'] : set_value('txt_forename'); ?>">
-                                                                <?php echo '<label id="txt_forename_error2" class="validation-error-label" for="txt_forename">' . form_error('txt_forename') . '</label>'; ?>
+                                                                <?php echo '<label id="txt_forename-error" class="validation-error-label" for="txt_forename">' . form_error('txt_forename') . '</label>'; ?>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group has-feedback">
                                                                 <label class="required">DOB</label>
-                                                                <input type="text" placeholder="Enter DOB (DD/MM/YYYY)" class="form-control format-date dateselect" name="txt_dob" id="txt_dob" value="<?php echo (isset($dataArr)) ? date('dd/mm/Y', strtotime($dataArr['DOB'])) : set_value('txt_dob'); ?>">
-                                                                <?php echo '<label id="txt_dob_error2" class="validation-error-label" for="txt_dob">' . form_error('txt_dob') . '</label>'; ?>
+                                                                <input type="text" placeholder="Enter DOB (DD/MM/YYYY)" class="form-control format-date dateofbirth" name="txt_dob" id="txt_dob" value="<?php echo (isset($dataArr)) ? date('dd/mm/Y', strtotime($dataArr['DOB'])) : set_value('txt_dob'); ?>">
+                                                                <?php echo '<label id="txt_dob-error" class="validation-error-label" for="txt_dob">' . form_error('txt_dob') . '</label>'; ?>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group has-feedback">
                                                                 <label class="required">Email</label>
                                                                 <input type="text" placeholder="Enter Email" class="form-control" name="txt_email" id="txt_email" value="<?php echo (isset($dataArr)) ? $dataArr['email'] : set_value('txt_email'); ?>">
-                                                                <?php echo '<label id="txt_email_error2" class="validation-error-label" for="txt_email">' . form_error('txt_email') . '</label>'; ?>
+                                                                <?php echo '<label id="txt_email-error" class="validation-error-label" for="txt_email">' . form_error('txt_email') . '</label>'; ?>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -98,21 +108,21 @@
                                                             <div class="form-group has-feedback">
                                                                 <label class="required">Username</label>
                                                                 <input type="text" placeholder="Enter Username" class="form-control" name="txt_username" id="txt_username" required value="<?php echo (isset($dataArr)) ? $dataArr['username'] : set_value('txt_username'); ?>">
-                                                                <?php echo '<label id="txt_username_error2" class="validation-error-label" for="txt_username">' . form_error('txt_username') . '</label>'; ?>
+                                                                <?php echo '<label id="txt_username-error" class="validation-error-label" for="txt_username">' . form_error('txt_username') . '</label>'; ?>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group has-feedback">
-                                                                <label class="required">Password</label>
-                                                                <input type="text" placeholder="Enter Password" class="form-control" name="txt_pass" id="txt_pass" value="<?php echo set_value('txt_pass'); ?>" <?php echo (!isset($dataArr)) ? 'required' : ''; ?>>
-                                                                <?php echo '<label id="txt_pass_error2" class="validation-error-label" for="txt_pass">' . form_error('txt_pass') . '</label>'; ?>
+                                                                <label class="<?php echo (!isset($dataArr)) ? 'required' : ''; ?>">Password</label>
+                                                                <input type="password" placeholder="Enter Password" class="form-control" name="txt_pass" id="txt_pass" value="<?php echo set_value('txt_pass'); ?>" <?php echo (!isset($dataArr)) ? 'required' : ''; ?>>
+                                                                <?php echo '<label id="txt_pass-error" class="validation-error-label" for="txt_pass">' . form_error('txt_pass') . '</label>'; ?>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group has-feedback">
-                                                                <label class="required">Confirm Password</label>
-                                                                <input type="text" placeholder="Re-enter Password" class="form-control" name="txt_cpass" id="txt_cpass" value="<?php echo set_value('txt_cpass'); ?>" <?php echo (!isset($dataArr)) ? 'required' : ''; ?>>
-                                                                <?php echo '<label id="txt_cpass_error2" class="validation-error-label" for="txt_cpass">' . form_error('txt_cpass') . '</label>'; ?>
+                                                                <label class="<?php echo (!isset($dataArr)) ? 'required' : ''; ?>">Confirm Password</label>
+                                                                <input type="password" placeholder="Re-enter Password" class="form-control" name="txt_cpass" id="txt_cpass" value="<?php echo set_value('txt_cpass'); ?>" <?php echo (!isset($dataArr)) ? 'required' : ''; ?>>
+                                                                <?php echo '<label id="txt_cpass-error" class="validation-error-label" for="txt_cpass">' . form_error('txt_cpass') . '</label>'; ?>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
@@ -168,7 +178,23 @@
         </div>
     </div>
 </section>
+<?php
+$edit = 0;
+$operativeGUID = '';
+if (isset($dataArr)) {
+    $edit = 1;
+    $operativeGUID = $dataArr['operativeGUID'];
+}
+?>
 <script type="text/javascript">
+    var edit = <?php echo $edit ?>;
+    var remoteURL = site_url + "super_admin/operators/is_unique_operator_email";
+    var remoteURL2 = site_url + "super_admin/operators/is_unique_operator_uname";
+    if (edit == 1) {
+        remoteURL += '/<?php echo base64_encode($operativeGUID) ?>';
+        remoteURL2 += '/<?php echo base64_encode($operativeGUID) ?>';
+    }
+
     $(document).on('change', '#company_name', function () {
         company = $(this).val();
         $('#txt_base_depot')
@@ -189,8 +215,18 @@
             }
         });
     });
-    var remoteURL = site_url + "company_admin/settings/is_unique_operator_email";
-    var remoteURL2 = site_url + "company_admin/settings/is_unique_operator_uname";
+    // Datepicker initialization
+    $('.dateselect').datepicker({
+        autoclose: true,
+        format: "dd/mm/yyyy"
+    });
+    // Dateof birth initialization
+    $('.dateofbirth').datepicker({
+        autoclose: true,
+        format: "dd/mm/yyyy",
+        endDate: new Date()
+    });
+
 
     /****************************************************************************
      This function is used to validate form
@@ -240,12 +276,19 @@
             txt_forename: {required: true, maxlength: 45},
             txt_dob: {required: true},
             txt_email: {required: true, email: true, remote: remoteURL},
+            txt_username: {required: true, remote: remoteURL2},
             txt_pass: {maxlength: 8},
             txt_cpass: {maxlength: 8, equalTo: '#txt_pass'}
         },
         messages: {
             txt_email: {
                 remote: $.validator.format("Email already exist!")
+            },
+            txt_username: {
+                remote: $.validator.format("Username already exist!")
+            },
+            txt_cpass: {
+                equalTo: $.validator.format("Password does not match!")
             }
         },
         submitHandler: function (form) {
@@ -256,9 +299,4 @@
             $('.custom_save_button').prop('disabled', false);
         }
     });
-    $('.dateselect').datepicker({
-        autoclose: true,
-        format: "dd/mm/yyyy"
-    });
-
 </script>
