@@ -54,11 +54,12 @@ class Operators extends MY_Controller {
         $data['companies'] = $this->operators_model->sql_select(TBL_COMPANY, 'companyGUID,companyName');
         $data['heading'] = 'Manage Operators';
 
-        $this->form_validation->set_rules('company', 'Company', 'trim|required');
+        $this->form_validation->set_rules('company_name', 'Company', 'trim|required');
         $this->form_validation->set_rules('txt_base_depot', 'Base Depot', 'trim|required');
         $this->form_validation->set_rules('txt_surname', 'Surname', 'trim|required|max_length[45]');
         $this->form_validation->set_rules('txt_forename', 'Forename', 'trim|required|max_length[45]');
         $this->form_validation->set_rules('txt_dob', 'Date Of Birth', 'trim|required');
+
         if ($this->form_validation->run() == true) {
             $operativeGUID = Uuid_v4();
             $password = htmlentities($this->input->post('txt_pass')); //randomPassword();
@@ -130,18 +131,23 @@ class Operators extends MY_Controller {
     public function edit_operators($id = null) {
         $operatorID = base64_decode($id);
         $data['dataArr'] = $this->operators_model->get_operators_by_id($operatorID);
+        $data['companies'] = $this->operators_model->sql_select(TBL_COMPANY, 'companyGUID,companyName');
+        $data['lic_no'] = explode(':-:', $data['dataArr']['lic_no']);
+        $data['lic_type'] = explode(':-:', $data['dataArr']['lic_type']);
+        $data['exp_date'] = explode(':-:', $data['dataArr']['exp_date']);
+
         if (!empty($data['dataArr'])) {
             $data['locationArr'] = $this->operators_model->get_depots_by_company($data['dataArr']['companyGUID']);
             $data['heading'] = 'Manage Operators';
 
             $record_id = base64_decode($id);
-            
-            $this->form_validation->set_rules('company', 'Company', 'trim|required');
+
+            $this->form_validation->set_rules('company_name', 'Company', 'trim|required');
             $this->form_validation->set_rules('txt_base_depot', 'Base Depot', 'trim|required');
             $this->form_validation->set_rules('txt_surname', 'Surname', 'trim|required|max_length[45]');
             $this->form_validation->set_rules('txt_forename', 'Forename', 'trim|required|max_length[45]');
             $this->form_validation->set_rules('txt_dob', 'Date Of Birth', 'trim|required');
-            
+
             if ($this->form_validation->run() == true) {
                 $password = htmlentities($this->input->post('txt_pass')); //randomPassword();
                 $insertArr = array(

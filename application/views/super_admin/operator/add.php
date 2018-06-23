@@ -13,7 +13,14 @@
                         </li>
                         <li class="trends-nav active">
                             <a href="<?php echo site_url('operators/add') ?>">
-                                <span>Add New</span>
+                                <span>
+                                    <?php
+                                    if (isset($dataArr))
+                                        echo "Edit";
+                                    else
+                                        echo "Add";
+                                    ?>
+                                </span>
                             </a>
                         </li>
                     </ul>
@@ -91,7 +98,7 @@
                                                         <div class="col-md-3">
                                                             <div class="form-group has-feedback">
                                                                 <label class="required">DOB</label>
-                                                                <input type="text" placeholder="Enter DOB (DD/MM/YYYY)" class="form-control format-date dateofbirth" name="txt_dob" id="txt_dob" value="<?php echo (isset($dataArr)) ? date('dd/mm/Y', strtotime($dataArr['DOB'])) : set_value('txt_dob'); ?>">
+                                                                <input type="text" placeholder="Enter DOB (DD/MM/YYYY)" class="form-control format-date dateofbirth" name="txt_dob" id="txt_dob" value="<?php echo (isset($dataArr)) ? date('d-m-Y', strtotime($dataArr['DOB'])) : set_value('txt_dob'); ?>">
                                                                 <?php echo '<label id="txt_dob-error" class="validation-error-label" for="txt_dob">' . form_error('txt_dob') . '</label>'; ?>
                                                             </div>
                                                         </div>
@@ -137,24 +144,24 @@
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr>
-                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence Type" name="txt_licence_type[]" value=""></td>
-                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence No." name="txt_licence_no[]" value=""></td>
-                                                                            <td><input type="text" class="form-control format-date dateselect" placeholder="Enter Expiry Date (DD/MM/YYYY)" name="txt_expiry_date[]" value=""></td>
+                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence Type" name="txt_licence_type[]" value="<?php if (isset($lic_type[0])) echo $lic_type[0] ?>"></td>
+                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence No." name="txt_licence_no[]" value="<?php if (isset($lic_no[0])) echo $lic_no[0] ?>"></td>
+                                                                            <td><input type="text" class="form-control format-date dateselect" placeholder="Enter Expiry Date (DD/MM/YYYY)" name="txt_expiry_date[]" value="<?php if (isset($exp_date[0])) echo date('d-m-Y', strtotime($exp_date[0])); ?>"></td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence Type" name="txt_licence_type[]" value=""></td>
-                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence No." name="txt_licence_no[]" value=""></td>
-                                                                            <td><input type="text" class="form-control format-date dateselect" placeholder="Enter Expiry Date (DD/MM/YYYY)" name="txt_expiry_date[]" value=""></td>
+                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence Type" name="txt_licence_type[]" value="<?php if (isset($lic_type[1])) echo $lic_type[1] ?>"></td>
+                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence No." name="txt_licence_no[]" value="<?php if (isset($lic_no[1])) echo $lic_no[1] ?>"></td>
+                                                                            <td><input type="text" class="form-control format-date dateselect" placeholder="Enter Expiry Date (DD/MM/YYYY)" name="txt_expiry_date[]" value="<?php if (isset($exp_date[1])) echo date('d-m-Y', strtotime($exp_date[1])); ?>"></td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence Type" name="txt_licence_type[]" value=""></td>
-                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence No." name="txt_licence_no[]" value=""></td>
-                                                                            <td><input type="text" class="form-control format-date dateselect" placeholder="Enter Expiry Date (DD/MM/YYYY)" name="txt_expiry_date[]" value=""></td>
+                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence Type" name="txt_licence_type[]" value="<?php if (isset($lic_type[2])) echo $lic_type[2] ?>"></td>
+                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence No." name="txt_licence_no[]" value="<?php if (isset($lic_no[2])) echo $lic_no[2] ?>"></td>
+                                                                            <td><input type="text" class="form-control format-date dateselect" placeholder="Enter Expiry Date (DD/MM/YYYY)" name="txt_expiry_date[]" value="<?php if (isset($exp_date[2])) echo date('d-m-Y', strtotime($exp_date[2])); ?>"></td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence Type" name="txt_licence_type[]" value=""></td>
-                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence No." name="txt_licence_no[]" value=""></td>
-                                                                            <td><input type="text" class="form-control format-date dateselect" placeholder="Enter Expiry Date (DD/MM/YYYY)" name="txt_expiry_date[]" value=""></td>
+                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence Type" name="txt_licence_type[]" value="<?php if (isset($lic_type[3])) echo $lic_type[3] ?>"></td>
+                                                                            <td><input type="text" class="form-control" placeholder="Enter Licence No." name="txt_licence_no[]" value="<?php if (isset($lic_no[3])) echo $lic_no[3] ?>"></td>
+                                                                            <td><input type="text" class="form-control format-date dateselect" placeholder="Enter Expiry Date (DD/MM/YYYY)" name="txt_expiry_date[]" value="<?php if (isset($exp_date[3])) echo date('d-m-Y', strtotime($exp_date[3])); ?>"></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
