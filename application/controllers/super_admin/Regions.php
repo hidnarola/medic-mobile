@@ -1,12 +1,16 @@
 <?php
 
+/**
+ * Manage Regions related activity
+ * @author KU
+ */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Regions extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('users_model', 'settings_model');
+        $this->load->model(array('settings_model', 'regions_model'));
         //-- Check if logged in user is admin if not admin than redirect user back to dashboard page
         if (!get_AdminLogin('A')) {
             redirect('dashboard');
@@ -15,9 +19,6 @@ class Regions extends MY_Controller {
 
     /**
      * Display areas listing
-     * @param --
-     * @return --
-     * @author PAV
      */
     public function display_areas() {
         $data['heading'] = 'Manage Regions';
@@ -26,16 +27,14 @@ class Regions extends MY_Controller {
     }
 
     /**
-     * Get all the data of areas for listing datatable.
-     * @param --
+     * Get all the data of areas for listing data table.
      * @return JSON
-     * @author PAV
      */
     public function get_areas_data() {
-        $final['recordsTotal'] = $this->settings_model->get_areas_data('count');
+        $final['recordsTotal'] = $this->regions_model->get_areas_data('count');
         $final['redraw'] = 1;
         $final['recordsFiltered'] = $final['recordsTotal'];
-        $areas = $this->settings_model->get_areas_data('result')->result_array();
+        $areas = $this->regions_model->get_areas_data('result');
         $start = $this->input->get('start') + 1;
         foreach ($areas as $key => $val) {
             $areas[$key] = $val;

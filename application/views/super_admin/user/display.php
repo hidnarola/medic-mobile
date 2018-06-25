@@ -103,8 +103,8 @@
                     data: "action",
                     render: function (data, type, full, meta) {
                         action = '';
-                        action += '<a href="' + site_url + 'users/edit/' + btoa(full.userGUID) + '" id="' + btoa(full.companyGUID) + '" class="btn btn-xs edit_btn" title="Edit">Edit</a>';
-                        action += '<a href="' + site_url + 'users/delete/' + btoa(full.userGUID) + '" class="btn btn-xs edit_btn" onclick="return confirm_alert(this)" title="Delete">Delete</a>';
+                        action += '<a href="' + site_url + 'users/edit/' + btoa(full.userGUID) + '" id="' + btoa(full.companyGUID) + '" class="edit_btn right_bar" title="Edit">Edit</a>';
+                        action += '<a href="' + site_url + 'users/delete/' + btoa(full.userGUID) + '" class="edit_btn last_btn" onclick="return confirm_alert(this)" title="Delete">Delete</a>';
                         return action;
                     },
                     sortable: false,

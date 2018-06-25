@@ -39,13 +39,13 @@
     </div>
 </section>
 <div id="vehicle_modal" class="modal fade">
-    <div class="modal-dialog modal-lg" style="margin:12% auto">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-black custom_modal_header">
                 <h6 class="modal-title text-center">Vehicle Details</h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body panel-body" id="vehicle_body">
+            <div class="modal-body panel-body view-modal-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
@@ -120,8 +120,8 @@
                 {
                     data: "action",
                     render: function (data, type, full, meta) {
-                        action = '<a href="javascript:void(0);" style="padding-right: 10px;border-right:2px solid #bbbbbb" title="View" id="' + btoa(full.vehicleGUID) + '" class="edit_btn view_btn">View</a>';
-                        action += '<a href="' + site_url + 'vehicles/edit/' + btoa(full.vehicleGUID) + '" id="' + btoa(full.vehicleGUID) + '" style="padding:0 10px;" title="Edit" class="edit_btn">Edit</a>';
+                        action = '<a href="javascript:void(0);" title="View" id="' + btoa(full.vehicleGUID) + '" class="edit_btn view_btn right_bar">View</a>';
+                        action += '<a href="' + site_url + 'vehicles/edit/' + btoa(full.vehicleGUID) + '" id="' + btoa(full.vehicleGUID) + '" style="padding:0 10px;" title="Edit" class="edit_btn last_btn">Edit</a>';
                         return action;
                     },
                     className: "action dt-head-center",
