@@ -5,7 +5,6 @@
 .bg-black .close{color:#fff}
 .btn-red {background: #d52b1f;color:#fff}
 .map-accordion.stops{top:30px;}
-/*logout icon*/
 .logout-icon{margin: 0 0 0 20px;}
 .logout-icon a {display: block;}
 .logout-icon a:hover svg path{fill:#d52b1f; stroke:#d52b1f;}
@@ -20,6 +19,9 @@ label.validation-error-label{color: red !important;margin:5px 0 0 0}
 .right_bar {padding-right: 10px;border-right:2px solid #bbbbbb;}
 .last_btn {padding: 0 10px;}
 .view-modal-body{font-size: 13px;}
+.add_btn_icn,.add_btn_icn:hover{color:black;}
+.bg-red{background: #d52b1f;}
+.bg-red i {color: white;}
 /*.dataTable thead .sorting_asc:after {content: '\e9c2';}
 .dataTable thead .sorting_desc:after {content: '\e9c1';}*/
 

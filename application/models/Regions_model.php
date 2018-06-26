@@ -37,51 +37,18 @@ class Regions_model extends MY_Model {
     }
 
     /**
-     * Get operator details by it GUID 
-     * @param string $operativeGUID
-     * @return array
+     * Get area details by id
+     * @param sring $id
+     * @return object
      */
-    public function get_operators_by_id($operativeGUID) {
-        $this->db->select('o.*,d.depotName,GROUP_CONCAT(q.number SEPARATOR ":-:") lic_no,GROUP_CONCAT(q.type SEPARATOR ":-:") lic_type,GROUP_CONCAT(q.expiry SEPARATOR ":-:") exp_date,c.companyGUID,c.companyName');
-        $this->db->from(TBL_OPERATIVE . ' o');
-        $this->db->join(TBL_DEPOT . ' d', 'o.baseDepotGUID=d.depotGUID', 'left');
-        $this->db->join(TBL_REGION . ' r', 'd.regionGUID=r.regionGUID', 'left');
-        $this->db->join(TBL_COMPANY . ' c', 'r.companyGUID=c.companyGUID', 'left');
-        $this->db->join(TBL_QUALIFICATION . ' q', 'o.operativeGUID=q.operativeGUID', 'left');
-        $this->db->where(array(
-            'o.operativeGUID' => $operativeGUID
-        ));
-        $q = $this->db->get();
-        return $q->row_array();
-    }
-
-    /**
-     * Get all company depots
-     * @param string $companyGUID
-     * @return array
-     */
-    public function get_depots_by_company($companyGUID) {
-        $this->db->select('d.depotGUID,d.depotName');
+    public function get_area_details_by_id($id) {
+        $this->db->select('d.*,r.*,m1.managerGUID as m1_GUID,m1.firstName as m1_fname,m1.lastName as m1_lname,m1.email as m1_email,m1.mobileNumber as m1_mobile,m2.managerGUID as m2_GUID,m2.firstName as m2_fname,m2.lastName as m2_lname,m2.email as m2_email,m2.mobileNumber as m2_mobile');
         $this->db->from(TBL_DEPOT . ' as d');
+        $this->db->join(TBL_MANAGER . ' as m1', 'd.managerGUID=m1.managerGUID', 'left');
+        $this->db->join(TBL_MANAGER . ' as m2', 'd.secondaryManagerGUID=m2.managerGUID', 'left');
         $this->db->join(TBL_REGION . ' as r', 'd.regionGUID=r.regionGUID', 'left');
-        $this->db->where('r.companyGUID', $companyGUID);
-        $q = $this->db->get();
-        return $q->result_array();
-    }
-
-    /**
-     * Get all company depots
-     * @param string $company companyGUID
-     * @author KU
-     */
-    public function get_depots($company) {
-        $this->db->select('d.depotGUID,d.depotName');
-
-        $this->db->join(TBL_REGION . ' r', 'd.regionGUID=r.regionGUID', 'LEFT');
-        $this->db->where('companyGUID', $company);
-
-        $query = $this->db->get(TBL_DEPOT . ' d');
-        return $query->result_array();
+        $this->db->where('d.depotGUID', $id);
+        return $this->db->get();
     }
 
 }

@@ -10,7 +10,7 @@ class Regions extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model(array('settings_model', 'regions_model'));
+        $this->load->model('regions_model');
         //-- Check if logged in user is admin if not admin than redirect user back to dashboard page
         if (!get_AdminLogin('A')) {
             redirect('dashboard');
@@ -53,6 +53,8 @@ class Regions extends MY_Controller {
     public function add_areas() {
         $data['heading'] = 'Manage Regions';
         $data['title'] = 'Add Areas';
+        $data['companies'] = $this->regions_model->sql_select(TBL_COMPANY, 'companyGUID,companyName');
+
         $Sec_managerGUID = '';
         $this->form_validation->set_rules('txt_depot_name', 'Depot Name', 'trim|required|max_length[128]');
         $this->form_validation->set_rules('txt_addressLine1', 'Address Line1', 'trim|required|max_length[80]');
@@ -64,8 +66,8 @@ class Regions extends MY_Controller {
         $this->form_validation->set_rules('txt_manager_name1', 'Manager Email', 'trim|required');
         $this->form_validation->set_rules('txt_manager_mobile1', 'Manager Mobile No.', 'trim|required');
         $this->form_validation->set_rules('txt_manager_email1', 'Manager Email', 'trim|required');
-        $data['regionArr'] = $this->settings_model->get_all_details(TBL_REGION, array('companyGUID' => get_AdminLogin('COMP_GUID')), array(array('field' => 'regionName', 'type' => 'asc')))->result_array();
-        $data['managerArr'] = $this->settings_model->get_all_details(TBL_MANAGER, array(), array(array('field' => 'firstName', 'type' => 'asc')))->result_array();
+        $data['regionArr'] = $this->regions_model->get_all_details(TBL_REGION, array('companyGUID' => get_AdminLogin('COMP_GUID')), array(array('field' => 'regionName', 'type' => 'asc')))->result_array();
+        $data['managerArr'] = $this->regions_model->get_all_details(TBL_MANAGER, array(), array(array('field' => 'firstName', 'type' => 'asc')))->result_array();
         if ($this->form_validation->run() == true) {
             // Depot Details
             $depotGUID = Uuid_v4();
@@ -81,7 +83,7 @@ class Regions extends MY_Controller {
                 'ManagerGUID' => htmlentities($this->input->post('txt_manager_name1')),
                 'secondaryManagerGUID' => htmlentities($this->input->post('txt_manager_name2'))
             );
-            $is_deport = $this->settings_model->insert_update('insert', TBL_DEPOT, $insertArr);
+            $is_deport = $this->regions_model->insert_update('insert', TBL_DEPOT, $insertArr);
             if ($is_deport > 0) {
                 $this->session->set_flashdata('success', 'Area has been added successfully.');
                 redirect('settings/manage_areas');
@@ -101,11 +103,12 @@ class Regions extends MY_Controller {
     public function edit_areas($id = '') {
         $data['title'] = 'Edit Areas';
         $data['heading'] = 'Manage Regions';
+        $data['companies'] = $this->regions_model->sql_select(TBL_COMPANY, 'companyGUID,companyName');
 
         $record_id = base64_decode($id);
-        $data['dataArr'] = $dataArr = $this->settings_model->get_area_details_by_id($record_id)->row_array();
-        $data['regionArr'] = $this->settings_model->get_all_details(TBL_REGION, array('companyGUID' => get_AdminLogin('COMP_GUID')), array(array('field' => 'regionName', 'type' => 'asc')))->result_array();
-        $data['managerArr'] = $this->settings_model->get_all_details(TBL_MANAGER, array(), array(array('field' => 'firstName', 'type' => 'asc')))->result_array();
+        $data['dataArr'] = $dataArr = $this->regions_model->get_area_details_by_id($record_id)->row_array();
+        $data['regionArr'] = $this->regions_model->get_all_details(TBL_REGION, array('companyGUID' => get_AdminLogin('COMP_GUID')), array(array('field' => 'regionName', 'type' => 'asc')))->result_array();
+        $data['managerArr'] = $this->regions_model->get_all_details(TBL_MANAGER, array(), array(array('field' => 'firstName', 'type' => 'asc')))->result_array();
         $Sec_managerGUID = '';
         $this->form_validation->set_rules('txt_depot_name', 'Depot Name', 'trim|required|max_length[128]');
         $this->form_validation->set_rules('txt_addressLine1', 'Address Line1', 'trim|required|max_length[80]');
@@ -130,7 +133,7 @@ class Regions extends MY_Controller {
                 'ManagerGUID' => htmlentities($this->input->post('txt_manager_name1')),
                 'secondaryManagerGUID' => htmlentities($this->input->post('txt_manager_name2'))
             );
-            $is_deport = $this->settings_model->insert_update('update', TBL_DEPOT, $insertArr4, array('depotGUID' => $dataArr['depotGUID']));
+            $is_deport = $this->regions_model->insert_update('update', TBL_DEPOT, $insertArr4, array('depotGUID' => $dataArr['depotGUID']));
 
             $this->session->set_flashdata('success', 'Area has been updated successfully.');
             redirect('settings/manage_areas');
@@ -152,7 +155,7 @@ class Regions extends MY_Controller {
             'regionName' => $this->input->post('txt_modal_region_name'),
             'regionDescription' => $this->input->post('txt_modal_region_desc')
         );
-        $is_inserted = $this->settings_model->insert_update('insert', TBL_REGION, $insertArr);
+        $is_inserted = $this->regions_model->insert_update('insert', TBL_REGION, $insertArr);
         if ($is_inserted > 0) {
             $return = array(
                 'status' => 'success',
@@ -166,7 +169,7 @@ class Regions extends MY_Controller {
 
     public function view_area_ajax() {
         $area_id = base64_decode($this->input->post('id'));
-        $data['viewArr'] = $this->settings_model->get_area_details_by_id($area_id)->row_array();
+        $data['viewArr'] = $this->regions_model->get_area_details_by_id($area_id)->row_array();
         return $this->load->view('company_admin/partial_view/area_view', $data);
         die;
     }
