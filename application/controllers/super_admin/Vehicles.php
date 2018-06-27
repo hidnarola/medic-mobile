@@ -102,7 +102,7 @@ class Vehicles extends MY_Controller {
                 'is_google_route' => ($this->input->post('txt_google_route') == 'on') ? 1 : 0
             );
             $is_inserted = $this->settings_model->insert_update('insert', TBL_VEHICLE, $insertArr);
-            if ($is_inserted > 0) { 
+            if ($is_inserted > 0) {
                 $this->session->set_flashdata('success', 'Vehicles has been added successfully.');
                 redirect('vehicles');
             } else {
@@ -180,13 +180,18 @@ class Vehicles extends MY_Controller {
         $this->template->load('default_admin', 'super_admin/vehicle/add', $data);
     }
 
+    /**
+     * Check vehicleGUID is unique or not
+     * @param string $vehicleGUID
+     */
     public function checkUnique_device_id($vehicleGUID = NULL) {
         $device_id = trim($this->input->get('txt_device_id'));
         $condition['deviceGUID'] = $device_id;
         if ($vehicleGUID != '') {
-            $condition['vehicleGUID'] = $vehicleGUID;
+            $condition['vehicleGUID!='] = $vehicleGUID;
         }
-        $result = $this->settings_model->get_all_details(TBL_VEHICLE, $condition)->result_array();
+
+        $result = $this->vehicle_model->get_all_details(TBL_VEHICLE, $condition)->result_array();
         //$result = $this->menu_model->check_unique_menu_item($condition);
         if ($result) {
             echo "false";

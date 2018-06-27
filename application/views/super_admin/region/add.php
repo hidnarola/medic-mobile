@@ -223,7 +223,7 @@
                     <div class="row">
                         <div class="add-form-btn">
                             <button type="submit" class="btn custom_save_button" name="btn_submit_region_data" id="btn_submit_region_data">Save</button>
-                            <button type="button" class="btn custom_cancel_button" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn custom_cancel_button cancel-btn" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
                 </form>

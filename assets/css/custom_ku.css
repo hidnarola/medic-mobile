@@ -22,6 +22,8 @@ label.validation-error-label{color: red !important;margin:5px 0 0 0}
 .add_btn_icn,.add_btn_icn:hover{color:black;}
 .bg-red{background: #d52b1f;}
 .bg-red i {color: white;}
+.add-form-btn .cancel-btn {background: transparent !important;border: 2px solid black;color: black;line-height: 20px;padding: 7px 10px;text-align: center;font-size: 15px;width: 110px;border-radius: 4px;}
+.add-form-btn .cancel-btn:hover {background: transparent !important;color: black;}
 /*.dataTable thead .sorting_asc:after {content: '\e9c2';}
 .dataTable thead .sorting_desc:after {content: '\e9c1';}*/
 
