@@ -45,6 +45,14 @@
                     <div class="form-group">
                         <button type="submit" class="btn bg-warning btn-block">Login <i class="icon-arrow-right14 position-right"></i></button>
                     </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-6 text-right">
+                                <a href="<?php echo site_url('forgot_password') ?>">Forgot password?</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>

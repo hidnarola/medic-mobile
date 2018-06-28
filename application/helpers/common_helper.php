@@ -100,7 +100,7 @@ function get_all_cats() {
 }
 
 /**
- * Return verfication code with check already exit or not for business user signup
+ * Return verification code with check already exit or not for business user signup
  */
 function verification_code() {
     $CI = & get_instance();
@@ -108,7 +108,7 @@ function verification_code() {
     for ($i = 0; $i < 1; $i++) {
         $verification_string = 'abcdefghijk123' . time();
         $verification_code = str_shuffle($verification_string);
-        $check_code = $CI->users_model->get_all_details(TBL_USERS, array('password_verify' => $verification_code))->num_rows();
+        $check_code = $CI->users_model->get_all_details(TBL_LOGIN_DETAILS, array('verificationCode' => $verification_code))->num_rows();
         if ($check_code > 0) {
             $i--;
         } else {
@@ -320,10 +320,6 @@ function get_curl_request($url) {
     $result_Array = (array) json_decode($response);
     return $result_Array;
 }
-
-/**
- * Returns unique id of table
- */
 
 /**
  * Returns unique id of table

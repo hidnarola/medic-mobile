@@ -9,6 +9,7 @@ class Login_model extends MY_Model {
      * @author pav
      * @param string username, string password
      * @return array
+     * @author PAV
      */
     public function check_login_validation($uname, $pass) {
         $this->db->select('ld.*');
@@ -21,6 +22,19 @@ class Login_model extends MY_Model {
         $this->db->limit(1);
         $res = $this->db->get();
         return $res->row_array();
+    }
+
+    /**
+     * Check verification code exists or not in users table
+     * @param string $verification_code
+     * @return array
+     * @author KU
+     */
+    public function check_verification_code($verification_code) {
+        $this->db->where('verificationCode', $verification_code);
+        $this->db->where('is_delete', 0);
+        $query = $this->db->get(TBL_LOGIN_DETAILS);
+        return $query->row_array();
     }
 
 }

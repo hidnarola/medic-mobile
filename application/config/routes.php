@@ -132,3 +132,7 @@ $route['operators/edit/(:any)'] = 'super_admin/operators/edit_operators/$1';
 $route['vehicles'] = 'super_admin/vehicles/display_vehicles';
 $route['vehicles/add'] = 'super_admin/vehicles/add_vehicles';
 $route['vehicles/edit/(:any)'] = 'super_admin/vehicles/edit_vehicles/$1';
+
+//-- Forgot password/Reset password routes
+$route['forgot_password'] = 'login/forgot_password';
+$route['reset_password'] = 'login/reset_password';
