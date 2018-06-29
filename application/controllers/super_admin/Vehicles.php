@@ -11,9 +11,10 @@ class Vehicles extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model(array('vehicle_model', 'settings_model', 'users_model'));
-        //-- Check if logged in user is admin if not admin than redirect user back to dashboard page
+        $this->isAdmin = true;
         if (!get_AdminLogin('A')) {
-            redirect('dashboard');
+            $this->isAdmin = false;
+//            redirect('dashboard');
         }
     }
 
@@ -24,7 +25,11 @@ class Vehicles extends MY_Controller {
     public function display_vehicles() {
         $data['heading'] = 'Manage Vehicles';
         $data['title'] = 'List Of Vehicles';
-        $this->template->load('default_admin', 'super_admin/vehicle/listing', $data);
+        if ($this->isAdmin) {
+            $this->template->load('default_admin', 'super_admin/vehicle/listing', $data);
+        } else {
+            $this->template->load('default', 'super_admin/vehicle/listing', $data);
+        }
     }
 
     /**
@@ -109,7 +114,11 @@ class Vehicles extends MY_Controller {
                 $this->session->set_flashdata('success', 'Sorry something went wrong! Please try it again.');
             }
         }
-        $this->template->load('default_admin', 'super_admin/vehicle/add', $data);
+        if ($this->isAdmin) {
+            $this->template->load('default_admin', 'super_admin/vehicle/add', $data);
+        } else {
+            $this->template->load('default_admin', 'super_admin/vehicle/add', $data);
+        }
     }
 
     /**
@@ -177,7 +186,11 @@ class Vehicles extends MY_Controller {
             $this->session->set_flashdata('success', 'Vehicles has been updated successfully.');
             redirect('vehicles');
         }
-        $this->template->load('default_admin', 'super_admin/vehicle/add', $data);
+        if ($this->isAdmin) {
+            $this->template->load('default_admin', 'super_admin/vehicle/add', $data);
+        } else {
+            $this->template->load('default_admin', 'super_admin/vehicle/add', $data);
+        }
     }
 
     /**

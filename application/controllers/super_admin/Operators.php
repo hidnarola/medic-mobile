@@ -11,10 +11,15 @@ class Operators extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('operators_model');
-        //-- Check if logged in user is admin if not admin than redirect user back to dashboard page
+        $this->isAdmin = true;
         if (!get_AdminLogin('A')) {
-            redirect('dashboard');
+            $this->isAdmin = false;
+//            redirect('dashboard');
         }
+        //-- Check if logged in user is admin if not admin than redirect user back to dashboard page
+//        if (!get_AdminLogin('A')) {
+//            redirect('dashboard');
+//        }
     }
 
     /**
@@ -23,7 +28,11 @@ class Operators extends MY_Controller {
     public function display_operators() {
         $data['title'] = 'List Of Operators';
         $data['heading'] = 'Manage Operators';
-        $this->template->load('default_admin', 'super_admin/operator/listing', $data);
+        if ($this->isAdmin) {
+            $this->template->load('default_admin', 'super_admin/operator/listing', $data);
+        } else {
+            $this->template->load('default', 'super_admin/operator/listing', $data);
+        }
     }
 
     /**
@@ -121,7 +130,11 @@ class Operators extends MY_Controller {
                 $this->session->set_flashdata('success', 'Sorry something went wrong! Please try it again.');
             }
         }
-        $this->template->load('default_admin', 'super_admin/operator/add', $data);
+        if ($this->isAdmin) {
+            $this->template->load('default_admin', 'super_admin/operator/add', $data);
+        } else {
+            $this->template->load('default', 'super_admin/operator/add', $data);
+        }
     }
 
     /**
@@ -185,7 +198,11 @@ class Operators extends MY_Controller {
                 $this->session->set_flashdata('success', 'Operators has been updated successfully.');
                 redirect('operators');
             }
-            $this->template->load('default_admin', 'super_admin/operator/add', $data);
+            if ($this->isAdmin) {
+                $this->template->load('default_admin', 'super_admin/operator/add', $data);
+            } else {
+                $this->template->load('default', 'super_admin/operator/add', $data);
+            }
         } else {
             $this->session->set_flashdata('error', 'Something went wrong, Please try again later');
             redirect('operators');

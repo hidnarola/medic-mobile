@@ -1,14 +1,16 @@
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=geometry,places&v=3.27&key=AIzaSyCcvuBSTZ5P8My0Am1uy0RgRQ7gu5SyuAw"></script>
 <?php
-if (isset($dataArr)) {
-    $form_action = 'manage_company/edit/' . base64_encode($dataArr['companyGUID']);
-} else {
-    $form_action = 'manage_company/add';
-}
+if ($this->isAdmin)
+    $section_class = 'home-content padding-none admin-content';
+else
+    $section_class = 'setting-page';
 ?>
-<section class="home-content padding-none admin-content">
+<section class="<?php echo $section_class ?>">
     <div class="container">
         <div class="row">
+            <?php
+            if (!$this->isAdmin)
+                $this->load->view('company_admin/settings/settings_header')
+                ?>
             <div class="panel-content d-flex">
                 <div class="left-nav">
                     <ul>
@@ -28,7 +30,7 @@ if (isset($dataArr)) {
                     <div class="content-wrapper">
                         <div class="row">
                             <div class="col-md-12">
-                                <form method="post" action="<?php echo site_url($form_action); ?>" id="add_compnay_form" enctype="multipart/form-data">
+                                <form method="post" id="add_compnay_form" enctype="multipart/form-data">
                                     <div class="panel panel-body login-form">
                                         <?php
                                         if (!isset($LoginDetailsArr)) {
@@ -56,7 +58,7 @@ if (isset($dataArr)) {
                                                     <input type="text" class="form-control" name="state" id="state" placeholder="State" value="<?php echo (isset($dataArr)) ? $dataArr['country_state'] : 'Maryland'; ?>" required>
                                                     <?php echo '<label id="state-error" class="validation-error-label" for="state">' . form_error('state') . '</label>'; ?>
                                                 </div>
-                                                 <div class="form-group">
+                                                <div class="form-group">
                                                     <label class="control-label required">Postal Code</label>
                                                     <input type="text" class="form-control" name="postal_code" id="postal_code" placeholder="Postal code" value="<?php echo (isset($dataArr)) ? $dataArr['postcode_zipcode'] : '21202'; ?>" required>
                                                     <?php echo '<label id="postal_code-error" class="validation-error-label" for="postal_code">' . form_error('postal_code') . '</label>'; ?>
@@ -142,6 +144,7 @@ if (isset($LoginDetailsArr)) {
     $company_id = $dataArr['companyGUID'];
 }
 ?>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=geometry,places&v=3.27&key=AIzaSyCcvuBSTZ5P8My0Am1uy0RgRQ7gu5SyuAw"></script>
 <script type="text/javascript">
     uname_ajax = '<?php echo site_url('super_admin/company/check_username') ?>';
     email_ajax = '<?php echo site_url('super_admin/company/check_useremail') ?>';
@@ -152,8 +155,7 @@ if (isset($LoginDetailsArr)) {
         email_ajax += '/<?php echo $unique_id ?>';
         company_ajax += '/<?php echo $company_id ?>';
     }
-</script>
-<script type="text/javascript">
+
     /*********************************************************
      Map Integration
      **********************************************************/
@@ -471,8 +473,6 @@ if (isset($LoginDetailsArr)) {
             });
         }
 <?php } ?>
-</script>
-<script type="text/javascript">
 
     /****************************************************************************
      This function is used to validate form

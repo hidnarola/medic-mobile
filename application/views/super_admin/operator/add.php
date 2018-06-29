@@ -1,8 +1,18 @@
+<?php
+if ($this->isAdmin)
+    $section_class = 'home-content padding-none admin-content';
+else
+    $section_class = 'setting-page';
+?>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-<section class="home-content padding-none admin-content">
+<section class="<?php echo $section_class ?>">
     <div class="container">
         <div class="row">
+            <?php
+            if (!$this->isAdmin)
+                $this->load->view('company_admin/settings/settings_header')
+                ?>
             <div class="panel-content d-flex">
                 <div class="left-nav">
                     <ul>

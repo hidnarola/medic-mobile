@@ -7,8 +7,10 @@ class Company extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model(array('company_model', 'settings_model'));
+        $this->isAdmin = true;
         if (!get_AdminLogin('A')) {
-            redirect('dashboard');
+            $this->isAdmin = false;
+//            redirect('dashboard');
         }
     }
 
@@ -25,11 +27,15 @@ class Company extends MY_Controller {
     public function display_company() {
         $data['title'] = 'List of Company';
         $data['heading'] = 'Manage Company';
-        $this->template->load('default_admin', 'super_admin/company/display', $data);
+        if ($this->isAdmin) {
+            $this->template->load('default_admin', 'super_admin/company/display', $data);
+        } else {
+            $this->template->load('default', 'super_admin/company/display', $data);
+        }
     }
 
     /**
-     * Get company data by ajax
+     * Get company data by Ajax
      * @param --
      * @return JSON
      * @author PAV
@@ -121,7 +127,11 @@ class Company extends MY_Controller {
                 $this->session->set_flashdata('error', 'Something went wrong! Please try it again.');
             }
         }
-        $this->template->load('default_admin', 'super_admin/company/add', $data);
+        if ($this->isAdmin) {
+            $this->template->load('default_admin', 'super_admin/company/add', $data);
+        } else {
+            $this->template->load('default', 'super_admin/company/add', $data);
+        }
     }
 
     /**
@@ -158,7 +168,11 @@ class Company extends MY_Controller {
             $this->session->set_flashdata('success', 'Company has been updated successfully.');
             redirect('manage_company');
         }
-        $this->template->load('default_admin', 'super_admin/company/add', $data);
+        if ($this->isAdmin) {
+            $this->template->load('default_admin', 'super_admin/company/add', $data);
+        } else {
+            $this->template->load('default', 'super_admin/company/add', $data);
+        }
     }
 
     /**

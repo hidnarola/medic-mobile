@@ -1,7 +1,17 @@
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"  rel="stylesheet">
-<section class="home-content padding-none admin-content">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<?php
+if ($this->isAdmin)
+    $section_class = 'home-content padding-none admin-content';
+else
+    $section_class = 'setting-page';
+?>
+<section class="<?php echo $section_class ?>">
     <div class="container">
         <div class="row">
+            <?php
+            if (!$this->isAdmin)
+                $this->load->view('company_admin/settings/settings_header')
+                ?>
             <div class="panel-content d-flex">
                 <div class="left-nav">
                     <ul>

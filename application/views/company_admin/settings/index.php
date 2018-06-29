@@ -1,19 +1,9 @@
-<?php $success_msg = $this->session->flashdata('success'); ?>
 <script type="text/javascript" src="assets/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="assets/js/additional-methods.min.js"></script>
 <section class="setting-page">
     <div class="container">
         <div class="row">
-            <div class="setting-nav">
-                <ul class="d-flex">
-                    <li><a href="<?php echo site_url('settings') ?>">General</a></li>
-                    <li><a href="<?php echo site_url('settings/manage_vehicles') ?>">Machines</a></li>
-                    <li><a href="<?php echo site_url('settings/manage_operators') ?>">Operators</a></li>
-                    <li><a href="">Work lists</a></li>
-                    <li><a href="">Reports</a></li>
-                    <li><a href="<?php echo site_url('settings/manage_users') ?>">Customers</a></li>
-                </ul>
-            </div>
+            <?php $this->load->view('company_admin/settings/settings_header') ?>
             <div class="general-info d-flex">
                 <div class="general-info-l">
                     <div class="general-info-l-head d-flex">
@@ -487,7 +477,6 @@
     </div>	
 </section>
 <script type="text/javascript">
-    var success_msg = "<?php echo $success_msg ?>";
     $(document).on('click', '#change_pwd_btn', function () {
         $('.password_div').show();
         $('#change_pwd_btn').hide();
@@ -510,17 +499,6 @@
                 equalTo: "#password"
             },
         },
-    });
-    $(document).ready(function () {
-        if (success_msg != '') {
-            new PNotify({
-                title: 'Success',
-                text: success_msg,
-                buttons: {
-                    sticker: false
-                },
-            });
-        }
     });
 
     // Edit profile form validation

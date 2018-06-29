@@ -11,9 +11,9 @@ class Regions extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('regions_model');
-        //-- Check if logged in user is admin if not admin than redirect user back to dashboard page
+        $this->isAdmin = true;
         if (!get_AdminLogin('A')) {
-            redirect('dashboard');
+            $this->isAdmin = false;
         }
     }
 
@@ -23,7 +23,10 @@ class Regions extends MY_Controller {
     public function display_areas() {
         $data['heading'] = 'Manage Regions';
         $data['title'] = 'List of Areas';
-        $this->template->load('default_admin', 'super_admin/region/listing', $data);
+        if ($this->isAdmin)
+            $this->template->load('default_admin', 'super_admin/region/listing', $data);
+        else
+            $this->template->load('default', 'super_admin/region/listing', $data);
     }
 
     /**
@@ -91,7 +94,10 @@ class Regions extends MY_Controller {
                 $this->session->set_flashdata('error', 'Something went wrong! Please try it again.');
             }
         }
-        $this->template->load('default_admin', 'super_admin/region/add', $data);
+        if ($this->isAdmin)
+            $this->template->load('default_admin', 'super_admin/region/add', $data);
+        else
+            $this->template->load('default', 'super_admin/region/add', $data);
     }
 
     /**
@@ -138,7 +144,10 @@ class Regions extends MY_Controller {
             $this->session->set_flashdata('success', 'Area has been updated successfully.');
             redirect('settings/manage_areas');
         }
-        $this->template->load('default_admin', 'super_admin/region/add', $data);
+        if ($this->isAdmin)
+            $this->template->load('default_admin', 'super_admin/region/add', $data);
+        else
+            $this->template->load('default', 'super_admin/region/add', $data);
     }
 
     /**
