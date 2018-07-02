@@ -10,10 +10,11 @@ class Users_model extends MY_Model {
 
     /**
      * Get all users with associated company 
-     * @param string $type 
+     * @param string $type count/result
+     * @param string $user_id
      * @return integer/array
      */
-    public function get_users($type = 'result') {
+    public function get_users($type = 'result', $user_id = null) {
         $columns = ['c.companyGUID', 'l.username', 'l.firstName', 'l.lastName', 'l.emailAddress', 'l.tier', 'c.companyName'];
         $keyword = $this->input->get('search');
         $this->db->select('l.*,c.companyName');
@@ -23,6 +24,9 @@ class Users_model extends MY_Model {
         }
         $this->db->where('isAdmin', 0);
         $this->db->where('is_delete', 0);
+        if (!is_null($user_id)) {
+            $this->db->where('l.userGUID', $user_id);
+        }
         $this->db->join(TBL_COMPANY . ' c', 'c.companyGUID=l.companyGUID', 'left');
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
         if ($type == 'count') {

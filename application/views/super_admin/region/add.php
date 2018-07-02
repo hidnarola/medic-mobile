@@ -36,21 +36,23 @@ else
                                         <div class="add-form-wrap">
                                             <div class="add-form-l">
                                                 <!--<legend class="text-semibold"><i class="icon-truck position-left"></i> Location details</legend>-->
-                                                <div class="form-group">
-                                                    <label class="required">Company</label>
-                                                    <select data-placeholder="Select a Company..." class="form-control select-control" id="company_name" name="company_name">
-                                                        <option value="">Select a Company</option>
-                                                        <?php
-                                                        foreach ($companies as $k => $v) {
-                                                            $selected = '';
-                                                            if (isset($dataArr) && $dataArr['companyGUID'] == $v['companyGUID'])
-                                                                $selected = 'selected';
-                                                            ?>
-                                                            <option value="<?php echo $v['companyGUID']; ?>" <?php echo $selected ?>><?php echo $v['companyName']; ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                    <?php echo '<label id="company_name-error" class="validation-error-label" for="company_name">' . form_error('company') . '</label>'; ?>
-                                                </div>
+                                                <?php if ($this->isAdmin) { ?>
+                                                    <div class="form-group">
+                                                        <label class="required">Company</label>
+                                                        <select data-placeholder="Select a Company..." class="form-control select-control" id="company_name" name="company_name">
+                                                            <option value="">Select a Company</option>
+                                                            <?php
+                                                            foreach ($companies as $k => $v) {
+                                                                $selected = '';
+                                                                if (isset($dataArr) && $dataArr['companyGUID'] == $v['companyGUID'])
+                                                                    $selected = 'selected';
+                                                                ?>
+                                                                <option value="<?php echo $v['companyGUID']; ?>" <?php echo $selected ?>><?php echo $v['companyName']; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                        <?php echo '<label id="company_name-error" class="validation-error-label" for="company_name">' . form_error('company') . '</label>'; ?>
+                                                    </div>
+                                                <?php } ?>
                                                 <div class="form-group">
                                                     <label class="required">Depot Name</label>
                                                     <input type="text" class="form-control" name="txt_depot_name" id="txt_depot_name" placeholder="Enter Depot Name" value="<?php echo (isset($dataArr)) ? $dataArr['depotName'] : set_value('txt_depot_name'); ?>">

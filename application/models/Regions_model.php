@@ -11,9 +11,10 @@ class Regions_model extends MY_Model {
     /**
      * Get area data for data table listing
      * @param string $type count/result
+     * @param string $user_id
      * @return integer/array
      */
-    public function get_areas_data($type) {
+    public function get_areas_data($type, $user_id = null) {
         $columns = ['d.depotGUID', 'c.companyName', 'd.depotName', 'd.addressLine1', 'm1.firtName as m1_fname', 'm2.firtName'];
         $keyword = $this->input->get('search');
         $this->db->select('d.*,m1.firstName as m1_fname,m1.lastName as m1_lname,m1.email as m1_email,m1.mobileNumber as m1_mobile,m2.firstName as m2_fname,m2.lastName as m2_lname,m2.email as m2_email,m2.mobileNumber as m2_mobile,c.companyName');
@@ -23,8 +24,13 @@ class Regions_model extends MY_Model {
         }
         $this->db->join(TBL_REGION . ' as r', 'd.regionGUID=r.regionGUID', 'left');
         $this->db->join(TBL_COMPANY . ' as c', 'r.companyGUID=c.companyGUID', 'left');
+        $this->db->join(TBL_LOGIN_DETAILS . ' l', 'c.companyGUID=l.companyGUID', 'left');
         $this->db->join(TBL_MANAGER . ' as m1', 'd.ManagerGUID=m1.managerGUID', 'left');
         $this->db->join(TBL_MANAGER . ' as m2', 'd.secondaryManagerGUID=m2.managerGUID', 'left');
+        
+        if (!is_null($user_id)) {
+            $this->db->where('l.userGUID', $user_id);
+        }
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
         if ($type == 'count') {
             $query = $this->db->get(TBL_DEPOT . ' d');

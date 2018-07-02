@@ -36,10 +36,14 @@ class Users extends MY_Controller {
      * @retunr JSON
      */
     public function get_users() {
-        $final['recordsTotal'] = $this->users_model->get_users('count');
+        $user_id = null;
+        if (!$this->isAdmin) {
+            $user_id = $this->session->userdata('userGUID');
+        }
+        $final['recordsTotal'] = $this->users_model->get_users('count', $user_id);
         $final['redraw'] = 1;
         $final['recordsFiltered'] = $final['recordsTotal'];
-        $users = $this->users_model->get_users('result');
+        $users = $this->users_model->get_users('result', $user_id);
         $start = $this->input->get('start') + 1;
         foreach ($users as $key => $val) {
             $users[$key] = $val;
@@ -59,7 +63,9 @@ class Users extends MY_Controller {
 
         $data['companies'] = $this->users_model->get_companies();
 
-        $this->form_validation->set_rules('company_name', 'Company Name', 'trim|required');
+        if ($this->isAdmin) {
+            $this->form_validation->set_rules('company_name', 'Company Name', 'trim|required');
+        }
         $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[3]');
         $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
         $this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
@@ -124,8 +130,9 @@ class Users extends MY_Controller {
 
             $record_id = base64_decode($id);
             $data['user'] = $this->users_model->get_user_by_id($record_id);
-
-            $this->form_validation->set_rules('company_name', 'Company Name', 'trim|required');
+            if ($this->isAdmin) {
+                $this->form_validation->set_rules('company_name', 'Company Name', 'trim|required');
+            }
             $this->form_validation->set_rules('username', 'Username', 'trim|required');
             $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
             $this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');

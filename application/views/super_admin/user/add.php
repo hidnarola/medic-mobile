@@ -42,21 +42,23 @@ else
                                         ?>
                                         <div class="add-form-wrap add-usr-div">
                                             <div class="add-form-l">
-                                                <div class="form-group">
-                                                    <label class="control-label required">Company Name</label>
-                                                    <select name="company_name" class="form-control select-control" id="company_name" required>
-                                                        <?php
-                                                        foreach ($companies as $company) {
-                                                            $selected = '';
-                                                            if (isset($user) && $user['companyGUID'] == $company['companyGUID'])
-                                                                $selected = 'selected';
-                                                            ?>
-                                                            <option value="<?php echo $company['companyGUID'] ?>" <?php echo $selected ?>><?php echo $company['companyName'] ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                    <?php echo '<label id="company_name-error" class="validation-error-label" for="company_name">' . form_error('company_name') . '</label>'; ?>
-                                                </div>
-                                                <div class="form-group"></div>
+                                                <?php if ($this->isAdmin) { ?>
+                                                    <div class="form-group">
+                                                        <label class="control-label required">Company Name</label>
+                                                        <select name="company_name" class="form-control select-control" id="company_name" required>
+                                                            <?php
+                                                            foreach ($companies as $company) {
+                                                                $selected = '';
+                                                                if (isset($user) && $user['companyGUID'] == $company['companyGUID'])
+                                                                    $selected = 'selected';
+                                                                ?>
+                                                                <option value="<?php echo $company['companyGUID'] ?>" <?php echo $selected ?>><?php echo $company['companyName'] ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                        <?php echo '<label id="company_name-error" class="validation-error-label" for="company_name">' . form_error('company_name') . '</label>'; ?>
+                                                    </div>
+                                                    <div class="form-group"></div>
+                                                <?php } ?>
                                                 <div class="form-group">
                                                     <label class="control-label required">First Name</label>
                                                     <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name" value="<?php echo (isset($user)) ? $user['firstName'] : set_value('txt_fname'); ?>" required>

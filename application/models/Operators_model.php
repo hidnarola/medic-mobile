@@ -11,10 +11,11 @@ class Operators_model extends MY_Model {
     /**
      * Get Operators data for data table listing
      * @param string $type result/count
+     * @param string $user_id
      * @return int/array
      * @author KU
      */
-    public function get_all_data($type = 'result') {
+    public function get_all_data($type = 'result', $user_id = null) {
         $columns = ['o.operativeGUID', 'c.companyName', 'd.depotName', 'o.firstName', 'o.DOB', 'o.employee', 'lic_type'];
         $keyword = $this->input->get('search');
         $this->db->select('o.*,c.companyName,d.depotName,GROUP_CONCAT(q.number SEPARATOR ":-:") lic_no,GROUP_CONCAT(q.type) lic_type,GROUP_CONCAT(q.expiry SEPARATOR ":-:") exp_date');
@@ -27,11 +28,16 @@ class Operators_model extends MY_Model {
         $this->db->join(TBL_DEPOT . ' as d', 'o.baseDepotGUID=d.depotGUID', 'left');
         $this->db->join(TBL_REGION . ' as r', 'd.regionGUID=r.regionGUID', 'left');
         $this->db->join(TBL_COMPANY . ' as c', 'c.companyGUID=r.companyGUID', 'left');
+        $this->db->join(TBL_LOGIN_DETAILS . ' as l', 'c.companyGUID=l.companyGUID', 'left');
         $this->db->join(TBL_QUALIFICATION . ' as q', 'o.operativeGUID=q.operativeGUID', 'left');
         $this->db->group_by('o.operativeGUID');
 
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
-
+        
+        if (!is_null($user_id)) {
+            $this->db->where('l.userGUID', $user_id);
+        }
+        
         if ($type == 'count') {
             $query = $this->db->get(TBL_OPERATIVE . ' o');
             return $query->num_rows();

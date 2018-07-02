@@ -34,10 +34,14 @@ class Regions extends MY_Controller {
      * @return JSON
      */
     public function get_areas_data() {
-        $final['recordsTotal'] = $this->regions_model->get_areas_data('count');
+        $user_id = null;
+        if (!$this->isAdmin) {
+            $user_id = $this->session->userdata('userGUID');
+        }
+        $final['recordsTotal'] = $this->regions_model->get_areas_data('count', $user_id);
         $final['redraw'] = 1;
         $final['recordsFiltered'] = $final['recordsTotal'];
-        $areas = $this->regions_model->get_areas_data('result');
+        $areas = $this->regions_model->get_areas_data('result', $user_id);
         $start = $this->input->get('start') + 1;
         foreach ($areas as $key => $val) {
             $areas[$key] = $val;

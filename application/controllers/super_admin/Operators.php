@@ -41,10 +41,14 @@ class Operators extends MY_Controller {
      * @return JSON
      */
     public function get_operators_data() {
-        $final['recordsTotal'] = $this->operators_model->get_all_data('count');
+        $user_id = null;
+        if (!$this->isAdmin) {
+            $user_id = $this->session->userdata('userGUID');
+        }
+        $final['recordsTotal'] = $this->operators_model->get_all_data('count', $user_id);
         $final['redraw'] = 1;
         $final['recordsFiltered'] = $final['recordsTotal'];
-        $operators = $this->operators_model->get_all_data('result');
+        $operators = $this->operators_model->get_all_data('result', $user_id);
         $start = $this->input->get('start') + 1;
         foreach ($operators as $key => $val) {
             $operators[$key] = $val;

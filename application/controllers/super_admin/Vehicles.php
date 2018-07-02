@@ -38,10 +38,14 @@ class Vehicles extends MY_Controller {
      * @return JSON
      */
     public function get_vehicles_data() {
-        $final['recordsTotal'] = $this->vehicle_model->get_results('count');
+        $user_id = null;
+        if (!$this->isAdmin) {
+            $user_id = $this->session->userdata('userGUID');
+        }
+        $final['recordsTotal'] = $this->vehicle_model->get_results('count', $user_id);
         $final['redraw'] = 1;
         $final['recordsFiltered'] = $final['recordsTotal'];
-        $vehicles = $this->vehicle_model->get_results('result');
+        $vehicles = $this->vehicle_model->get_results('result', $user_id);
         $start = $this->input->get('start') + 1;
         foreach ($vehicles as $key => $val) {
             $vehicles[$key] = $val;
@@ -64,7 +68,13 @@ class Vehicles extends MY_Controller {
         $data['depotArray'] = [];
         $data['used_depotGUID'] = array_column($this->vehicle_model->get_vehicle_depot(), 'baseDepotGUID');
 
-        $this->form_validation->set_rules('company_name', 'Company Name', 'trim|required');
+        $user_id = null;
+        if (!$this->isAdmin) {
+            $user_id = $this->session->userdata('userGUID');
+        } else {
+            $this->form_validation->set_rules('company_name', 'Company Name', 'trim|required');
+        }
+
         $this->form_validation->set_rules('txt_device_id', 'Device ID', 'trim|required|max_length[45]|is_unique[vehicle.deviceGUID]');
         $this->form_validation->set_rules('txt_base_depot', 'Base Depot', 'trim|required|max_length[45]');
         $this->form_validation->set_rules('txt_reg_no', 'Registration No', 'trim|required|max_length[10]');
@@ -139,7 +149,13 @@ class Vehicles extends MY_Controller {
 //        $data['dataArr'] = $this->settings_model->get_all_details(TBL_VEHICLE, array('vehicleGUID' => $record_id))->row_array();
         $data['dataArr'] = $this->vehicle_model->get_vehicle_by_id($record_id);
 
-        $this->form_validation->set_rules('company_name', 'Company Name', 'trim|required');
+        $user_id = null;
+        if (!$this->isAdmin) {
+            $user_id = $this->session->userdata('userGUID');
+        } else {
+            $this->form_validation->set_rules('company_name', 'Company Name', 'trim|required');
+        }
+
         $this->form_validation->set_rules('txt_device_id', 'Device ID', 'trim|required|max_length[45]');
         $this->form_validation->set_rules('txt_base_depot', 'Base Depot', 'trim|required|max_length[45]');
         $this->form_validation->set_rules('txt_reg_no', 'Registration No', 'trim|required|max_length[10]');

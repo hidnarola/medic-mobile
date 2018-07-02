@@ -58,13 +58,14 @@ class Vehicle_model extends MY_Model {
      * @return integer/array
      * @author KU
      */
-    public function get_results($type = 'result') {
+    public function get_results($type = 'result', $user_id = null) {
         $columns = ['v.vehicleGUID', 'c.companyName', 'v.registration', 'v.vin', 'v.fuelType', 'v.licenceType', 'v.resetServiceCounter'];
         $keyword = $this->input->get('search');
         $this->db->select('v.*,c.companyName');
         $this->db->join(TBL_DEPOT . ' d', 'v.baseDepotGUID=d.depotGUID', 'LEFT');
         $this->db->join(TBL_REGION . ' r', 'd.regionGUID=r.regionGUID', 'LEFT');
         $this->db->join(TBL_COMPANY . ' c', 'r.companyGUID=c.companyGUID', 'LEFT');
+        $this->db->join(TBL_LOGIN_DETAILS . ' l', 'l.companyGUID=c.companyGUID', 'LEFT');
 
         if (!empty($keyword['value'])) {
             $where = '(c.companyName LIKE ' . $this->db->escape('%' . $keyword['value'] . '%')
@@ -72,7 +73,9 @@ class Vehicle_model extends MY_Model {
                     ' OR v.vin LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR v.fuelType LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR v.licenceType LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR v.numberOfAxles LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR v.axle1TyreSize LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR v.resetServiceCounter LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ')';
             $this->db->where($where);
         }
-
+        if (!is_null($user_id)) {
+            $this->db->where('l.userGUID', $user_id);
+        }
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
         if ($type == 'count') {
             $query = $this->db->get(TBL_VEHICLE . ' v');

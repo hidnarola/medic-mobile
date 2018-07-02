@@ -41,10 +41,14 @@ class Company extends MY_Controller {
      * @author PAV
      */
     public function get_company_data() {
-        $final['recordsTotal'] = $this->company_model->get_company_data('count');
+        $user_id = null;
+        if (!$this->isAdmin) {
+            $user_id = $this->session->userdata('userGUID');
+        }
+        $final['recordsTotal'] = $this->company_model->get_company_data('count', $user_id);
         $final['redraw'] = 1;
         $final['recordsFiltered'] = $final['recordsTotal'];
-        $company = $this->company_model->get_company_data('result')->result_array();
+        $company = $this->company_model->get_company_data('result', $user_id)->result_array();
         $start = $this->input->get('start') + 1;
         foreach ($company as $key => $val) {
             $company[$key] = $val;
@@ -63,8 +67,9 @@ class Company extends MY_Controller {
     public function add_company() {
         $data['title'] = 'Add Company';
         $data['heading'] = 'Manage Company';
-
-        $this->form_validation->set_rules('name', 'Company Name', 'trim|required|max_length[128]');
+        if ($this->isAdmin) {
+            $this->form_validation->set_rules('name', 'Company Name', 'trim|required|max_length[128]');
+        }
         $this->form_validation->set_rules('address', 'Company Address', 'trim|required');
         if ($this->form_validation->run() == true) {
             $companyGUID = Uuid_v4();
@@ -147,7 +152,9 @@ class Company extends MY_Controller {
         $record_id = base64_decode($id);
         $data['dataArr'] = $this->company_model->get_all_details(TBL_COMPANY, array('companyGUID' => $record_id))->row_array();
         $data['LoginDetailsArr'] = $this->company_model->get_all_details(TBL_LOGIN_DETAILS, array('companyGUID' => $record_id))->row_array();
-        $this->form_validation->set_rules('name', 'Company Name', 'trim|required|max_length[128]');
+        if ($this->isAdmin) {
+            $this->form_validation->set_rules('name', 'Company Name', 'trim|required|max_length[128]');
+        }
         $this->form_validation->set_rules('address', 'Company Address', 'trim|required');
         if ($this->form_validation->run() == true) {
             $updateArr = array(
