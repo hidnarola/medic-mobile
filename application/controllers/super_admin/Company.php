@@ -1,22 +1,22 @@
 <?php
 
+/**
+ * Manage company related activities
+ * @author KU
+ */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Company extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model(array('company_model', 'settings_model'));
+        $this->load->model('company_model');
         $this->isAdmin = true;
         if (!get_AdminLogin('A')) {
             $this->isAdmin = false;
 //            redirect('dashboard');
         }
     }
-
-    /*     * *************************************************************
-      Manage Company
-     * ************************************************************* */
 
     /**
      * Display Company details in listing datatable
@@ -59,20 +59,24 @@ class Company extends MY_Controller {
     }
 
     /**
-     * Add new company details
-     * @param --
-     * @return --
-     * @author PAV
+     * Add new company
+     * @author KU
      */
     public function add_company() {
         $data['title'] = 'Add Company';
         $data['heading'] = 'Manage Company';
+        //-- Get all parent companies
+        $data['parent_companies'] = $this->company_model->sql_select(TBL_COMPANY, 'companyGUID,companyName', ['where' => ['parentCompanyGUID' => null]]);
         if ($this->isAdmin) {
             $this->form_validation->set_rules('name', 'Company Name', 'trim|required|max_length[128]');
         }
         $this->form_validation->set_rules('address', 'Company Address', 'trim|required');
         if ($this->form_validation->run() == true) {
-            $companyGUID = Uuid_v4();
+            $companyGUID = unique_id('companyGUID', TBL_COMPANY);
+            $parentCompanyGUID = null;
+            if ($this->input->post('parent_company') != '') {
+                $parentCompanyGUID = $this->input->post('parent_company');
+            }
             $insertArr = array(
                 'companyGUID' => $companyGUID,
                 'companyName' => htmlentities($this->input->post('name')),
@@ -86,7 +90,7 @@ class Company extends MY_Controller {
                 'longitude' => htmlentities($this->input->post('longitude')),
                 'allowAPIAccess' => '',
                 'apiAllowedIpAddresses' => '',
-                'parentCompanyGUID' => 0
+                'parentCompanyGUID' => $parentCompanyGUID
             );
             $is_comp_insert = $this->company_model->insert_update('insert', TBL_COMPANY, $insertArr);
             extract($insertArr);
@@ -148,6 +152,7 @@ class Company extends MY_Controller {
     public function edit_company($id = '') {
         $data['title'] = 'Edit Company';
         $data['heading'] = 'Manage Company';
+        $data['parent_companies'] = $this->company_model->sql_select(TBL_COMPANY, 'companyGUID,companyName', ['where' => ['parentCompanyGUID' => null]]);
 
         $record_id = base64_decode($id);
         $data['dataArr'] = $this->company_model->get_all_details(TBL_COMPANY, array('companyGUID' => $record_id))->row_array();
@@ -157,6 +162,12 @@ class Company extends MY_Controller {
         }
         $this->form_validation->set_rules('address', 'Company Address', 'trim|required');
         if ($this->form_validation->run() == true) {
+
+            $parentCompanyGUID = $data['dataArr']['parentCompanyGUID'];
+            if ($this->input->post('parent_company') != '') {
+                $parentCompanyGUID = $this->input->post('parent_company');
+            }
+
             $updateArr = array(
                 'companyName' => htmlentities($this->input->post('name')),
                 'addressLine1' => htmlentities($this->input->post('address')),
@@ -169,7 +180,7 @@ class Company extends MY_Controller {
                 'longitude' => htmlentities($this->input->post('longitude')),
                 'allowAPIAccess' => '',
                 'apiAllowedIpAddresses' => '',
-                'parentCompanyGUID' => 0
+                'parentCompanyGUID' => $parentCompanyGUID
             );
             $this->company_model->insert_update('update', TBL_COMPANY, $updateArr, array('companyGUID' => $record_id));
             $this->session->set_flashdata('success', 'Company has been updated successfully.');
@@ -194,7 +205,7 @@ class Company extends MY_Controller {
         } else {
             $where = ['emailAddress' => $requested_email];
         }
-        $user = $this->settings_model->get_all_details(TBL_LOGIN_DETAILS, $where)->row_array();
+        $user = $this->company_model->get_all_details(TBL_LOGIN_DETAILS, $where)->row_array();
         if (!empty($user)) {
             echo "false";
         } else {
@@ -214,7 +225,7 @@ class Company extends MY_Controller {
         } else {
             $where = ['username' => $requested_username];
         }
-        $user = $this->settings_model->get_all_details(TBL_LOGIN_DETAILS, $where)->row_array();
+        $user = $this->company_model->get_all_details(TBL_LOGIN_DETAILS, $where)->row_array();
         if (!empty($user)) {
             echo "false";
         } else {
@@ -234,7 +245,7 @@ class Company extends MY_Controller {
         } else {
             $where = ['companyName' => $requested_name];
         }
-        $company = $this->settings_model->get_all_details(TBL_COMPANY, $where)->row_array();
+        $company = $this->company_model->get_all_details(TBL_COMPANY, $where)->row_array();
         if (!empty($company)) {
             echo "false";
         } else {

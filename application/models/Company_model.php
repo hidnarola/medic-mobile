@@ -14,21 +14,24 @@ class Company_model extends MY_Model {
      * @return integer/array
      */
     public function get_company_data($type, $user_id = null) {
-        $columns = ['c.companyGUID', 'c.companyName', 'c.addressLine1', 'c.town_city', 'c.country_state', 'c.postcode_zipcode', 'c.country'];
+        $columns = ['c.companyGUID', 'c.companyName', 'p.companyName', 'c.addressLine1', 'c.town_city', 'c.country_state', 'c.postcode_zipcode', 'c.country'];
         $keyword = $this->input->get('search');
-        $this->db->select('c.*');
+        $this->db->select('c.*,p.companyName as parentCompany');
         $this->db->join(TBL_LOGIN_DETAILS . ' l', 'c.companyGUID=l.companyGUID', 'left');
+        $this->db->join(TBL_COMPANY . ' p', 'c.parentCompanyGUID=p.companyGUID AND c.parentCompanyGUID IS NOT NULL', 'left');
 
         if (!empty($keyword['value'])) {
             $where = '(c.companyName LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR c.addressLine1 LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') .
                     ' OR c.addressLine2 LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') .
                     ' OR c.town_city LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR c.country_state LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') .
+                    ' OR p.companyName LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') .
                     ' OR c.postcode_zipcode LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR c.country LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ')';
             $this->db->where($where);
         }
         if (!is_null($user_id)) {
             $this->db->where('l.userGUID', $user_id);
         }
+        $this->db->group_by('c.companyGUID');
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
         if ($type == 'count') {
             $query = $this->db->get(TBL_COMPANY . ' c');

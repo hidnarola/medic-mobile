@@ -42,12 +42,26 @@ else
                                         ?>
                                         <div class="add-form-wrap">
                                             <div class="add-form-l">
-                                                <div class="form-group has-feedback">
+                                                <div class="form-group">
                                                     <label class="control-label required">Company Name</label>
                                                     <input type="text" class="form-control" name="name" id="name" placeholder="Company Name" value="<?php echo (isset($dataArr)) ? $dataArr['companyName'] : set_value('name'); ?>">
                                                     <?php echo '<label id="name-error" class="validation-error-label" for="name">' . form_error('name') . '</label>'; ?>
                                                 </div>
-                                                <div class="form-group company-name"></div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Parent Company</label>
+                                                    <select name="parent_company" class="form-control select-control">
+                                                        <option value="">Select Company</option>
+                                                        <?php
+                                                        foreach ($parent_companies as $company) {
+                                                            $selected = '';
+                                                            if (isset($dataArr) && $dataArr['parentCompanyGUID'] == $company['companyGUID'])
+                                                                $selected = 'selected';
+                                                            ?>
+                                                            <option value="<?php echo $company['companyGUID'] ?>" <?php echo $selected ?>><?php echo $company['companyName'] ?></option>
+                                                        <?php }
+                                                        ?>
+                                                    </select>
+                                                </div>
                                                 <div class="form-group">
                                                     <label class="control-label required">City</label>
                                                     <input type="text" class="form-control" name="city" id="city" placeholder="City" value="<?php echo (isset($dataArr)) ? $dataArr['town_city'] : 'Baltimore'; ?>" required>
@@ -68,27 +82,27 @@ else
                                                     <input type="text" class="form-control" name="country" id="country" placeholder="Country" value="<?php echo (isset($dataArr)) ? $dataArr['country'] : 'Maryland'; ?>" required>
                                                     <?php echo '<label id="country-error" class="validation-error-label" for="country">' . form_error('country') . '</label>'; ?>
                                                 </div>
-                                                <div class="form-group has-feedback">
+                                                <div class="form-group">
                                                     <label class="control-label <?php echo $label_attribute ?>">First Name</label>
                                                     <input type="text" class="form-control" name="txt_fname" id="txt_fname" placeholder="First Name" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['firstName'] : set_value('txt_fname'); ?>" <?php echo $field_attribute ?>>
                                                     <?php echo '<label id="txt_fname-error" class="validation-error-label" for="txt_fname">' . form_error('txt_fname') . '</label>'; ?>
                                                 </div>
-                                                <div class="form-group has-feedback">
+                                                <div class="form-group">
                                                     <label class="control-label <?php echo $label_attribute ?>">Last Name</label>
                                                     <input type="text" class="form-control" name="txt_lname" id="txt_lname" placeholder="Last Name" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['lastName'] : set_value('txt_lname'); ?>" <?php echo $field_attribute ?>>
                                                     <?php echo '<label id="txt_lname-error" class="validation-error-label" for="txt_lname">' . form_error('txt_lname') . '</label>'; ?>
                                                 </div>    
-                                                <div class="form-group has-feedback">
+                                                <div class="form-group">
                                                     <label class="control-label <?php echo $label_attribute ?>">Username</label>
                                                     <input type="text" class="form-control" name="txt_uname" id="txt_uname" placeholder="User Name" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['username'] : set_value('txt_uname'); ?>" <?php echo $field_attribute ?>>
                                                     <?php echo '<label id="txt_uname-error" class="validation-error-label" for="txt_uname">' . form_error('txt_uname') . '</label>'; ?>
                                                 </div>
-                                                <div class="form-group has-feedback">
+                                                <div class="form-group">
                                                     <label class="control-label <?php echo $label_attribute ?>">Email</label>
                                                     <input type="email" class="form-control" name="txt_email" id="txt_email" placeholder="Email" value="<?php echo (isset($LoginDetailsArr)) ? $LoginDetailsArr['emailAddress'] : set_value('txt_email'); ?>" <?php echo $field_attribute ?>>
                                                     <?php echo '<label id="txt_email-error" class="validation-error-label" for="txt_email">' . form_error('txt_email') . '</label>'; ?>
                                                 </div>
-                                                <div class="form-group has-feedback">
+                                                <div class="form-group">
                                                     <label class="control-label <?php
                                                     if (!isset($LoginDetailsArr)) {
                                                         echo 'required';
@@ -96,7 +110,7 @@ else
                                                     ?>">Password</label>
                                                     <input type="text" class="form-control" name="txt_pass" id="txt_pass" placeholder="Password" value="<?php echo set_value('txt_pass'); ?>" <?php echo $field_attribute ?>>
                                                 </div>
-                                                <div class="form-group has-feedback">
+                                                <div class="form-group">
                                                     <label class="control-label <?php
                                                     if (!isset($LoginDetailsArr)) {
                                                         echo 'required';
@@ -106,7 +120,7 @@ else
                                                 </div>
                                             </div>
                                             <div class="add-form-r">
-                                                <div class="form-group has-feedback">
+                                                <div class="form-group">
                                                     <label class="control-label required">Address</label>
                                                     <input type="text" class="form-control" name="address" id="address" placeholder="Company Address" value="<?php echo (isset($dataArr)) ? $dataArr['addressLine1'] : set_value('address'); ?>">
                                                     <?php echo '<label id="address_error2" class="validation-error-label" for="address">' . form_error('address') . '</label>'; ?>
