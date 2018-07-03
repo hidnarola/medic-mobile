@@ -22,6 +22,7 @@ class Users extends MY_Controller {
      * @author KU
      */
     public function display_users() {
+        p($this->session->userdata(), 1);
         $data['title'] = 'List of Company';
         $data['heading'] = 'Manage System Users';
         if ($this->isAdmin)
@@ -72,10 +73,11 @@ class Users extends MY_Controller {
         $this->form_validation->set_rules('password', 'Password', 'required');
         $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[password]');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+        $userGUID = unique_id('userGUID', TBL_LOGIN_DETAILS);
 
         if ($this->form_validation->run() == true) {
             $insertArr = array(
-                'userGUID' => Uuid_v4(),
+                'userGUID' => $userGUID,
                 'firstName' => htmlentities($this->input->post('firstname')),
                 'lastName' => htmlentities($this->input->post('lastname')),
                 'username' => htmlentities($this->input->post('username')),
@@ -152,7 +154,6 @@ class Users extends MY_Controller {
                 }
 
                 $this->users_model->insert_update('update', TBL_LOGIN_DETAILS, $updateArr, array('userGUID' => $record_id));
-
                 $this->session->set_flashdata('success', 'User has been updated successfully.');
                 redirect('users');
             }

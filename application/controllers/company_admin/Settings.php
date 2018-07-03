@@ -11,6 +11,11 @@ class Settings extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model(array('settings_model'));
+        $this->isAdmin = true;
+        if (!get_AdminLogin('A')) {
+            $this->isAdmin = false;
+        }
+        $this->tier = $this->session->userdata('tier');
     }
 
     /**

@@ -34,6 +34,7 @@ class Login extends MY_Controller {
                 $cookie_ssn_data['emailAddress'] = $ssn_data['emailAddress'];
                 $cookie_ssn_data['companyGUID'] = $ssn_data['companyGUID'];
                 $cookie_ssn_data['isAdmin'] = $ssn_data['isAdmin'];
+                $user_ssn_data['tier'] = $ssn_data['tier'];
                 $cookie_ssn_data['logged_in'] = 1;
                 $this->session->set_userdata($cookie_ssn_data);
                 redirect(site_url('dashboard'));
@@ -65,6 +66,7 @@ class Login extends MY_Controller {
                         $user_ssn_data['emailAddress'] = $_auth_data['emailAddress'];
                         $user_ssn_data['companyGUID'] = $_auth_data['companyGUID'];
                         $user_ssn_data['isAdmin'] = $_auth_data['isAdmin'];
+                        $user_ssn_data['tier'] = $_auth_data['tier'];
                         $user_ssn_data['logged_in'] = 1;
 
                         $this->session->set_userdata($user_ssn_data);

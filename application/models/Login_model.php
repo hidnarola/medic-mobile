@@ -37,6 +37,23 @@ class Login_model extends MY_Model {
         return $query->row_array();
     }
 
+    /**
+     * Get User details by its user id
+     * @author KU
+     * @param type $user_id
+     * @param type $password_verify
+     * @return type
+     */
+    public function get_user_details($user_id) {
+        $this->db->select('*');
+        $this->db->from(TBL_LOGIN_DETAILS);
+        $this->db->where('userGUID', $user_id);
+        $this->db->where('is_delete', 0);
+        $res = $this->db->get();
+
+        return $res->row_array();
+    }
+
 }
 
 /* End of file Login_model.php */

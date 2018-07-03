@@ -74,8 +74,9 @@ class Operators extends MY_Controller {
         $this->form_validation->set_rules('txt_dob', 'Date Of Birth', 'trim|required');
 
         if ($this->form_validation->run() == true) {
-            $operativeGUID = Uuid_v4();
             $password = htmlentities($this->input->post('txt_pass')); //randomPassword();
+            $operativeGUID = unique_id('operativeGUID', TBL_OPERATIVE);
+
             $insertArr = array(
                 'operativeGUID' => $operativeGUID,
                 'baseDepotGUID' => htmlentities($this->input->post('txt_base_depot')),

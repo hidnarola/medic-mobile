@@ -91,8 +91,10 @@ class Vehicles extends MY_Controller {
             if (!in_array($odo_measurment, array('km', 'miles', 'hours'))) {
                 $odo_measurment = 'km';
             }
+            $vehicleGUID = unique_id('vehicleGUID', TBL_VEHICLE);
+
             $insertArr = array(
-                'vehicleGUID' => Uuid_v4(),
+                'vehicleGUID' => $vehicleGUID,
                 'deviceGUID' => htmlentities($this->input->post('txt_device_id')),
                 'baseDepotGUID' => htmlentities($this->input->post('txt_base_depot')),
                 'registration' => htmlentities($this->input->post('txt_reg_no')),

@@ -76,8 +76,10 @@ class Regions extends MY_Controller {
         $data['regionArr'] = $this->regions_model->get_all_details(TBL_REGION, array('companyGUID' => get_AdminLogin('COMP_GUID')), array(array('field' => 'regionName', 'type' => 'asc')))->result_array();
         $data['managerArr'] = $this->regions_model->get_all_details(TBL_MANAGER, array(), array(array('field' => 'firstName', 'type' => 'asc')))->result_array();
         if ($this->form_validation->run() == true) {
+
             // Depot Details
-            $depotGUID = Uuid_v4();
+            $depotGUID = unique_id('depotGUID', TBL_DEPOT);
+
             $insertArr = array(
                 'depotGUID' => $depotGUID,
                 'regionGUID' => htmlentities($this->input->post('txt_region_name')),
